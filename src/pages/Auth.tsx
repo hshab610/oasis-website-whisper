@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 
 const Auth = () => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [session, setSession] = useState(() => supabase.auth.getSession());
@@ -23,6 +23,9 @@ const Auth = () => {
     setLoading(true);
     
     try {
+      // Convert username to email format for Supabase
+      const email = `${username.toLowerCase()}@oasismovingco.com`;
+      
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -45,6 +48,36 @@ const Auth = () => {
     }
   };
 
+  const handleSignup = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    
+    try {
+      // Convert username to email format for Supabase
+      const email = `${username.toLowerCase()}@oasismovingco.com`;
+      
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Account created successfully",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
       <Card className="w-full max-w-md">
@@ -55,10 +88,10 @@ const Auth = () => {
           <form onSubmit={handleLogin} className="space-y-4">
             <div className="space-y-2">
               <Input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                type="text"
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 required
               />
             </div>
@@ -77,6 +110,15 @@ const Auth = () => {
               disabled={loading}
             >
               {loading ? "Loading..." : "Login"}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full"
+              onClick={handleSignup}
+              disabled={loading}
+            >
+              Sign Up
             </Button>
           </form>
         </CardContent>
