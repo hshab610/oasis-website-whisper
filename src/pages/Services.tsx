@@ -1,3 +1,4 @@
+
 import { Helmet } from 'react-helmet';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -25,7 +26,7 @@ const Services = () => {
       ]
     },
     {
-      icon: <MapPin size={32} />,
+      icon: MapPin,
       title: 'Long Distance Moving',
       description: 'Relocating to another state? Our long-distance moving services are customized to meet your specific needs and ensure a smooth transition to your new home.',
       price: 'Custom quotes',
@@ -40,7 +41,7 @@ const Services = () => {
       ]
     },
     {
-      icon: <SlidersHorizontal size={32} />,
+      icon: SlidersHorizontal,
       title: 'Furniture Assembly/Disassembly',
       description: 'Let our experienced technicians handle the assembly or disassembly of your furniture, saving you time and ensuring everything is put together correctly.',
       price: '$90 for up to 5 items, $120 for over 5 items',
@@ -55,7 +56,7 @@ const Services = () => {
       ]
     },
     {
-      icon: <Tv size={32} />,
+      icon: Tv,
       title: 'TV Mounting',
       description: 'Our professional TV mounting service ensures your television is securely and properly installed on your wall for optimal viewing experience.',
       price: '$60 flat rate (customer provides wall mount)',
@@ -70,7 +71,7 @@ const Services = () => {
       ]
     },
     {
-      icon: <Trash2 size={32} />,
+      icon: Trash2,
       title: 'Hauling & Junk Removal',
       description: 'Need to get rid of unwanted items? Our junk removal service provides efficient hauling of furniture, appliances, and other unwanted items.',
       price: '$150 flat rate (potential dumping fees may apply)',
@@ -85,7 +86,7 @@ const Services = () => {
       ]
     },
     {
-      icon: <Heart size={32} />,
+      icon: Heart,
       title: 'Donation Pickup & Dropoff',
       description: 'Supporting charitable giving, we'll pick up items you wish to donate and deliver them to your charity of choice.',
       price: '$150 flat rate',
@@ -100,7 +101,7 @@ const Services = () => {
       ]
     },
     {
-      icon: <Package size={32} />,
+      icon: Package,
       title: 'Storage Solutions',
       description: 'We offer secure storage options for your belongings, whether you need short-term or long-term storage during your move or renovation.',
       price: 'Contact for pricing',

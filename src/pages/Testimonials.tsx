@@ -1,3 +1,4 @@
+
 import { Helmet } from 'react-helmet';
 import { Star } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
@@ -79,7 +80,7 @@ const Testimonials = () => {
       date: 'February 18, 2023',
       text: 'We used Oasis for both moving and temporary storage during our home renovation. They were very accommodating with our changing timeline and made the process easy. Our items were well-protected in storage and returned in perfect condition. The moving crew was professional and efficient both during the move-out and move-in phases. Great experience overall.',
       rating: 4,
-    },
+    }
   ];
 
   return (

@@ -1,3 +1,4 @@
+
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/layout/Navbar';
@@ -90,30 +91,7 @@ const About = () => {
           </section>
           
           {/* Our Values */}
-          <section className="py-16 md:py-20 bg-muted">
-            <div className="container mx-auto px-4">
-              <div className="max-w-3xl mx-auto text-center mb-16">
-                <h2 className="text-3xl font-bold mb-4">Our Core Values</h2>
-                <div className="w-24 h-1 bg-primary mx-auto mb-6"></div>
-                <p className="text-muted-foreground">
-                  These principles guide everything we do and every decision we make.
-                </p>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                {values.map((value, index) => (
-                  <div 
-                    key={index} 
-                    className="bg-card p-6 rounded-lg border border-border shadow-sm hover:shadow-md transition-all duration-300"
-                  >
-                    <div className="text-primary mb-4">{value.icon}</div>
-                    <h3 className="text-xl font-semibold mb-2">{value.title}</h3>
-                    <p className="text-muted-foreground">{value.description}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
+          <CoreValues />
           
           {/* Why Choose Us */}
           <section className="py-16 md:py-20 bg-background">
