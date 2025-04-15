@@ -12,16 +12,29 @@ interface NavLinksProps {
 export const NavLinks = ({ mobile = false, closeMenu }: NavLinksProps) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
   
   useEffect(() => {
     // Check auth status on mount
     const checkAuth = async () => {
-      const { data } = await supabase.auth.getSession();
-      setIsLoggedIn(!!data.session);
-      
-      if (data.session) {
-        const role = await getUserRole();
-        setIsAdmin(role === 'admin');
+      try {
+        setIsChecking(true);
+        const { data } = await supabase.auth.getSession();
+        const hasSession = !!data.session;
+        setIsLoggedIn(hasSession);
+        
+        if (hasSession) {
+          // Wait a bit to ensure the session is established
+          await new Promise(resolve => setTimeout(resolve, 500));
+          const role = await getUserRole();
+          setIsAdmin(role === 'admin');
+        } else {
+          setIsAdmin(false);
+        }
+      } catch (error) {
+        console.error("Error checking auth status:", error);
+      } finally {
+        setIsChecking(false);
       }
     };
     
@@ -30,12 +43,20 @@ export const NavLinks = ({ mobile = false, closeMenu }: NavLinksProps) => {
     // Subscribe to auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        setIsLoggedIn(!!session);
-        
-        if (session) {
-          const role = await getUserRole();
-          setIsAdmin(role === 'admin');
-        } else {
+        try {
+          const hasSession = !!session;
+          setIsLoggedIn(hasSession);
+          
+          if (hasSession) {
+            // Wait a bit to ensure the session is established
+            await new Promise(resolve => setTimeout(resolve, 500));
+            const role = await getUserRole();
+            setIsAdmin(role === 'admin');
+          } else {
+            setIsAdmin(false);
+          }
+        } catch (error) {
+          console.error("Error in auth state change handler:", error);
           setIsAdmin(false);
         }
       }

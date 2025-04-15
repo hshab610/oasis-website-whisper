@@ -41,6 +41,7 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
     setLoading(true);
     
     try {
+      console.log("Attempting login with:", data.email);
       const { error } = await supabase.auth.signInWithPassword({
         email: data.email,
         password: data.password,
@@ -49,33 +50,38 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
       if (error) throw error;
 
       // Give a short delay to ensure the session is established
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
       // Check if the user is an admin after successful login
       const isAdmin = await isUserAdmin();
       console.log("Is admin check result:", isAdmin);
       
-      if (!isAdmin) {
+      if (isAdmin) {
+        toast({
+          title: "Success",
+          description: "Successfully logged in as admin",
+        });
+        
+        // Navigate to admin page after successful login
+        navigate('/admin');
+      } else {
+        toast({
+          title: "Access Denied",
+          description: "You do not have admin privileges",
+          variant: "destructive",
+        });
+        
+        // Sign out if not admin
         await supabase.auth.signOut();
-        throw new Error("Access denied. Admin privileges required.");
       }
-
-      toast({
-        title: "Success",
-        description: "Successfully logged in",
-      });
-      
-      // Navigate to admin page after successful login
-      navigate('/admin');
     } catch (error: any) {
+      console.error("Login error:", error);
       let errorMessage = "Failed to login. Please try again.";
       
       if (error.message.includes("Invalid login credentials")) {
         errorMessage = "Invalid email or password";
       } else if (error.message.includes("rate limit")) {
         errorMessage = "Too many login attempts. Please try again later.";
-      } else if (error.message.includes("Access denied")) {
-        errorMessage = "You do not have admin access";
       }
       
       toast({
@@ -93,16 +99,14 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
     
     try {
       const values = getValues();
+      console.log("Attempting signup with:", values.email);
       
-      // Step 1: Create the user account with explicit email confirmation
+      // Step 1: Create the user account
       const { data: authData, error: signupError } = await supabase.auth.signUp({
         email: values.email,
         password: values.password,
         options: {
           emailRedirectTo: window.location.origin + '/auth',
-          data: {
-            email_confirmed: true
-          }
         }
       });
 
@@ -138,7 +142,7 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
 
       if (roleError) {
         console.error("Failed to assign admin role:", roleError);
-        throw new Error("Failed to create admin account. Please try again.");
+        throw new Error("Failed to create admin account. Please contact support.");
       }
 
       console.log("Admin role successfully assigned");
@@ -165,6 +169,13 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
         description: errorMessage,
         variant: "destructive",
       });
+      
+      // Attempt to sign out if there was an error
+      try {
+        await supabase.auth.signOut();
+      } catch (signOutError) {
+        console.error("Error signing out after failed signup:", signOutError);
+      }
     } finally {
       setLoading(false);
     }

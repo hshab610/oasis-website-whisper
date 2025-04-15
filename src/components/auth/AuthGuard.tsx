@@ -14,44 +14,58 @@ const AuthGuard = ({ children, adminOnly = false }: { children: React.ReactNode,
   const navigate = useNavigate();
 
   useEffect(() => {
+    let isMounted = true;
+    
     const checkAdminStatus = async (userId: string) => {
       try {
         // Add a small delay to ensure session is established
         await new Promise(resolve => setTimeout(resolve, 500));
         const adminStatus = await isUserAdmin();
         console.log(`Admin status check for user ${userId}: ${adminStatus}`);
-        setIsAdmin(adminStatus);
+        
+        if (isMounted) {
+          setIsAdmin(adminStatus);
+          setLoading(false);
+        }
       } catch (error) {
         console.error("Error checking admin status:", error);
-        setIsAdmin(false);
-      } finally {
-        setLoading(false);
+        if (isMounted) {
+          setIsAdmin(false);
+          setLoading(false);
+        }
       }
     };
 
     // Set up the auth state listener first
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
       console.log("Auth state changed:", session ? "logged in" : "logged out");
-      setSession(session);
-      if (session) {
-        checkAdminStatus(session.user.id);
-      } else {
-        setLoading(false);
+      if (isMounted) {
+        setSession(session);
+        if (session) {
+          checkAdminStatus(session.user.id);
+        } else {
+          setLoading(false);
+        }
       }
     });
 
     // Then check for an existing session
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       console.log("Initial session check:", session ? "session found" : "no session");
-      setSession(session);
-      if (session) {
-        checkAdminStatus(session.user.id);
-      } else {
-        setLoading(false);
+      if (isMounted) {
+        setSession(session);
+        if (session) {
+          checkAdminStatus(session.user.id);
+        } else {
+          setLoading(false);
+        }
       }
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      isMounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
   if (loading) {
@@ -70,9 +84,8 @@ const AuthGuard = ({ children, adminOnly = false }: { children: React.ReactNode,
 
   // Admin route but user is not admin
   if (adminOnly && !isAdmin) {
-    // Instead of redirecting, we'll explicitly navigate to home
-    navigate('/');
-    return null;
+    console.log("User is not admin, redirecting to home");
+    return <Navigate to="/" replace />;
   }
 
   return <>{children}</>;

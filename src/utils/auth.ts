@@ -17,7 +17,7 @@ export async function isUserAdmin(): Promise<boolean> {
       .eq('user_id', session.user.id)
       .maybeSingle(); // Use maybeSingle() instead of single() to handle no results
 
-    if (error && error.code !== 'PGRST116') { // Ignore the "no rows returned" error
+    if (error) {
       console.error("Error checking admin status:", error);
       return false;
     }
@@ -32,17 +32,25 @@ export async function isUserAdmin(): Promise<boolean> {
 }
 
 export async function getUserRole() {
-  const { data: { session } } = await supabase.auth.getSession();
-  
-  if (!session) return null;
+  try {
+    const { data: { session } } = await supabase.auth.getSession();
+    
+    if (!session) return null;
 
-  const { data, error } = await supabase
-    .from('user_roles')
-    .select('role')
-    .eq('user_id', session.user.id)
-    .maybeSingle(); // Use maybeSingle() instead of single()
+    const { data, error } = await supabase
+      .from('user_roles')
+      .select('role')
+      .eq('user_id', session.user.id)
+      .maybeSingle(); // Use maybeSingle() instead of single()
 
-  if (error && error.code !== 'PGRST116') return null;
+    if (error) {
+      console.error("Error fetching user role:", error);
+      return null;
+    }
 
-  return data?.role;
+    return data?.role;
+  } catch (error) {
+    console.error("Error in getUserRole function:", error);
+    return null;
+  }
 }
