@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import Navbar from '@/components/layout/Navbar';
@@ -102,6 +101,10 @@ const Admin = () => {
     }
   };
 
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+  };
+
   return (
     <>
       <Helmet>
@@ -113,7 +116,12 @@ const Admin = () => {
         
         <main className="flex-grow py-12">
           <div className="container mx-auto px-4">
-            <h1 className="text-3xl font-bold mb-8">Booking Management</h1>
+            <div className="flex justify-between items-center mb-8">
+              <h1 className="text-3xl font-bold">Booking Management</h1>
+              <Button variant="outline" onClick={handleLogout}>
+                Logout
+              </Button>
+            </div>
             
             {isLoading ? (
               <div className="flex justify-center items-center py-20">
