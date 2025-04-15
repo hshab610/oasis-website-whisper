@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { 
@@ -15,7 +16,7 @@ const Services = () => {
       featured: true,
       pricing: [
         'Base package: $249 + $100/hour',
-        'Add stairs service: +$50',
+        'Add stairs service: +$20 per staircase',
         'Add donation service: +$100',
         'Add junk removal: +$100'
       ]
@@ -110,7 +111,7 @@ const Services = () => {
                   <ul className="space-y-2">
                     {service.pricing.map((price, idx) => (
                       <li key={idx} className="flex items-center gap-2 text-sm">
-                        <Badge variant="outline" className="h-2 w-2 rounded-full" />
+                        <Badge className="h-2 w-2 rounded-full" />
                         {price}
                       </li>
                     ))}
