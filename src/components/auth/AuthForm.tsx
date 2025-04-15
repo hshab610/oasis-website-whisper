@@ -89,7 +89,8 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
         password: values.password,
         options: {
           emailRedirectTo: window.location.origin + '/auth',
-          // Skip email verification for now
+          // Skip email verification completely
+          skipConfirmation: true,
           data: {
             email_confirmed: true
           }
