@@ -2,7 +2,7 @@
 import { Helmet } from 'react-helmet';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import ContactForm from '@/components/home/ContactForm';
+import ContactSection from '@/components/contact/ContactSection';
 import { MapPin, Clock, CalendarCheck, HelpCircle } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
@@ -97,7 +97,7 @@ const Contact = () => {
                 </div>
               </div>
               
-              <ContactForm />
+              <ContactSection />
             </div>
           </section>
           
