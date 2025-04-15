@@ -7,14 +7,30 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+
+interface AuthFormValues {
+  username: string;
+  password: string;
+}
 
 const Auth = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [session, setSession] = useState<any>(null);
   const [showPassword, setShowPassword] = useState(false);
   const { toast } = useToast();
+  
+  const { 
+    register, 
+    handleSubmit, 
+    formState: { errors },
+    getValues
+  } = useForm<AuthFormValues>({
+    defaultValues: {
+      username: '',
+      password: ''
+    }
+  });
 
   useEffect(() => {
     // Check for existing session on load
@@ -34,17 +50,16 @@ const Auth = () => {
     return <Navigate to="/admin" replace />;
   }
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onLogin = async (data: AuthFormValues) => {
     setLoading(true);
     
     try {
       // Convert username to email format for Supabase
-      const email = `${username.toLowerCase()}@oasismovingco.com`;
+      const email = `${data.username.toLowerCase()}@oasismovingco.com`;
       
       const { error } = await supabase.auth.signInWithPassword({
         email,
-        password,
+        password: data.password,
       });
 
       if (error) throw error;
@@ -73,17 +88,17 @@ const Auth = () => {
     }
   };
 
-  const handleSignup = async (e: React.MouseEvent) => {
-    e.preventDefault();
+  const onSignup = async () => {
     setLoading(true);
     
     try {
+      const values = getValues();
       // Convert username to email format for Supabase
-      const email = `${username.toLowerCase()}@oasismovingco.com`;
+      const email = `${values.username.toLowerCase()}@oasismovingco.com`;
       
       const { error } = await supabase.auth.signUp({
         email,
-        password,
+        password: values.password,
       });
 
       if (error) throw error;
@@ -118,28 +133,33 @@ const Auth = () => {
           <CardTitle className="text-2xl text-center">Admin Login</CardTitle>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleLogin} className="space-y-4">
+          <form onSubmit={handleSubmit(onLogin)} className="space-y-4">
             <div className="space-y-2">
               <Input
+                {...register("username", { 
+                  required: "Username is required",
+                  minLength: { value: 3, message: "Username must be at least 3 characters" }
+                })}
                 type="text"
                 placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
                 disabled={loading}
-                className="w-full"
-                required
+                className={`w-full ${errors.username ? "border-red-500" : ""}`}
                 autoComplete="username"
               />
+              {errors.username && (
+                <p className="text-sm text-red-500 mt-1">{errors.username.message}</p>
+              )}
             </div>
             <div className="space-y-2 relative">
               <Input
+                {...register("password", { 
+                  required: "Password is required",
+                  minLength: { value: 6, message: "Password must be at least 6 characters" }
+                })}
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
                 disabled={loading}
-                className="w-full pr-10"
-                required
+                className={`w-full pr-10 ${errors.password ? "border-red-500" : ""}`}
                 autoComplete="current-password"
               />
               <Button
@@ -155,6 +175,9 @@ const Auth = () => {
                   <Eye className="h-4 w-4 text-gray-500" />
                 )}
               </Button>
+              {errors.password && (
+                <p className="text-sm text-red-500 mt-1">{errors.password.message}</p>
+              )}
             </div>
             <Button
               type="submit"
@@ -174,7 +197,7 @@ const Auth = () => {
               type="button"
               variant="outline"
               className="w-full"
-              onClick={handleSignup}
+              onClick={onSignup}
               disabled={loading}
             >
               {loading ? (
