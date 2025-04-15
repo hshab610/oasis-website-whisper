@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import type { Session } from '@supabase/supabase-js';
 import { Loader2 } from 'lucide-react';
@@ -11,6 +11,7 @@ const AuthGuard = ({ children, adminOnly = false }: { children: React.ReactNode,
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const checkAdminStatus = async (userId: string) => {
@@ -62,12 +63,16 @@ const AuthGuard = ({ children, adminOnly = false }: { children: React.ReactNode,
     );
   }
 
+  // Not logged in, redirect to auth page
   if (!session) {
     return <Navigate to="/auth" state={{ from: location }} replace />;
   }
 
+  // Admin route but user is not admin
   if (adminOnly && !isAdmin) {
-    return <Navigate to="/" replace />;
+    // Instead of redirecting, we'll explicitly navigate to home
+    navigate('/');
+    return null;
   }
 
   return <>{children}</>;

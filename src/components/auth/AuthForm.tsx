@@ -8,6 +8,7 @@ import { Lead } from '@/components/ui/typography';
 import AuthFormField from './AuthFormField';
 import AuthFormButtons from './AuthFormButtons';
 import { isUserAdmin } from '@/utils/auth';
+import { useNavigate } from 'react-router-dom';
 
 interface AuthFormValues {
   email: string;
@@ -22,6 +23,7 @@ interface AuthFormProps {
 const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
   
   const { 
     register, 
@@ -51,6 +53,8 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
 
       // Check if the user is an admin after successful login
       const isAdmin = await isUserAdmin();
+      console.log("Is admin check result:", isAdmin);
+      
       if (!isAdmin) {
         await supabase.auth.signOut();
         throw new Error("Access denied. Admin privileges required.");
@@ -60,6 +64,9 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
         title: "Success",
         description: "Successfully logged in",
       });
+      
+      // Navigate to admin page after successful login
+      navigate('/admin');
     } catch (error: any) {
       let errorMessage = "Failed to login. Please try again.";
       
@@ -140,6 +147,9 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
         title: "Success",
         description: "Admin account created. You are now logged in.",
       });
+      
+      // Navigate to admin page after successful signup
+      navigate('/admin');
     } catch (error: any) {
       console.error("Signup error:", error);
       let errorMessage = "Failed to create account. Please try again.";
