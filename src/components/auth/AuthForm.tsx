@@ -84,13 +84,12 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
     try {
       const values = getValues();
       
-      // First create the user with email verification disabled
+      // Step 1: Create the user account
       const { data: authData, error: signupError } = await supabase.auth.signUp({
         email: values.email,
         password: values.password,
         options: {
           emailRedirectTo: window.location.origin + '/auth',
-          // Skip email verification
           data: {
             email_confirmed: true
           }
@@ -99,34 +98,40 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
 
       if (signupError) throw signupError;
       
-      if (authData.user) {
-        // Then log in the user to create a session
-        const { error: loginError } = await supabase.auth.signInWithPassword({
-          email: values.email,
-          password: values.password,
-        });
-
-        if (loginError) throw loginError;
-
-        // With an active session, add the admin role
-        const { error: roleError } = await supabase
-          .from('user_roles')
-          .insert([{ 
-            user_id: authData.user.id, 
-            role: 'admin' 
-          }]);
-
-        if (roleError) {
-          console.error("Failed to assign admin role:", roleError);
-          throw new Error("Failed to create admin account. Please contact support.");
-        }
-
-        toast({
-          title: "Success",
-          description: "Admin account created. You are now logged in.",
-        });
+      if (!authData.user) {
+        throw new Error("Failed to create user account");
       }
+      
+      // Step 2: Sign in immediately to get a valid session
+      const { error: loginError } = await supabase.auth.signInWithPassword({
+        email: values.email,
+        password: values.password,
+      });
+
+      if (loginError) throw loginError;
+      
+      // Step 3: Add the admin role directly using the user's ID
+      const userId = authData.user.id;
+      console.log("Attempting to create admin role for user ID:", userId);
+      
+      const { error: roleError } = await supabase
+        .from('user_roles')
+        .insert([{ 
+          user_id: userId, 
+          role: 'admin' 
+        }]);
+
+      if (roleError) {
+        console.error("Failed to assign admin role:", roleError);
+        throw new Error("Failed to create admin account. Try again or contact support.");
+      }
+
+      toast({
+        title: "Success",
+        description: "Admin account created. You are now logged in.",
+      });
     } catch (error: any) {
+      console.error("Signup error:", error);
       let errorMessage = "Failed to create account. Please try again.";
       
       if (error.message.includes("already exists")) {

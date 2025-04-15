@@ -5,8 +5,12 @@ export async function isUserAdmin(): Promise<boolean> {
   try {
     const { data: { session } } = await supabase.auth.getSession();
     
-    if (!session) return false;
+    if (!session) {
+      console.log("No active session found");
+      return false;
+    }
 
+    console.log("Checking admin status for user:", session.user.id);
     const { data, error } = await supabase
       .from('user_roles')
       .select('role')
@@ -18,7 +22,9 @@ export async function isUserAdmin(): Promise<boolean> {
       return false;
     }
 
-    return data?.role === 'admin';
+    const isAdmin = data?.role === 'admin';
+    console.log("Admin check result:", isAdmin);
+    return isAdmin;
   } catch (error) {
     console.error("Error in isUserAdmin function:", error);
     return false;
