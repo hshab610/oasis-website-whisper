@@ -8,11 +8,17 @@ export const handleFormSubmission = async (
   supabaseSubmit: (data: any) => Promise<{ error: any, data: any }>
 ) => {
   setIsSubmitting(true);
+  console.log("handleFormSubmission started with data:", formData);
 
   try {
+    console.log("Calling supabaseSubmit function");
     const result = await supabaseSubmit(formData);
+    console.log("supabaseSubmit result:", result);
     
-    if (result.error) throw result.error;
+    if (result.error) {
+      console.error("Error from supabaseSubmit:", result.error);
+      throw result.error;
+    }
 
     toast({
       title: "Message submitted successfully!",
@@ -29,6 +35,7 @@ export const handleFormSubmission = async (
     });
     return false;
   } finally {
+    console.log("Setting isSubmitting to false");
     setIsSubmitting(false);
   }
 };

@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -37,48 +36,66 @@ const BookingForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted with data:", formData);
+    console.log("Booking form submitted with data:", formData);
     
-    const success = await handleFormSubmission(
-      formData,
-      setIsSubmitting,
-      toast,
-      async (data) => {
-        try {
-          // First store in database
-          const dbResult = await supabase.from('bookings').insert([data]);
-          if (dbResult.error) throw dbResult.error;
-
-          // Then send email notification
-          const emailResult = await supabase.functions.invoke('send-notification', {
-            body: { 
-              type: 'booking',
-              ...data
+    try {
+      const success = await handleFormSubmission(
+        formData,
+        setIsSubmitting,
+        toast,
+        async (data) => {
+          console.log("Processing booking submission");
+          try {
+            // First store in database
+            console.log("Inserting into bookings table:", data);
+            const dbResult = await supabase.from('bookings').insert([data]);
+            console.log("Database result:", dbResult);
+            
+            if (dbResult.error) {
+              console.error("Database error:", dbResult.error);
+              throw dbResult.error;
             }
-          });
-          
-          if (emailResult.error) throw emailResult.error;
 
-          return { error: null, data: dbResult.data };
-        } catch (error) {
-          console.error("Error in form submission:", error);
-          return { error: error, data: null };
+            // Then send email notification
+            console.log("Sending email notification");
+            const emailResult = await supabase.functions.invoke('send-notification', {
+              body: { 
+                type: 'booking',
+                ...data
+              }
+            });
+            console.log("Email result:", emailResult);
+            
+            if (emailResult.error) {
+              console.error("Email error:", emailResult.error);
+              throw emailResult.error;
+            }
+
+            return { error: null, data: dbResult.data };
+          } catch (error) {
+            console.error("Error in booking submission:", error);
+            return { error: error, data: null };
+          }
         }
-      }
-    );
+      );
 
-    if (success) {
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        move_date: '',
-        move_time: '',
-        address: '',
-        package_type: '',
-        additional_services: '',
-        notes: ''
-      });
+      console.log("Form submission result:", success);
+      
+      if (success) {
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          move_date: '',
+          move_time: '',
+          address: '',
+          package_type: '',
+          additional_services: '',
+          notes: ''
+        });
+      }
+    } catch (error) {
+      console.error("Unexpected error in booking form submit:", error);
     }
   };
 
