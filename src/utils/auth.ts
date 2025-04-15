@@ -15,9 +15,9 @@ export async function isUserAdmin(): Promise<boolean> {
       .from('user_roles')
       .select('role')
       .eq('user_id', session.user.id)
-      .single();
+      .maybeSingle(); // Use maybeSingle() instead of single() to handle no results
 
-    if (error) {
+    if (error && error.code !== 'PGRST116') { // Ignore the "no rows returned" error
       console.error("Error checking admin status:", error);
       return false;
     }
@@ -40,9 +40,9 @@ export async function getUserRole() {
     .from('user_roles')
     .select('role')
     .eq('user_id', session.user.id)
-    .single();
+    .maybeSingle(); // Use maybeSingle() instead of single()
 
-  if (error) return null;
+  if (error && error.code !== 'PGRST116') return null;
 
   return data?.role;
 }

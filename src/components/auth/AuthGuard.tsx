@@ -13,10 +13,19 @@ const AuthGuard = ({ children, adminOnly = false }: { children: React.ReactNode,
   const location = useLocation();
 
   useEffect(() => {
-    const checkAdminStatus = async () => {
-      const adminStatus = await isUserAdmin();
-      setIsAdmin(adminStatus);
-      setLoading(false);
+    const checkAdminStatus = async (userId: string) => {
+      try {
+        // Add a small delay to ensure session is established
+        await new Promise(resolve => setTimeout(resolve, 500));
+        const adminStatus = await isUserAdmin();
+        console.log(`Admin status check for user ${userId}: ${adminStatus}`);
+        setIsAdmin(adminStatus);
+      } catch (error) {
+        console.error("Error checking admin status:", error);
+        setIsAdmin(false);
+      } finally {
+        setLoading(false);
+      }
     };
 
     // Set up the auth state listener first
@@ -24,7 +33,7 @@ const AuthGuard = ({ children, adminOnly = false }: { children: React.ReactNode,
       console.log("Auth state changed:", session ? "logged in" : "logged out");
       setSession(session);
       if (session) {
-        await checkAdminStatus();
+        checkAdminStatus(session.user.id);
       } else {
         setLoading(false);
       }
@@ -35,7 +44,7 @@ const AuthGuard = ({ children, adminOnly = false }: { children: React.ReactNode,
       console.log("Initial session check:", session ? "session found" : "no session");
       setSession(session);
       if (session) {
-        await checkAdminStatus();
+        checkAdminStatus(session.user.id);
       } else {
         setLoading(false);
       }

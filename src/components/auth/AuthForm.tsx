@@ -46,6 +46,9 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
 
       if (error) throw error;
 
+      // Give a short delay to ensure the session is established
+      await new Promise(resolve => setTimeout(resolve, 500));
+
       // Check if the user is an admin after successful login
       const isAdmin = await isUserAdmin();
       if (!isAdmin) {
@@ -84,7 +87,7 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
     try {
       const values = getValues();
       
-      // Step 1: Create the user account
+      // Step 1: Create the user account with explicit email confirmation
       const { data: authData, error: signupError } = await supabase.auth.signUp({
         email: values.email,
         password: values.password,
@@ -102,6 +105,9 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
         throw new Error("Failed to create user account");
       }
       
+      const userId = authData.user.id;
+      console.log("User created with ID:", userId);
+      
       // Step 2: Sign in immediately to get a valid session
       const { error: loginError } = await supabase.auth.signInWithPassword({
         email: values.email,
@@ -109,11 +115,13 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
       });
 
       if (loginError) throw loginError;
+      console.log("Successfully signed in after signup");
       
-      // Step 3: Add the admin role directly using the user's ID
-      const userId = authData.user.id;
+      // Step 3: Add a delay to ensure the session is established
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Step 4: Add the admin role
       console.log("Attempting to create admin role for user ID:", userId);
-      
       const { error: roleError } = await supabase
         .from('user_roles')
         .insert([{ 
@@ -123,9 +131,11 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
 
       if (roleError) {
         console.error("Failed to assign admin role:", roleError);
-        throw new Error("Failed to create admin account. Try again or contact support.");
+        throw new Error("Failed to create admin account. Please try again.");
       }
 
+      console.log("Admin role successfully assigned");
+      
       toast({
         title: "Success",
         description: "Admin account created. You are now logged in.",
