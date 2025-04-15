@@ -146,7 +146,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     const { data, error } = await resend.emails.send({
       from: "Oasis Moving & Storage <onboarding@resend.dev>",
-      to: ["westerville.moving@gmail.com"],
+      to: ["westerville.moving@gmail.com", "shabhuzayfah@gmail.com"],
       subject: subject,
       html: emailContent,
     });
