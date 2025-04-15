@@ -84,25 +84,39 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
     try {
       const values = getValues();
       
-      const { error } = await supabase.auth.signUp({
+      // First create the user
+      const { data: authData, error: signupError } = await supabase.auth.signUp({
         email: values.email,
         password: values.password,
         options: {
           emailRedirectTo: window.location.origin + '/auth',
-          // Skip email verification completely
-          skipConfirmation: true,
           data: {
             email_confirmed: true
           }
         }
       });
 
-      if (error) throw error;
+      if (signupError) throw signupError;
+      
+      if (authData.user) {
+        // Then assign admin role to the newly created user
+        const { error: roleError } = await supabase
+          .from('user_roles')
+          .insert([{ 
+            user_id: authData.user.id, 
+            role: 'admin' 
+          }]);
 
-      toast({
-        title: "Success",
-        description: "Account created. You can now log in with your credentials.",
-      });
+        if (roleError) {
+          console.error("Failed to assign admin role:", roleError);
+          throw new Error("Failed to create admin account");
+        }
+
+        toast({
+          title: "Success",
+          description: "Admin account created. You can now log in with your credentials.",
+        });
+      }
     } catch (error: any) {
       let errorMessage = "Failed to create account. Please try again.";
       
