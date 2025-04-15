@@ -1,4 +1,3 @@
-
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 
@@ -146,7 +145,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     const { data, error } = await resend.emails.send({
       from: "Oasis Moving & Storage <onboarding@resend.dev>",
-      to: ["westerville.moving@gmail.com", "shabhuzayfah@gmail.com"],
+      to: ["shabhuzayfah@gmail.com"],
       subject: subject,
       html: emailContent,
     });
@@ -173,4 +172,3 @@ const handler = async (req: Request): Promise<Response> => {
 };
 
 serve(handler);
-
