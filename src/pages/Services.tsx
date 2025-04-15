@@ -103,7 +103,7 @@ const Services = () => {
       icon: Package,
       title: 'All-in-One Moving Package',
       description: 'Get everything done in one go! This comprehensive package includes local moving services, furniture assembly/disassembly, and TV mounting for a seamless transition to your new home.',
-      price: '$299 flat rate + $120/hour for moving',
+      price: '$249 flat rate + $100/hour for moving',
       details: [
         'Professional local moving service',
         'Assembly of up to 5 furniture items',
@@ -111,7 +111,7 @@ const Services = () => {
         'Basic furniture protection included',
         'Professional tools and equipment',
         'Experienced moving & assembly team',
-        'Save compared to booking separately'
+        'Save over $120 compared to booking separately'
       ]
     },
     {

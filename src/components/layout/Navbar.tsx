@@ -15,9 +15,17 @@ const Navbar = () => {
     <nav className="bg-background sticky top-0 z-50 shadow-sm">
       <div className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
-          <Link to="/" className="flex items-center">
-            <div className="text-2xl font-bold text-primary">
-              <span className="text-foreground">Oasis</span> Moving & Storage
+          <Link to="/" className="flex items-center gap-4">
+            <img 
+              src="/lovable-uploads/f19c55da-68b3-48d5-a1b2-9944693d66bf.png" 
+              alt="Oasis Moving & Storage" 
+              className="h-16 w-auto"
+            />
+            <div className="flex flex-col">
+              <div className="text-2xl font-bold text-primary">
+                Oasis Moving & Storage
+              </div>
+              <span className="text-sm text-muted-foreground">Trusted, Timely, Tough</span>
             </div>
           </Link>
 
