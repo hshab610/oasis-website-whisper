@@ -1,12 +1,11 @@
 
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import { Send, Loader2 } from 'lucide-react';
 import { supabase } from "@/integrations/supabase/client";
-import FormField from '@/components/contact/FormField';
 import { handleFormSubmission } from '@/utils/form';
+import PersonalFields from './contact/PersonalFields';
+import MessageField from './contact/MessageField';
+import SubmitButton from './contact/SubmitButton';
 
 const ContactForm = () => {
   const { toast } = useToast();
@@ -25,8 +24,6 @@ const ContactForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Prevent double submissions
     if (isSubmitting) return;
     
     console.log("Submitting contact form with data:", formData);
@@ -38,7 +35,6 @@ const ContactForm = () => {
       async (data) => {
         console.log("Calling Supabase functions with data:", data);
         try {
-          // First store in database
           const dbResult = await supabase.from('contact_messages').insert([data]);
           console.log("Database insertion result:", dbResult);
           
@@ -47,7 +43,6 @@ const ContactForm = () => {
             return { error: dbResult.error, data: null };
           }
 
-          // Then send email notification
           const emailResult = await supabase.functions.invoke('send-notification', {
             body: { 
               type: 'contact',
@@ -72,7 +67,6 @@ const ContactForm = () => {
     console.log("Form submission completed with success:", success);
     
     if (success) {
-      // Reset form on success
       setFormData({
         name: '',
         email: '',
@@ -94,67 +88,17 @@ const ContactForm = () => {
         
         <div className="max-w-2xl mx-auto bg-card rounded-lg shadow-md border border-border p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
-            <FormField
-              label="Full Name"
-              name="name"
-              value={formData.name}
+            <PersonalFields 
+              formData={formData}
               onChange={handleChange}
-              required
-              placeholder="Your Name"
             />
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormField
-                label="Email Address"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                placeholder="Your Email"
-              />
-              
-              <FormField
-                label="Phone Number"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                placeholder="Your Phone (Optional)"
-              />
-            </div>
+            <MessageField
+              value={formData.message}
+              onChange={handleChange}
+            />
             
-            <div>
-              <label htmlFor="message" className="block text-sm font-medium mb-2">
-                Message
-              </label>
-              <Textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                placeholder="How can we help you?"
-                rows={4}
-                required
-              />
-            </div>
-            
-            <Button 
-              type="submit" 
-              className="w-full"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? (
-                <span className="flex items-center">
-                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                  Sending...
-                </span>
-              ) : (
-                <>
-                  <Send className="mr-2 h-5 w-5" />
-                  Send Message
-                </>
-              )}
-            </Button>
+            <SubmitButton isSubmitting={isSubmitting} />
           </form>
         </div>
       </div>
