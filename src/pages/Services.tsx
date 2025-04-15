@@ -8,6 +8,13 @@ import ServicesHero from '@/components/services/ServicesHero';
 import ServiceCard from '@/components/services/ServiceCard';
 
 const Services = () => {
+  const additionalFees = [
+    { name: 'Travel Fee', description: 'For locations outside our service area', price: '$75+' },
+    { name: 'Heavy Item Fee', description: 'Per item (pianos, safes, etc.)', price: '$50+' },
+    { name: 'Stairs Fee', description: 'Per single step of stairs', price: '$5' },
+    { name: 'Last Minute Booking', description: 'For bookings with less than 48 hours notice', price: '$75' }
+  ];
+
   const servicesData = [
     {
       icon: Truck,
@@ -109,9 +116,10 @@ const Services = () => {
         'Assembly of up to 5 furniture items',
         'One TV mounting installation',
         'Basic furniture protection included',
-        'Professional tools and equipment',
-        'Experienced moving & assembly team',
-        'Save over $120 compared to booking separately'
+        'Add stairs service for $50 flat rate',
+        'Add donation pickup/dropoff for $100',
+        'Add junk removal for $100',
+        'Save over $120 on combined services'
       ]
     },
     {
@@ -129,13 +137,6 @@ const Services = () => {
         'Pickup and delivery services available'
       ]
     }
-  ];
-
-  const additionalFees = [
-    { name: 'Travel Fee', description: 'For locations outside our service area', price: '$50+' },
-    { name: 'Heavy Item Fee', description: 'Per item (pianos, safes, etc.)', price: '$30+' },
-    { name: 'Stairs Fee', description: 'Per floor (applies to buildings without elevators)', price: '$20' },
-    { name: 'Last Minute Booking', description: 'For bookings with less than 48 hours notice', price: '$50' }
   ];
 
   return (

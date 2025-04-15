@@ -9,18 +9,27 @@ import {
 } from "@/components/ui/accordion";
 
 const Pricing = () => {
+  const additionalFees = [
+    { name: 'Travel Fee', description: 'For locations outside service area', price: '$75+' },
+    { name: 'Heavy Item Fee', description: 'Per item (pianos, safes, etc.)', price: '$50+' },
+    { name: 'Stairs Fee', description: 'Per single step of stairs', price: '$5' },
+    { name: 'Last Minute Booking', description: 'For bookings with less than 48 hours notice', price: '$75' }
+  ];
+
   const services = [
     {
       name: 'All-in-One Moving Package',
       price: '$249 + $100',
       unit: 'flat rate + per hour',
-      description: 'Best value! Complete moving solution including assembly and TV mounting',
+      description: 'Best value! Complete moving solution with optional add-ons',
       features: [
-        'Save over $120 compared to booking separately',
         'Professional local moving service',
         'Assembly of up to 5 furniture items',
         'One TV mounting installation',
-        'Basic furniture protection included'
+        'Add stairs service for $50 flat rate',
+        'Add donation service for $100',
+        'Add junk removal for $100',
+        'Save over $120 on combined services'
       ],
       featured: true
     },
@@ -72,13 +81,6 @@ const Pricing = () => {
         'Quick and efficient service'
       ]
     }
-  ];
-
-  const additionalFees = [
-    { name: 'Travel Fee', description: 'For locations outside service area', price: '$50+' },
-    { name: 'Heavy Item Fee', description: 'Per item (pianos, safes, etc.)', price: '$30+' },
-    { name: 'Stairs Fee', description: 'Per floor (applies to buildings without elevators)', price: '$20' },
-    { name: 'Last Minute Booking', description: 'For bookings with less than 48 hours notice', price: '$50' }
   ];
 
   return (

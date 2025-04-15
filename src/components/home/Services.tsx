@@ -10,9 +10,15 @@ const Services = () => {
     {
       icon: <PackageOpen size={24} />,
       title: 'All-in-One Moving Package',
-      description: 'Save over $120! Get local moving, furniture assembly, and TV mounting in one convenient package.',
+      description: 'Ultimate value! Complete moving solution with optional add-ons for donation services and junk removal.',
       link: '/services',
-      featured: true
+      featured: true,
+      pricing: [
+        'Base package: $249 + $100/hour',
+        'Add stairs service: +$50',
+        'Add donation service: +$100',
+        'Add junk removal: +$100'
+      ]
     },
     {
       icon: <Truck size={24} />,
@@ -90,7 +96,7 @@ const Services = () => {
                 {service.featured && (
                   <div className="bg-primary/10 px-3 py-1 rounded-full flex items-center gap-2">
                     <Sparkles size={16} className="text-primary" />
-                    <span className="text-sm font-medium text-primary">Save $120+</span>
+                    <span className="text-sm font-medium text-primary">Most Value</span>
                   </div>
                 )}
               </div>
@@ -98,6 +104,19 @@ const Services = () => {
                 {service.title}
               </h3>
               <p className="text-muted-foreground mb-4">{service.description}</p>
+              {service.featured && service.pricing && (
+                <div className="bg-primary/10 p-4 rounded-lg mb-4">
+                  <h4 className="font-semibold mb-2">Package Options:</h4>
+                  <ul className="space-y-2">
+                    {service.pricing.map((price, idx) => (
+                      <li key={idx} className="flex items-center gap-2 text-sm">
+                        <Badge variant="outline" className="h-2 w-2 rounded-full" />
+                        {price}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               <Link 
                 to={service.link} 
                 className={`inline-flex items-center font-medium group-hover:underline
