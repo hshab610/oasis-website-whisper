@@ -1,8 +1,10 @@
 
 import { useState } from 'react';
 import { Menu, X, Phone } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { Logo } from './nav/Logo';
+import { NavLinks } from './nav/NavLinks';
+import { MobileMenu } from './nav/MobileMenu';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,19 +17,7 @@ const Navbar = () => {
     <nav className="bg-background sticky top-0 z-50 shadow-sm">
       <div className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
-          <Link to="/" className="flex items-center gap-4">
-            <img 
-              src="/lovable-uploads/f19c55da-68b3-48d5-a1b2-9944693d66bf.png" 
-              alt="Oasis Moving & Storage" 
-              className="h-16 w-auto"
-            />
-            <div className="flex flex-col">
-              <div className="text-2xl font-bold text-primary">
-                Oasis Moving & Storage
-              </div>
-              <span className="text-sm text-muted-foreground">Trusted, Timely, Tough</span>
-            </div>
-          </Link>
+          <Logo />
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
@@ -52,53 +42,9 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 animate-fadeIn">
-            <div className="flex flex-col space-y-4">
-              <NavLinks mobile={true} closeMenu={() => setIsMenuOpen(false)} />
-              <Button className="cta-button w-full">Get a Quote</Button>
-              <Button variant="outline" size="sm" className="flex items-center justify-center gap-2">
-                <Phone size={16} />
-                <span>614-740-0275</span>
-              </Button>
-            </div>
-          </div>
-        )}
+        <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
       </div>
     </nav>
-  );
-};
-
-interface NavLinksProps {
-  mobile?: boolean;
-  closeMenu?: () => void;
-}
-
-const NavLinks = ({ mobile = false, closeMenu }: NavLinksProps) => {
-  const links = [
-    { name: 'Home', path: '/' },
-    { name: 'Services', path: '/services' },
-    { name: 'About', path: '/about' },
-    { name: 'Testimonials', path: '/testimonials' },
-    { name: 'Contact', path: '/contact' },
-  ];
-
-  return (
-    <>
-      {links.map((link) => (
-        <Link
-          key={link.name}
-          to={link.path}
-          className={`${
-            mobile ? 'block py-2 text-foreground hover:text-primary' : 'text-foreground hover:text-primary'
-          } transition-colors duration-200`}
-          onClick={closeMenu}
-        >
-          {link.name}
-        </Link>
-      ))}
-    </>
   );
 };
 
