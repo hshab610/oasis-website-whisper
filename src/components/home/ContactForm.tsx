@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import { Send } from 'lucide-react';
+import { Send, Loader2 } from 'lucide-react';
 import { supabase } from "@/integrations/supabase/client";
 import FormField from '@/components/contact/FormField';
 import { handleFormSubmission } from '@/utils/form';
@@ -25,64 +25,60 @@ const ContactForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Home contact form submitted with data:", formData);
     
-    // Prevent multiple submissions
-    if (isSubmitting) {
-      console.log("Form is already submitting, preventing duplicate submission");
-      return;
-    }
+    // Prevent double submissions
+    if (isSubmitting) return;
     
-    try {
-      const success = await handleFormSubmission(
-        formData,
-        setIsSubmitting,
-        toast,
-        async (data) => {
-          console.log("Submitting data to Supabase:", data);
-          try {
-            // First store in database
-            const dbResult = await supabase.from('contact_messages').insert([data]);
-            console.log("Database insert result:", dbResult);
-            if (dbResult.error) {
-              console.error("Database insert error:", dbResult.error);
-              throw dbResult.error;
-            }
-
-            // Then send email notification
-            const emailResult = await supabase.functions.invoke('send-notification', {
-              body: { 
-                type: 'contact',
-                ...data
-              }
-            });
-            console.log("Email notification result:", emailResult);
-            
-            if (emailResult.error) {
-              console.error("Email notification error:", emailResult.error);
-              throw emailResult.error;
-            }
-
-            return { error: null, data: dbResult.data };
-          } catch (error) {
-            console.error("Error in form submission:", error);
-            return { error: error, data: null };
+    console.log("Submitting contact form with data:", formData);
+    
+    const success = await handleFormSubmission(
+      formData,
+      setIsSubmitting,
+      toast,
+      async (data) => {
+        console.log("Calling Supabase functions with data:", data);
+        try {
+          // First store in database
+          const dbResult = await supabase.from('contact_messages').insert([data]);
+          console.log("Database insertion result:", dbResult);
+          
+          if (dbResult.error) {
+            console.error("Database error:", dbResult.error);
+            return { error: dbResult.error, data: null };
           }
+
+          // Then send email notification
+          const emailResult = await supabase.functions.invoke('send-notification', {
+            body: { 
+              type: 'contact',
+              ...data
+            }
+          });
+          console.log("Email notification result:", emailResult);
+          
+          if (emailResult.error) {
+            console.error("Email notification error:", emailResult.error);
+            return { error: emailResult.error, data: null };
+          }
+
+          return { error: null, data: dbResult.data };
+        } catch (error) {
+          console.error("Error in form submission process:", error);
+          return { error, data: null };
         }
-      );
-
-      console.log("Form submission success:", success);
-
-      if (success) {
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          message: ''
-        });
       }
-    } catch (error) {
-      console.error("Unexpected error in handleSubmit:", error);
+    );
+
+    console.log("Form submission completed with success:", success);
+    
+    if (success) {
+      // Reset form on success
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        message: ''
+      });
     }
   };
 
@@ -148,7 +144,10 @@ const ContactForm = () => {
               disabled={isSubmitting}
             >
               {isSubmitting ? (
-                <span>Sending...</span>
+                <span className="flex items-center">
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  Sending...
+                </span>
               ) : (
                 <>
                   <Send className="mr-2 h-5 w-5" />

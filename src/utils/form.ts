@@ -7,29 +7,35 @@ export const handleFormSubmission = async (
   toast: typeof toastType,
   supabaseSubmit: (data: any) => Promise<{ error: any, data: any }>
 ) => {
-  setIsSubmitting(true);
-  console.log("handleFormSubmission started with data:", formData);
-
   try {
-    console.log("Calling supabaseSubmit function");
+    // Set submission state to prevent multiple clicks
+    setIsSubmitting(true);
+    console.log("Form submission started with data:", formData);
+
+    // Call the provided supabase submission function
     const result = await supabaseSubmit(formData);
-    console.log("supabaseSubmit result:", result);
+    console.log("Supabase submission result:", result);
     
     if (result.error) {
-      console.error("Error from supabaseSubmit:", result.error);
-      throw result.error;
+      console.error("Error from Supabase:", result.error);
+      toast({
+        title: "Error submitting form",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+      return false;
     }
 
-    // Successfully submitted
+    // Success case
     console.log("Form submitted successfully");
     toast({
       title: "Message submitted successfully!",
       description: "We'll get back to you as soon as possible.",
     });
-
+    
     return true;
   } catch (error) {
-    console.error('Error submitting form:', error);
+    console.error('Unexpected error during form submission:', error);
     toast({
       title: "Error submitting form",
       description: "Please try again later.",
@@ -37,7 +43,8 @@ export const handleFormSubmission = async (
     });
     return false;
   } finally {
-    console.log("Setting isSubmitting to false");
+    // Always reset the submitting state
+    console.log("Resetting isSubmitting state");
     setIsSubmitting(false);
   }
 };

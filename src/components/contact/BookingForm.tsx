@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { Send } from 'lucide-react';
+import { Send, Loader2 } from 'lucide-react';
 import { supabase } from "@/integrations/supabase/client";
 import FormField from './FormField';
 import TimeSelect from './TimeSelect';
@@ -37,72 +37,65 @@ const BookingForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Booking form submitted with data:", formData);
     
-    // Prevent multiple submissions
-    if (isSubmitting) {
-      console.log("Form is already submitting, preventing duplicate submission");
-      return;
-    }
+    // Prevent double submissions
+    if (isSubmitting) return;
     
-    try {
-      const success = await handleFormSubmission(
-        formData,
-        setIsSubmitting,
-        toast,
-        async (data) => {
-          console.log("Processing booking submission");
-          try {
-            // First store in database
-            console.log("Inserting into bookings table:", data);
-            const dbResult = await supabase.from('bookings').insert([data]);
-            console.log("Database result:", dbResult);
-            
-            if (dbResult.error) {
-              console.error("Database error:", dbResult.error);
-              throw dbResult.error;
-            }
-
-            // Then send email notification
-            console.log("Sending email notification");
-            const emailResult = await supabase.functions.invoke('send-notification', {
-              body: { 
-                type: 'booking',
-                ...data
-              }
-            });
-            console.log("Email result:", emailResult);
-            
-            if (emailResult.error) {
-              console.error("Email error:", emailResult.error);
-              throw emailResult.error;
-            }
-
-            return { error: null, data: dbResult.data };
-          } catch (error) {
-            console.error("Error in booking submission:", error);
-            return { error: error, data: null };
+    console.log("Submitting booking form with data:", formData);
+    
+    const success = await handleFormSubmission(
+      formData,
+      setIsSubmitting,
+      toast,
+      async (data) => {
+        console.log("Calling Supabase functions with data:", data);
+        try {
+          // First store in database
+          const dbResult = await supabase.from('bookings').insert([data]);
+          console.log("Database insertion result:", dbResult);
+          
+          if (dbResult.error) {
+            console.error("Database error:", dbResult.error);
+            return { error: dbResult.error, data: null };
           }
-        }
-      );
 
-      console.log("Form submission result:", success);
-      
-      if (success) {
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          move_date: '',
-          move_time: '',
-          address: '',
-          package_type: '',
-          additional_services: '',
-          notes: ''
-        });
+          // Then send email notification
+          const emailResult = await supabase.functions.invoke('send-notification', {
+            body: { 
+              type: 'booking',
+              ...data
+            }
+          });
+          console.log("Email notification result:", emailResult);
+          
+          if (emailResult.error) {
+            console.error("Email notification error:", emailResult.error);
+            return { error: emailResult.error, data: null };
+          }
+
+          return { error: null, data: dbResult.data };
+        } catch (error) {
+          console.error("Error in booking submission process:", error);
+          return { error, data: null };
+        }
       }
-    } catch (error) {
-      console.error("Unexpected error in booking form submit:", error);
+    );
+
+    console.log("Form submission completed with success:", success);
+    
+    if (success) {
+      // Reset form on success
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        move_date: '',
+        move_time: '',
+        address: '',
+        package_type: '',
+        additional_services: '',
+        notes: ''
+      });
     }
   };
 
@@ -197,7 +190,10 @@ const BookingForm = () => {
           disabled={isSubmitting}
         >
           {isSubmitting ? (
-            <span>Sending...</span>
+            <span className="flex items-center justify-center">
+              <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+              Sending...
+            </span>
           ) : (
             <>
               <Send className="mr-2 h-5 w-5" />
