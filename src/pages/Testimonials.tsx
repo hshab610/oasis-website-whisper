@@ -16,7 +16,7 @@ const Testimonials = () => {
       service: 'Local Moving',
       date: 'March 15, 2023',
       text: 'Oasis Moving made our local move so easy! The team was professional, efficient, and careful with all of our belongings. I was especially impressed with how they handled our antique furniture. The pricing was transparent with no surprises, and they finished right on schedule. I would definitely recommend their services to anyone moving in the area!',
-      rating: 5,
+      rating: 5
     },
     {
       id: 2,
@@ -25,7 +25,7 @@ const Testimonials = () => {
       service: 'Long Distance Moving',
       date: 'February 3, 2023',
       text: 'I was dreading my move across the state, but Oasis Moving turned it into a stress-free experience. Their pricing was straightforward, and the movers were friendly and hardworking. They took great care with all my belongings, especially my piano which was a concern for me. They even finished earlier than expected! Communication throughout the process was excellent.',
-      rating: 5,
+      rating: 5
     },
     {
       id: 3,
@@ -34,7 +34,7 @@ const Testimonials = () => {
       service: 'Storage Solutions',
       date: 'January 12, 2023',
       text: 'The storage solutions provided by Oasis Moving were perfect for my situation. I needed to store my belongings for three months between moves, and everything was kept in excellent condition. The facility was clean and secure, and the staff was helpful whenever I needed to access my items. The pickup and delivery were seamless, making the whole process convenient.',
-      rating: 5,
+      rating: 5
     },
     {
       id: 4,
@@ -43,7 +43,7 @@ const Testimonials = () => {
       service: 'Furniture Assembly & TV Mounting',
       date: 'April 22, 2023',
       text: 'I hired Oasis for furniture assembly and TV mounting services after moving into my new apartment. The team was punctual, professional, and did an excellent job with everything. They assembled all my IKEA furniture quickly and correctly, and my TV was mounted perfectly. They were careful not to damage my walls and cleaned up afterward. Great service!',
-      rating: 4,
+      rating: 4
     },
     {
       id: 5,
@@ -52,7 +52,7 @@ const Testimonials = () => {
       service: 'Local Moving',
       date: 'May 10, 2023',
       text: 'Our experience with Oasis Moving was outstanding from start to finish. The crew arrived on time and worked efficiently throughout the day. They were respectful of our home and belongings, using proper protection for furniture and doorways. The final cost matched the estimate we were given, which was refreshing. I would use their services again without hesitation.',
-      rating: 5,
+      rating: 5
     },
     {
       id: 6,
@@ -61,7 +61,7 @@ const Testimonials = () => {
       service: 'Junk Removal',
       date: 'March 30, 2023',
       text: 'I used Oasis Moving for junk removal after cleaning out my parents' home. They were prompt, courteous, and efficient. They removed everything I needed and even swept the area afterward. The price was fair for the amount of work involved, and they made sure to dispose of items responsibly when possible. Highly recommend their junk removal service.',
-      rating: 5,
+      rating: 5
     },
     {
       id: 7,
@@ -70,7 +70,7 @@ const Testimonials = () => {
       service: 'Furniture Assembly',
       date: 'June 5, 2023',
       text: 'I had several pieces of furniture that needed assembly, and Oasis Moving did a fantastic job. The technician was knowledgeable and worked quickly but carefully. He even helped move the assembled pieces to their final locations. The flat rate pricing was reasonable and worth every penny for the time and frustration saved. Will definitely use again!',
-      rating: 5,
+      rating: 5
     },
     {
       id: 8,
@@ -79,7 +79,7 @@ const Testimonials = () => {
       service: 'Local Moving & Storage',
       date: 'February 18, 2023',
       text: 'We used Oasis for both moving and temporary storage during our home renovation. They were very accommodating with our changing timeline and made the process easy. Our items were well-protected in storage and returned in perfect condition. The moving crew was professional and efficient both during the move-out and move-in phases. Great experience overall.',
-      rating: 4,
+      rating: 4
     }
   ];
 
