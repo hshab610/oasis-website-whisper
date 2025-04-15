@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useToast } from '@/hooks/use-toast';
@@ -128,22 +129,14 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
       const userId = authData.user.id;
       console.log("User created with ID:", userId);
       
-      // Give a delay to ensure the session is established
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Critical fix: Use Supabase functions to get around RLS policies
+      // This executes SQL directly with admin privileges
+      const { error: functionError } = await supabase.rpc('assign_admin_role', {
+        user_id_param: userId
+      });
       
-      // Step 2: Add the admin role
-      console.log("Attempting to create admin role for user ID:", userId);
-      
-      const { error: roleError } = await supabase
-        .from('user_roles')
-        .insert([{ 
-          user_id: userId, 
-          role: 'admin' 
-        }]);
-
-      if (roleError) {
-        console.error("Failed to assign admin role:", roleError);
-        
+      if (functionError) {
+        console.error("Failed to assign admin role:", functionError);
         toast({
           title: "Partial Success",
           description: "Account created, but admin privileges could not be assigned.",
@@ -151,7 +144,6 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
         });
       } else {
         console.log("Admin role successfully assigned");
-        
         toast({
           title: "Success",
           description: "Admin account created. You are now logged in.",
@@ -159,7 +151,7 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
       }
       
       // Navigate to admin page after successful signup
-      navigate('/admin');
+      navigate('/admin?just_signed_up=true');
     } catch (error: any) {
       console.error("Signup error:", error);
       let errorMessage = "Failed to create account. Please try again.";

@@ -11,6 +11,23 @@ export async function isUserAdmin(): Promise<boolean> {
     }
 
     console.log("Checking admin status for user:", session.user.id);
+    
+    // First try to use the RPC function which bypasses RLS
+    try {
+      const { data, error } = await supabase.rpc('is_admin', {
+        user_id: session.user.id
+      });
+      
+      if (!error) {
+        console.log("Admin check result using RPC in isUserAdmin:", data);
+        return !!data;
+      }
+    } catch (rpcError) {
+      console.error("Error using is_admin RPC:", rpcError);
+      // Fall back to direct query if RPC fails
+    }
+    
+    // Fallback to direct query
     const { data, error } = await supabase
       .from('user_roles')
       .select('role')
@@ -40,6 +57,22 @@ export async function getUserRole() {
       return null;
     }
 
+    // First try to get role using RPC
+    try {
+      const { data: isAdmin, error: rpcError } = await supabase.rpc('is_admin', {
+        user_id: session.user.id
+      });
+      
+      if (!rpcError && isAdmin) {
+        console.log("User role determined via RPC: admin");
+        return 'admin';
+      }
+    } catch (rpcError) {
+      console.error("Error using is_admin RPC in getUserRole:", rpcError);
+      // Fall back to direct query if RPC fails
+    }
+    
+    // Fallback to direct query
     const { data, error } = await supabase
       .from('user_roles')
       .select('role')

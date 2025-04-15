@@ -25,13 +25,14 @@ const Auth = () => {
         setCheckingAdmin(true);
         console.log("Checking if user is admin on Auth page");
         
-        // Check if the URL contains a "just_logged_in" flag
+        // Check URL parameters for special flags
         const params = new URLSearchParams(window.location.search);
         const justLoggedIn = params.get('just_logged_in');
+        const justSignedUp = params.get('just_signed_up');
         
-        if (justLoggedIn) {
-          console.log("Just logged in flag detected, not redirecting");
-          // If they just logged in, don't redirect automatically
+        if (justLoggedIn || justSignedUp) {
+          console.log("Just logged in or signed up flag detected, not redirecting");
+          // If they just logged in or signed up, don't redirect automatically
           setCheckingAdmin(false);
           return;
         }
