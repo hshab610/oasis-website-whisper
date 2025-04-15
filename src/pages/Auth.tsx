@@ -6,12 +6,14 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Eye, EyeOff, Loader2 } from 'lucide-react';
 
 const Auth = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [session, setSession] = useState<any>(null);
+  const [showPassword, setShowPassword] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -52,9 +54,18 @@ const Auth = () => {
         description: "Successfully logged in",
       });
     } catch (error: any) {
+      let errorMessage = "Failed to login. Please try again.";
+      
+      // Handle specific error cases
+      if (error.message.includes("Invalid login credentials")) {
+        errorMessage = "Invalid username or password";
+      } else if (error.message.includes("rate limit")) {
+        errorMessage = "Too many login attempts. Please try again later.";
+      }
+      
       toast({
         title: "Error",
-        description: error.message,
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
@@ -79,18 +90,26 @@ const Auth = () => {
 
       toast({
         title: "Success",
-        description: "Account created successfully",
+        description: "Account created successfully. Please wait for admin approval.",
       });
     } catch (error: any) {
+      let errorMessage = "Failed to create account. Please try again.";
+      
+      if (error.message.includes("already exists")) {
+        errorMessage = "This username is already taken";
+      }
+      
       toast({
         title: "Error",
-        description: error.message,
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
       setLoading(false);
     }
   };
+
+  const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
@@ -106,24 +125,50 @@ const Auth = () => {
                 placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+                disabled={loading}
+                className="w-full"
                 required
+                autoComplete="username"
               />
             </div>
-            <div className="space-y-2">
+            <div className="space-y-2 relative">
               <Input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                disabled={loading}
+                className="w-full pr-10"
                 required
+                autoComplete="current-password"
               />
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4 text-gray-500" />
+                ) : (
+                  <Eye className="h-4 w-4 text-gray-500" />
+                )}
+              </Button>
             </div>
             <Button
               type="submit"
               className="w-full"
               disabled={loading}
             >
-              {loading ? "Loading..." : "Login"}
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Logging in...
+                </>
+              ) : (
+                "Login"
+              )}
             </Button>
             <Button
               type="button"
@@ -132,7 +177,14 @@ const Auth = () => {
               onClick={handleSignup}
               disabled={loading}
             >
-              Sign Up
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Creating account...
+                </>
+              ) : (
+                "Sign Up"
+              )}
             </Button>
           </form>
         </CardContent>
