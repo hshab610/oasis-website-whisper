@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useToast } from '@/hooks/use-toast';
@@ -9,6 +10,7 @@ import AuthFormButtons from './AuthFormButtons';
 
 interface AuthFormValues {
   username: string;
+  email: string;
   password: string;
 }
 
@@ -29,6 +31,7 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
   } = useForm<AuthFormValues>({
     defaultValues: {
       username: '',
+      email: '',
       password: ''
     }
   });
@@ -37,10 +40,8 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
     setLoading(true);
     
     try {
-      const email = `${data.username.toLowerCase()}@oasismovingandstorage.com`;
-      
       const { error } = await supabase.auth.signInWithPassword({
-        email,
+        email: data.email,
         password: data.password,
       });
 
@@ -54,7 +55,7 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
       let errorMessage = "Failed to login. Please try again.";
       
       if (error.message.includes("Invalid login credentials")) {
-        errorMessage = "Invalid username or password";
+        errorMessage = "Invalid email or password";
       } else if (error.message.includes("rate limit")) {
         errorMessage = "Too many login attempts. Please try again later.";
       }
@@ -74,10 +75,9 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
     
     try {
       const values = getValues();
-      const email = `${values.username.toLowerCase()}@oasismovingandstorage.com`;
       
       const { error } = await supabase.auth.signUp({
-        email,
+        email: values.email,
         password: values.password,
       });
 
@@ -91,7 +91,7 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
       let errorMessage = "Failed to create account. Please try again.";
       
       if (error.message.includes("already exists")) {
-        errorMessage = "This username is already taken";
+        errorMessage = "This email is already taken";
       }
       
       toast({
@@ -117,14 +117,17 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
       <CardContent>
         <form onSubmit={handleSubmit(onLogin)} className="space-y-6">
           <AuthFormField
-            id="username"
-            label="Username"
+            id="email"
+            label="Email"
             type="text"
-            error={errors.username?.message}
+            error={errors.email?.message}
             loading={loading}
-            register={register("username", { 
-              required: "Username is required",
-              minLength: { value: 3, message: "Username must be at least 3 characters" }
+            register={register("email", { 
+              required: "Email is required",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "Invalid email address"
+              }
             })}
           />
           
