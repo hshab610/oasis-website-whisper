@@ -23,9 +23,11 @@ const Hero = () => {
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
-              <Button variant="outline" className="bg-white/80">
-                Explore Services
-              </Button>
+              <Link to="/services">
+                <Button variant="outline" className="bg-white/80">
+                  Explore Services
+                </Button>
+              </Link>
             </div>
             
             <div className="flex flex-wrap gap-6 pt-4">
