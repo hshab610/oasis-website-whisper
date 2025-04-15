@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useToast } from '@/hooks/use-toast';
@@ -38,7 +37,7 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
     setLoading(true);
     
     try {
-      const email = `${data.username.toLowerCase()}@oasismovingco.com`;
+      const email = `${data.username.toLowerCase()}@oasismovingandstorage.com`;
       
       const { error } = await supabase.auth.signInWithPassword({
         email,
@@ -75,7 +74,7 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
     
     try {
       const values = getValues();
-      const email = `${values.username.toLowerCase()}@oasismovingco.com`;
+      const email = `${values.username.toLowerCase()}@oasismovingandstorage.com`;
       
       const { error } = await supabase.auth.signUp({
         email,
