@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -15,6 +14,7 @@ import {
   SelectValue 
 } from '@/components/ui/select';
 import { Calendar, MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
+import { supabase } from "@/integrations/supabase/client";
 
 const ContactForm = () => {
   const { toast } = useToast();
@@ -24,6 +24,12 @@ const ContactForm = () => {
     phone: '',
     service: '',
     message: '',
+    move_date: '',
+    move_time: '',
+    address: '',
+    package_type: '',
+    additional_services: '',
+    notes: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -32,67 +38,49 @@ const ContactForm = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSelectChange = (value: string) => {
-    setFormData(prev => ({ ...prev, service: value }));
+  const handleSelectChange = (name: string, value: string) => {
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // In a production environment, this would be replaced with an actual API call
-    // to a backend service that would process the form submission
-    // Example with fetch:
-    /*
-    fetch('https://api.example.com/submit-form', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    })
-      .then(response => response.json())
-      .then(data => {
-        toast({
-          title: "Form submitted successfully!",
-          description: "We'll get back to you as soon as possible.",
-        });
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          service: '',
-          message: '',
-        });
-      })
-      .catch(error => {
-        toast({
-          title: "Error submitting form",
-          description: "Please try again later.",
-          variant: "destructive",
-        });
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-      });
-    */
-    
-    // Simulate form submission for development
-    setTimeout(() => {
-      console.log('Form submitted with data:', formData);
+
+    try {
+      const { error } = await supabase
+        .from('bookings')
+        .insert([formData]);
+
+      if (error) throw error;
+
       toast({
-        title: "Form submitted successfully!",
+        title: "Booking request submitted!",
         description: "We'll get back to you as soon as possible.",
       });
+
       setFormData({
         name: '',
         email: '',
         phone: '',
         service: '',
         message: '',
+        move_date: '',
+        move_time: '',
+        address: '',
+        package_type: '',
+        additional_services: '',
+        notes: ''
       });
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast({
+        title: "Error submitting form",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
 
   return (
@@ -221,12 +209,53 @@ const ContactForm = () => {
                     />
                   </div>
                 </div>
-                
+
                 <div>
-                  <Label htmlFor="service">Service Interested In</Label>
-                  <Select onValueChange={handleSelectChange} value={formData.service}>
+                  <Label htmlFor="move_date">Move Date</Label>
+                  <Input 
+                    id="move_date" 
+                    name="move_date"
+                    type="date"
+                    value={formData.move_date}
+                    onChange={handleChange}
+                    required 
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="move_time">Preferred Time</Label>
+                  <Select name="move_time" value={formData.move_time} onValueChange={(value) => handleSelectChange('move_time', value)}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select a service" />
+                      <SelectValue placeholder="Select preferred time" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Time Slots</SelectLabel>
+                        <SelectItem value="morning">Morning (8AM - 12PM)</SelectItem>
+                        <SelectItem value="afternoon">Afternoon (12PM - 4PM)</SelectItem>
+                        <SelectItem value="evening">Evening (4PM - 7PM)</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Label htmlFor="address">Moving Address</Label>
+                  <Input 
+                    id="address" 
+                    name="address"
+                    value={formData.address}
+                    onChange={handleChange}
+                    required 
+                    placeholder="Enter the address" 
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="package_type">Service Package</Label>
+                  <Select name="package_type" value={formData.package_type} onValueChange={(value) => handleSelectChange('package_type', value)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a service package" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
@@ -246,14 +275,24 @@ const ContactForm = () => {
                 </div>
                 
                 <div>
-                  <Label htmlFor="message">Your Message</Label>
-                  <Textarea 
-                    id="message" 
-                    name="message"
-                    value={formData.message}
+                  <Label htmlFor="additional_services">Additional Services (Optional)</Label>
+                  <Input 
+                    id="additional_services" 
+                    name="additional_services"
+                    value={formData.additional_services}
                     onChange={handleChange}
-                    required 
-                    placeholder="Tell us about your moving needs..." 
+                    placeholder="Any additional services needed?" 
+                  />
+                </div>
+                
+                <div>
+                  <Label htmlFor="notes">Additional Notes (Optional)</Label>
+                  <Textarea 
+                    id="notes" 
+                    name="notes"
+                    value={formData.notes}
+                    onChange={handleChange}
+                    placeholder="Any specific requirements or questions?" 
                     rows={4} 
                   />
                 </div>
