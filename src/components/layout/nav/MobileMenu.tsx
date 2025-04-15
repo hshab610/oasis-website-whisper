@@ -19,7 +19,7 @@ export const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
         <Link to="/contact" onClick={onClose}>
           <Button className="cta-button w-full">Get a Quote</Button>
         </Link>
-        <a href="tel:6147400275">
+        <a href="tel:+16147400275">
           <Button variant="outline" size="sm" className="flex items-center justify-center gap-2 w-full">
             <Phone size={16} />
             <span>614-740-0275</span>

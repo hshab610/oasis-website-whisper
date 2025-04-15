@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Menu, X, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -24,7 +23,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-8">
             <NavLinks />
             <div className="flex items-center space-x-2">
-              <a href="tel:6147400275">
+              <a href="tel:+16147400275">
                 <Button variant="ghost" size="sm" className="flex items-center gap-2">
                   <Phone size={16} />
                   <span>614-740-0275</span>
