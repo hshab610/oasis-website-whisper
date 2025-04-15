@@ -5,7 +5,7 @@ export const handleFormSubmission = async (
   formData: any,
   setIsSubmitting: (value: boolean) => void,
   toast: typeof toastType,
-  supabaseSubmit: (data: any) => Promise<{ error: any } | { error: null, data: any }>
+  supabaseSubmit: (data: any) => Promise<{ error: any, data: any }>
 ) => {
   setIsSubmitting(true);
 
@@ -15,7 +15,7 @@ export const handleFormSubmission = async (
     if (result.error) throw result.error;
 
     toast({
-      title: "Booking request submitted!",
+      title: "Message submitted successfully!",
       description: "We'll get back to you as soon as possible.",
     });
 

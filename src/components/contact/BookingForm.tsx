@@ -44,20 +44,26 @@ const BookingForm = () => {
       setIsSubmitting,
       toast,
       async (data) => {
-        // First store in database
-        const dbResult = await supabase.from('bookings').insert([data]);
-        if (dbResult.error) throw dbResult.error;
+        try {
+          // First store in database
+          const dbResult = await supabase.from('bookings').insert([data]);
+          if (dbResult.error) throw dbResult.error;
 
-        // Then send email notification
-        const emailResult = await supabase.functions.invoke('send-notification', {
-          body: { 
-            type: 'booking',
-            ...data
-          }
-        });
-        if (emailResult.error) throw emailResult.error;
+          // Then send email notification
+          const emailResult = await supabase.functions.invoke('send-notification', {
+            body: { 
+              type: 'booking',
+              ...data
+            }
+          });
+          
+          if (emailResult.error) throw emailResult.error;
 
-        return dbResult;
+          return { error: null, data: dbResult.data };
+        } catch (error) {
+          console.error("Error in form submission:", error);
+          return { error: error, data: null };
+        }
       }
     );
 
