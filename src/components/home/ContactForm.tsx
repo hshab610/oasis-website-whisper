@@ -32,7 +32,20 @@ const ContactForm = () => {
       setIsSubmitting,
       toast,
       async (data) => {
-        return await supabase.from('contact_messages').insert([data]);
+        // First store in database
+        const dbResult = await supabase.from('contact_messages').insert([data]);
+        if (dbResult.error) throw dbResult.error;
+
+        // Then send email notification
+        const emailResult = await supabase.functions.invoke('send-notification', {
+          body: { 
+            type: 'contact',
+            ...data
+          }
+        });
+        if (emailResult.error) throw emailResult.error;
+
+        return dbResult;
       }
     );
 
