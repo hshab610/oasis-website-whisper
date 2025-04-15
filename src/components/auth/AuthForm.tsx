@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useToast } from '@/hooks/use-toast';
@@ -48,8 +47,14 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
 
       if (error) throw error;
 
-      // Give a short delay to ensure the session is established
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      console.log("Login successful, checking admin status");
+      toast({
+        title: "Login Successful",
+        description: "Verifying your access level",
+      });
+      
+      // Give a delay to ensure the session is established
+      await new Promise(resolve => setTimeout(resolve, 1500));
 
       // Check if the user is an admin after successful login
       const { data: roleData, error: roleError } = await supabase
@@ -60,21 +65,24 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
 
       if (roleError) {
         console.error("Error checking role:", roleError);
-        throw new Error("Failed to verify user role");
+        // Don't throw an error here, just log it
       }
 
       const isAdmin = roleData?.role === 'admin';
       console.log("Is admin check result:", isAdmin);
       
-      toast({
-        title: "Login Successful",
-        description: isAdmin ? "Welcome back, admin" : "You've successfully logged in",
-      });
-      
       // Navigate to the appropriate page
       if (isAdmin) {
+        toast({
+          title: "Admin Access Granted",
+          description: "Redirecting to admin dashboard",
+        });
         navigate('/admin');
       } else {
+        toast({
+          title: "Login Successful",
+          description: "Welcome back to Oasis Moving & Storage",
+        });
         // If not admin, just go to home
         navigate('/');
       }
@@ -82,9 +90,9 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
       console.error("Login error:", error);
       let errorMessage = "Failed to login. Please try again.";
       
-      if (error.message.includes("Invalid login credentials")) {
+      if (error.message && error.message.includes("Invalid login credentials")) {
         errorMessage = "Invalid email or password";
-      } else if (error.message.includes("rate limit")) {
+      } else if (error.message && error.message.includes("rate limit")) {
         errorMessage = "Too many login attempts. Please try again later.";
       }
       
@@ -120,19 +128,12 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
       const userId = authData.user.id;
       console.log("User created with ID:", userId);
       
+      // Give a delay to ensure the session is established
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
       // Step 2: Add the admin role
       console.log("Attempting to create admin role for user ID:", userId);
       
-      // Ensure we have a valid session before adding the role
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        // If we don't have a session yet, try logging in
-        await supabase.auth.signInWithPassword({
-          email: values.email,
-          password: values.password,
-        });
-      }
-
       const { error: roleError } = await supabase
         .from('user_roles')
         .insert([{ 
@@ -143,8 +144,6 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
       if (roleError) {
         console.error("Failed to assign admin role:", roleError);
         
-        // This is important - if we can't create the role, we should show an error
-        // but not throw, since the user account was created successfully
         toast({
           title: "Partial Success",
           description: "Account created, but admin privileges could not be assigned.",
@@ -165,7 +164,7 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
       console.error("Signup error:", error);
       let errorMessage = "Failed to create account. Please try again.";
       
-      if (error.message.includes("already exists")) {
+      if (error.message && error.message.includes("already exists")) {
         errorMessage = "This email is already taken. Try logging in instead.";
       }
       
@@ -174,8 +173,6 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
         description: errorMessage,
         variant: "destructive",
       });
-      
-      // Don't sign out if there was an error - just stay on the page
     } finally {
       setLoading(false);
     }

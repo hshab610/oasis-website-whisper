@@ -14,56 +14,33 @@ const AuthGuard = ({ children, adminOnly = false }: { children: React.ReactNode,
 
   useEffect(() => {
     let isMounted = true;
+    console.log("Setting up AuthGuard with adminOnly:", adminOnly);
     
-    // First check for existing session (synchronous)
-    const checkSession = async () => {
-      try {
-        const { data } = await supabase.auth.getSession();
-        if (isMounted) {
-          setSession(data.session);
-          
-          // Only check admin status if we have a session
-          if (data.session) {
-            // Add a delay before checking admin status
-            await new Promise(resolve => setTimeout(resolve, 500));
-            const adminStatus = await isUserAdmin();
-            console.log(`Admin status check: ${adminStatus}`);
-            
-            if (isMounted) {
-              setIsAdmin(adminStatus);
-            }
-          }
-          
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error("Error checking session:", error);
-        if (isMounted) {
-          setLoading(false);
-        }
-      }
-    };
-
-    // Set up auth state listener
+    // First set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, newSession) => {
-        console.log("Auth state changed:", event, newSession ? "has session" : "no session");
+        console.log("Auth state changed in AuthGuard:", event, newSession ? "has session" : "no session");
         
         if (isMounted) {
           setSession(newSession);
           
           if (newSession) {
-            try {
-              // Add a delay before checking admin status
-              await new Promise(resolve => setTimeout(resolve, 500));
-              const adminStatus = await isUserAdmin();
-              console.log(`Admin status check after auth change: ${adminStatus}`);
-              
-              if (isMounted) {
-                setIsAdmin(adminStatus);
+            if (adminOnly) {
+              try {
+                // Add a delay before checking admin status
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                const adminStatus = await isUserAdmin();
+                console.log(`Admin status check in AuthGuard: ${adminStatus}`);
+                
+                if (isMounted) {
+                  setIsAdmin(adminStatus);
+                }
+              } catch (error) {
+                console.error("Error checking admin status in AuthGuard:", error);
+                if (isMounted) {
+                  setIsAdmin(false);
+                }
               }
-            } catch (error) {
-              console.error("Error checking admin status:", error);
             }
           } else {
             if (isMounted) {
@@ -71,19 +48,57 @@ const AuthGuard = ({ children, adminOnly = false }: { children: React.ReactNode,
             }
           }
           
-          setLoading(false);
+          if (isMounted) {
+            setLoading(false);
+          }
         }
       }
     );
 
-    // Check session
+    // Check for existing session
+    const checkSession = async () => {
+      try {
+        const { data } = await supabase.auth.getSession();
+        console.log("Initial session check in AuthGuard:", data.session ? "session found" : "no session");
+        
+        if (isMounted) {
+          setSession(data.session);
+          
+          if (data.session && adminOnly) {
+            try {
+              // Add a longer delay for initial check
+              await new Promise(resolve => setTimeout(resolve, 1500));
+              const adminStatus = await isUserAdmin();
+              console.log(`Initial admin status check in AuthGuard: ${adminStatus}`);
+              
+              if (isMounted) {
+                setIsAdmin(adminStatus);
+              }
+            } catch (error) {
+              console.error("Error in initial admin check:", error);
+              if (isMounted) {
+                setIsAdmin(false);
+              }
+            }
+          }
+          
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error("Error checking session in AuthGuard:", error);
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    };
+
     checkSession();
 
     return () => {
       isMounted = false;
       subscription.unsubscribe();
     };
-  }, []);
+  }, [adminOnly]);
 
   if (loading) {
     return (
@@ -96,6 +111,7 @@ const AuthGuard = ({ children, adminOnly = false }: { children: React.ReactNode,
 
   // Not logged in, redirect to auth page
   if (!session) {
+    console.log("No session, redirecting to auth page");
     return <Navigate to="/auth" state={{ from: location }} replace />;
   }
 
@@ -105,6 +121,7 @@ const AuthGuard = ({ children, adminOnly = false }: { children: React.ReactNode,
     return <Navigate to="/" replace />;
   }
 
+  console.log("Authentication successful, rendering protected content");
   return <>{children}</>;
 };
 
