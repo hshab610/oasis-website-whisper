@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -39,8 +40,46 @@ const ContactForm = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
+    // In a production environment, this would be replaced with an actual API call
+    // to a backend service that would process the form submission
+    // Example with fetch:
+    /*
+    fetch('https://api.example.com/submit-form', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+      .then(response => response.json())
+      .then(data => {
+        toast({
+          title: "Form submitted successfully!",
+          description: "We'll get back to you as soon as possible.",
+        });
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          service: '',
+          message: '',
+        });
+      })
+      .catch(error => {
+        toast({
+          title: "Error submitting form",
+          description: "Please try again later.",
+          variant: "destructive",
+        });
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      });
+    */
+    
+    // Simulate form submission for development
     setTimeout(() => {
+      console.log('Form submitted with data:', formData);
       toast({
         title: "Form submitted successfully!",
         description: "We'll get back to you as soon as possible.",
@@ -85,7 +124,7 @@ const ContactForm = () => {
                 </div>
                 <div>
                   <h3 className="font-medium text-lg mb-1">Phone Number</h3>
-                  <p className="text-muted-foreground">614-740-0275</p>
+                  <a href="tel:6147400275" className="text-muted-foreground hover:text-primary transition-colors">614-740-0275</a>
                 </div>
               </div>
               
@@ -95,7 +134,9 @@ const ContactForm = () => {
                 </div>
                 <div>
                   <h3 className="font-medium text-lg mb-1">Email Address</h3>
-                  <p className="text-muted-foreground">zay@oasismovingandstorage.com</p>
+                  <a href="mailto:zay@oasismovingandstorage.com" className="text-muted-foreground hover:text-primary transition-colors">
+                    zay@oasismovingandstorage.com
+                  </a>
                 </div>
               </div>
               
@@ -105,7 +146,9 @@ const ContactForm = () => {
                 </div>
                 <div>
                   <h3 className="font-medium text-lg mb-1">Website</h3>
-                  <p className="text-muted-foreground">oasismovingandstorage.com</p>
+                  <a href="https://oasismovingandstorage.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+                    oasismovingandstorage.com
+                  </a>
                 </div>
               </div>
               
@@ -188,6 +231,7 @@ const ContactForm = () => {
                     <SelectContent>
                       <SelectGroup>
                         <SelectLabel>Moving Services</SelectLabel>
+                        <SelectItem value="all-in-one">All-in-One Moving Package</SelectItem>
                         <SelectItem value="local">Local Moving</SelectItem>
                         <SelectItem value="long-distance">Long Distance Moving</SelectItem>
                         <SelectItem value="furniture">Furniture Assembly</SelectItem>

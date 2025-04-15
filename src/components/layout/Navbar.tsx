@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Logo } from './nav/Logo';
 import { NavLinks } from './nav/NavLinks';
 import { MobileMenu } from './nav/MobileMenu';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -23,11 +24,15 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-8">
             <NavLinks />
             <div className="flex items-center space-x-2">
-              <Button variant="ghost" size="sm" className="flex items-center gap-2">
-                <Phone size={16} />
-                <span>614-740-0275</span>
-              </Button>
-              <Button className="cta-button">Get a Quote</Button>
+              <a href="tel:6147400275">
+                <Button variant="ghost" size="sm" className="flex items-center gap-2">
+                  <Phone size={16} />
+                  <span>614-740-0275</span>
+                </Button>
+              </a>
+              <Link to="/contact">
+                <Button className="cta-button">Get a Quote</Button>
+              </Link>
             </div>
           </div>
 
