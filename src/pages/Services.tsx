@@ -88,7 +88,7 @@ const Services = () => {
     {
       icon: Heart,
       title: 'Donation Pickup & Dropoff',
-      description: 'Supporting charitable giving, we'll pick up items you wish to donate and deliver them to your charity of choice.',
+      description: "Supporting charitable giving, we'll pick up items you wish to donate and deliver them to your charity of choice.",
       price: '$150 flat rate',
       details: [
         'Convenient pickup from your location',

@@ -60,7 +60,7 @@ const Testimonials = () => {
       location: 'Upper Arlington, OH',
       service: 'Junk Removal',
       date: 'March 30, 2023',
-      text: 'I used Oasis Moving for junk removal after cleaning out my parents' home. They were prompt, courteous, and efficient. They removed everything I needed and even swept the area afterward. The price was fair for the amount of work involved, and they made sure to dispose of items responsibly when possible. Highly recommend their junk removal service.',
+      text: "I used Oasis Moving for junk removal after cleaning out my parents' home. They were prompt, courteous, and efficient. They removed everything I needed and even swept the area afterward. The price was fair for the amount of work involved, and they made sure to dispose of items responsibly when possible. Highly recommend their junk removal service.",
       rating: 5
     },
     {

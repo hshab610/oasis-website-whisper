@@ -22,7 +22,7 @@ const CoreValues = () => {
     {
       icon: Heart,
       title: 'Community',
-      description: 'We're proud to be part of the Westerville community and contribute positively to the areas we serve.'
+      description: 'We\'re proud to be part of the Westerville community and contribute positively to the areas we serve.'
     }
   ];
 
