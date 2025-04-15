@@ -1,5 +1,4 @@
-
-import { ArrowRight, DollarSign, AlertCircle } from 'lucide-react';
+import { ArrowRight, DollarSign, AlertCircle, Sparkles, PackageOpen } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { 
@@ -11,6 +10,20 @@ import {
 
 const Pricing = () => {
   const services = [
+    {
+      name: 'All-in-One Moving Package',
+      price: '$249 + $100',
+      unit: 'flat rate + per hour',
+      description: 'Best value! Complete moving solution including assembly and TV mounting',
+      features: [
+        'Save over $120 compared to booking separately',
+        'Professional local moving service',
+        'Assembly of up to 5 furniture items',
+        'One TV mounting installation',
+        'Basic furniture protection included'
+      ],
+      featured: true
+    },
     {
       name: 'Local Moving',
       price: '$120',
@@ -82,11 +95,29 @@ const Pricing = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {services.map((service, index) => (
-            <div key={index} className="bg-card rounded-lg border border-border overflow-hidden transition-all duration-300 hover:shadow-md">
-              <div className="bg-primary/10 p-6">
-                <h3 className="text-xl font-semibold mb-1">{service.name}</h3>
+            <div 
+              key={index} 
+              className={`bg-card rounded-lg border overflow-hidden transition-all duration-300 hover:shadow-md
+                ${service.featured ? 
+                  'col-span-full lg:col-span-2 border-primary/20 bg-primary/5' : 
+                  'border-border'}`}
+            >
+              <div className={`p-6 ${service.featured ? 'bg-primary/10' : 'bg-primary/10'}`}>
+                {service.featured && (
+                  <div className="flex items-center gap-2 mb-4">
+                    <PackageOpen size={20} className="text-primary" />
+                    <span className="bg-primary/20 text-primary px-3 py-1 rounded-full text-sm font-medium">
+                      Most Popular
+                    </span>
+                  </div>
+                )}
+                <h3 className={`text-xl font-semibold mb-1 ${service.featured ? 'text-2xl' : ''}`}>
+                  {service.name}
+                </h3>
                 <div className="flex items-end gap-1 mb-3">
-                  <span className="text-3xl font-bold">{service.price}</span>
+                  <span className={`font-bold ${service.featured ? 'text-4xl text-primary' : 'text-3xl'}`}>
+                    {service.price}
+                  </span>
                   <span className="text-muted-foreground">{service.unit}</span>
                 </div>
                 <p className="text-sm text-muted-foreground">{service.description}</p>
@@ -96,8 +127,12 @@ const Pricing = () => {
                 <ul className="space-y-3">
                   {service.features.map((feature, fIndex) => (
                     <li key={fIndex} className="flex items-start gap-2">
-                      <div className="bg-primary/10 p-1 rounded-full mt-0.5">
-                        <DollarSign size={14} className="text-primary" />
+                      <div className={`p-1 rounded-full mt-0.5
+                        ${service.featured ? 'bg-primary/20' : 'bg-primary/10'}`}>
+                        {service.featured ? 
+                          <Sparkles size={14} className="text-primary" /> :
+                          <DollarSign size={14} className="text-primary" />
+                        }
                       </div>
                       <span className="text-sm">{feature}</span>
                     </li>

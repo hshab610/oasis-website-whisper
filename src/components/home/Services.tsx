@@ -1,13 +1,19 @@
-
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { 
   Truck, ArrowRight, Home, MapPin, Package, 
-  SlidersHorizontal, Tv, Trash2, Heart 
+  SlidersHorizontal, Tv, Trash2, Heart, PackageOpen, Badge, Sparkles
 } from 'lucide-react';
 
 const Services = () => {
   const services = [
+    {
+      icon: <PackageOpen size={24} />,
+      title: 'All-in-One Moving Package',
+      description: 'Save over $120! Get local moving, furniture assembly, and TV mounting in one convenient package.',
+      link: '/services',
+      featured: true
+    },
     {
       icon: <Truck size={24} />,
       title: 'Local Moving',
@@ -74,15 +80,28 @@ const Services = () => {
           {services.map((service, index) => (
             <div 
               key={index} 
-              className="service-card group"
+              className={`service-card group ${service.featured ? 'col-span-full lg:col-span-2 bg-primary/5 border-primary/20' : ''}`}
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="text-primary mb-4">{service.icon}</div>
-              <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
+              <div className="flex items-start gap-4">
+                <div className={`text-primary mb-4 ${service.featured ? 'bg-primary/10 p-3 rounded-full' : ''}`}>
+                  {service.icon}
+                </div>
+                {service.featured && (
+                  <div className="bg-primary/10 px-3 py-1 rounded-full flex items-center gap-2">
+                    <Sparkles size={16} className="text-primary" />
+                    <span className="text-sm font-medium text-primary">Save $120+</span>
+                  </div>
+                )}
+              </div>
+              <h3 className={`text-xl font-semibold mb-2 ${service.featured ? 'text-2xl' : ''}`}>
+                {service.title}
+              </h3>
               <p className="text-muted-foreground mb-4">{service.description}</p>
               <Link 
                 to={service.link} 
-                className="inline-flex items-center text-primary font-medium group-hover:underline"
+                className={`inline-flex items-center font-medium group-hover:underline
+                  ${service.featured ? 'text-primary' : 'text-primary/80'}`}
               >
                 Learn More
                 <ArrowRight size={16} className="ml-2 transition-transform group-hover:translate-x-1" />
