@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Clock, Facebook, Instagram, Twitter } from 'lucide-react';
 
@@ -8,7 +7,7 @@ const Footer = () => {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-xl font-semibold mb-4">Oasis Moving & Storage</h3>
+            <h3 className="text-xl font-semibold mb-4">Oasis Moving & Storage LLC</h3>
             <p className="text-muted-foreground mb-4">
               Professional moving services you can trust. We make your relocation smooth and stress-free.
             </p>
@@ -100,7 +99,11 @@ const Footer = () => {
               </li>
               <li className="flex items-center space-x-3">
                 <Mail size={20} className="text-primary flex-shrink-0" />
-                <span className="text-muted-foreground">info@oasismoving.com</span>
+                <span className="text-muted-foreground">zay@oasismovingandstorage.com</span>
+              </li>
+              <li className="flex items-center space-x-3">
+                <MapPin size={20} className="text-primary flex-shrink-0" />
+                <span className="text-muted-foreground">oasismovingandstorage.com</span>
               </li>
               <li className="flex items-start space-x-3">
                 <Clock size={20} className="text-primary mt-1 flex-shrink-0" />
@@ -111,7 +114,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-border mt-8 pt-8 text-center text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} Oasis Moving & Storage. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Oasis Moving & Storage LLC. All rights reserved.</p>
         </div>
       </div>
     </footer>
