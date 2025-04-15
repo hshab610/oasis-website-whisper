@@ -15,26 +15,28 @@ export const NavLinks = ({ mobile = false, closeMenu }: NavLinksProps) => {
   const [isChecking, setIsChecking] = useState(true);
   
   useEffect(() => {
+    let isMounted = true;
     // Check auth status on mount
     const checkAuth = async () => {
       try {
         setIsChecking(true);
         const { data } = await supabase.auth.getSession();
         const hasSession = !!data.session;
-        setIsLoggedIn(hasSession);
+        
+        if (isMounted) setIsLoggedIn(hasSession);
         
         if (hasSession) {
           // Wait a bit to ensure the session is established
           await new Promise(resolve => setTimeout(resolve, 500));
           const role = await getUserRole();
-          setIsAdmin(role === 'admin');
+          if (isMounted) setIsAdmin(role === 'admin');
         } else {
-          setIsAdmin(false);
+          if (isMounted) setIsAdmin(false);
         }
       } catch (error) {
         console.error("Error checking auth status:", error);
       } finally {
-        setIsChecking(false);
+        if (isMounted) setIsChecking(false);
       }
     };
     
@@ -45,24 +47,28 @@ export const NavLinks = ({ mobile = false, closeMenu }: NavLinksProps) => {
       async (event, session) => {
         try {
           const hasSession = !!session;
-          setIsLoggedIn(hasSession);
+          
+          if (isMounted) setIsLoggedIn(hasSession);
           
           if (hasSession) {
             // Wait a bit to ensure the session is established
             await new Promise(resolve => setTimeout(resolve, 500));
             const role = await getUserRole();
-            setIsAdmin(role === 'admin');
+            if (isMounted) setIsAdmin(role === 'admin');
           } else {
-            setIsAdmin(false);
+            if (isMounted) setIsAdmin(false);
           }
         } catch (error) {
           console.error("Error in auth state change handler:", error);
-          setIsAdmin(false);
+          if (isMounted) setIsAdmin(false);
         }
       }
     );
     
-    return () => subscription.unsubscribe();
+    return () => {
+      isMounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
   const links = [

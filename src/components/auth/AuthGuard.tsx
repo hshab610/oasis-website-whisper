@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import type { Session } from '@supabase/supabase-js';
 import { Loader2 } from 'lucide-react';
@@ -11,56 +11,73 @@ const AuthGuard = ({ children, adminOnly = false }: { children: React.ReactNode,
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     let isMounted = true;
     
-    const checkAdminStatus = async (userId: string) => {
+    // First check for existing session (synchronous)
+    const checkSession = async () => {
       try {
-        // Add a small delay to ensure session is established
-        await new Promise(resolve => setTimeout(resolve, 500));
-        const adminStatus = await isUserAdmin();
-        console.log(`Admin status check for user ${userId}: ${adminStatus}`);
-        
+        const { data } = await supabase.auth.getSession();
         if (isMounted) {
-          setIsAdmin(adminStatus);
+          setSession(data.session);
+          
+          // Only check admin status if we have a session
+          if (data.session) {
+            // Add a delay before checking admin status
+            await new Promise(resolve => setTimeout(resolve, 500));
+            const adminStatus = await isUserAdmin();
+            console.log(`Admin status check: ${adminStatus}`);
+            
+            if (isMounted) {
+              setIsAdmin(adminStatus);
+            }
+          }
+          
           setLoading(false);
         }
       } catch (error) {
-        console.error("Error checking admin status:", error);
+        console.error("Error checking session:", error);
         if (isMounted) {
-          setIsAdmin(false);
           setLoading(false);
         }
       }
     };
 
-    // Set up the auth state listener first
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
-      console.log("Auth state changed:", session ? "logged in" : "logged out");
-      if (isMounted) {
-        setSession(session);
-        if (session) {
-          checkAdminStatus(session.user.id);
-        } else {
+    // Set up auth state listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, newSession) => {
+        console.log("Auth state changed:", event, newSession ? "has session" : "no session");
+        
+        if (isMounted) {
+          setSession(newSession);
+          
+          if (newSession) {
+            try {
+              // Add a delay before checking admin status
+              await new Promise(resolve => setTimeout(resolve, 500));
+              const adminStatus = await isUserAdmin();
+              console.log(`Admin status check after auth change: ${adminStatus}`);
+              
+              if (isMounted) {
+                setIsAdmin(adminStatus);
+              }
+            } catch (error) {
+              console.error("Error checking admin status:", error);
+            }
+          } else {
+            if (isMounted) {
+              setIsAdmin(false);
+            }
+          }
+          
           setLoading(false);
         }
       }
-    });
+    );
 
-    // Then check for an existing session
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
-      console.log("Initial session check:", session ? "session found" : "no session");
-      if (isMounted) {
-        setSession(session);
-        if (session) {
-          checkAdminStatus(session.user.id);
-        } else {
-          setLoading(false);
-        }
-      }
-    });
+    // Check session
+    checkSession();
 
     return () => {
       isMounted = false;

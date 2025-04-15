@@ -7,7 +7,6 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Lead } from '@/components/ui/typography';
 import AuthFormField from './AuthFormField';
 import AuthFormButtons from './AuthFormButtons';
-import { isUserAdmin } from '@/utils/auth';
 import { useNavigate } from 'react-router-dom';
 
 interface AuthFormValues {
@@ -53,26 +52,31 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
       await new Promise(resolve => setTimeout(resolve, 1000));
 
       // Check if the user is an admin after successful login
-      const isAdmin = await isUserAdmin();
+      const { data: roleData, error: roleError } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', (await supabase.auth.getUser()).data.user?.id || '')
+        .maybeSingle();
+
+      if (roleError) {
+        console.error("Error checking role:", roleError);
+        throw new Error("Failed to verify user role");
+      }
+
+      const isAdmin = roleData?.role === 'admin';
       console.log("Is admin check result:", isAdmin);
       
+      toast({
+        title: "Login Successful",
+        description: isAdmin ? "Welcome back, admin" : "You've successfully logged in",
+      });
+      
+      // Navigate to the appropriate page
       if (isAdmin) {
-        toast({
-          title: "Success",
-          description: "Successfully logged in as admin",
-        });
-        
-        // Navigate to admin page after successful login
         navigate('/admin');
       } else {
-        toast({
-          title: "Access Denied",
-          description: "You do not have admin privileges",
-          variant: "destructive",
-        });
-        
-        // Sign out if not admin
-        await supabase.auth.signOut();
+        // If not admin, just go to home
+        navigate('/');
       }
     } catch (error: any) {
       console.error("Login error:", error);
@@ -105,9 +109,6 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
       const { data: authData, error: signupError } = await supabase.auth.signUp({
         email: values.email,
         password: values.password,
-        options: {
-          emailRedirectTo: window.location.origin + '/auth',
-        }
       });
 
       if (signupError) throw signupError;
@@ -119,20 +120,19 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
       const userId = authData.user.id;
       console.log("User created with ID:", userId);
       
-      // Step 2: Sign in immediately to get a valid session
-      const { error: loginError } = await supabase.auth.signInWithPassword({
-        email: values.email,
-        password: values.password,
-      });
-
-      if (loginError) throw loginError;
-      console.log("Successfully signed in after signup");
-      
-      // Step 3: Add a delay to ensure the session is established
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Step 4: Add the admin role
+      // Step 2: Add the admin role
       console.log("Attempting to create admin role for user ID:", userId);
+      
+      // Ensure we have a valid session before adding the role
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        // If we don't have a session yet, try logging in
+        await supabase.auth.signInWithPassword({
+          email: values.email,
+          password: values.password,
+        });
+      }
+
       const { error: roleError } = await supabase
         .from('user_roles')
         .insert([{ 
@@ -142,15 +142,22 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
 
       if (roleError) {
         console.error("Failed to assign admin role:", roleError);
-        throw new Error("Failed to create admin account. Please contact support.");
+        
+        // This is important - if we can't create the role, we should show an error
+        // but not throw, since the user account was created successfully
+        toast({
+          title: "Partial Success",
+          description: "Account created, but admin privileges could not be assigned.",
+          variant: "destructive",
+        });
+      } else {
+        console.log("Admin role successfully assigned");
+        
+        toast({
+          title: "Success",
+          description: "Admin account created. You are now logged in.",
+        });
       }
-
-      console.log("Admin role successfully assigned");
-      
-      toast({
-        title: "Success",
-        description: "Admin account created. You are now logged in.",
-      });
       
       // Navigate to admin page after successful signup
       navigate('/admin');
@@ -159,9 +166,7 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
       let errorMessage = "Failed to create account. Please try again.";
       
       if (error.message.includes("already exists")) {
-        errorMessage = "This email is already taken";
-      } else if (error.message.includes("Failed to create admin account")) {
-        errorMessage = error.message;
+        errorMessage = "This email is already taken. Try logging in instead.";
       }
       
       toast({
@@ -170,12 +175,7 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
         variant: "destructive",
       });
       
-      // Attempt to sign out if there was an error
-      try {
-        await supabase.auth.signOut();
-      } catch (signOutError) {
-        console.error("Error signing out after failed signup:", signOutError);
-      }
+      // Don't sign out if there was an error - just stay on the page
     } finally {
       setLoading(false);
     }

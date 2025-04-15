@@ -3,6 +3,9 @@ import { supabase } from "@/integrations/supabase/client";
 
 export async function isUserAdmin(): Promise<boolean> {
   try {
+    // Add a small delay to ensure session is established
+    await new Promise(resolve => setTimeout(resolve, 300));
+    
     const { data: { session } } = await supabase.auth.getSession();
     
     if (!session) {
@@ -15,7 +18,7 @@ export async function isUserAdmin(): Promise<boolean> {
       .from('user_roles')
       .select('role')
       .eq('user_id', session.user.id)
-      .maybeSingle(); // Use maybeSingle() instead of single() to handle no results
+      .maybeSingle();
 
     if (error) {
       console.error("Error checking admin status:", error);
@@ -33,6 +36,9 @@ export async function isUserAdmin(): Promise<boolean> {
 
 export async function getUserRole() {
   try {
+    // Add a small delay to ensure session is established
+    await new Promise(resolve => setTimeout(resolve, 300));
+    
     const { data: { session } } = await supabase.auth.getSession();
     
     if (!session) return null;
@@ -41,7 +47,7 @@ export async function getUserRole() {
       .from('user_roles')
       .select('role')
       .eq('user_id', session.user.id)
-      .maybeSingle(); // Use maybeSingle() instead of single()
+      .maybeSingle();
 
     if (error) {
       console.error("Error fetching user role:", error);
