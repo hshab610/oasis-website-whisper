@@ -1,4 +1,4 @@
-import { ArrowRight, DollarSign, AlertCircle, Sparkles, PackageOpen } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { 
@@ -7,82 +7,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { ServiceCard } from '@/components/pricing/ServiceCard';
+import { AdditionalFees } from '@/components/pricing/AdditionalFees';
+import { services } from '@/data/pricing';
 
 const Pricing = () => {
-  const additionalFees = [
-    { name: 'Travel Fee', description: 'For locations outside service area', price: '$75+' },
-    { name: 'Heavy Item Fee', description: 'Per item (pianos, safes, etc.)', price: '$50+' },
-    { name: 'Stairs Fee', description: 'Per staircase during move', price: '$20' },
-    { name: 'Last Minute Booking', description: 'For bookings with less than 48 hours notice', price: '$75' }
-  ];
-
-  const services = [
-    {
-      name: 'All-in-One Moving Package',
-      price: '$249 + $100',
-      unit: 'flat rate + per hour',
-      description: 'Best value! Complete moving solution with optional add-ons',
-      features: [
-        'Professional local moving service',
-        'Assembly of up to 5 furniture items',
-        'One TV mounting installation',
-        'Add stairs service for $20 per staircase',
-        'Add donation service for $100',
-        'Add junk removal for $100',
-        'Save over $120 on combined services'
-      ],
-      featured: true
-    },
-    {
-      name: 'Local Moving',
-      price: '$120',
-      unit: 'per hour',
-      description: 'Includes mileage and travel time within Ohio',
-      features: [
-        '2-hour minimum',
-        'Fully equipped moving truck',
-        'Professional movers',
-        'Basic furniture protection'
-      ]
-    },
-    {
-      name: 'Furniture Assembly',
-      price: '$90 / $120',
-      unit: 'flat rate',
-      description: 'Assembly or disassembly services',
-      features: [
-        '$90 for up to 5 items',
-        '$120 for over 5 items',
-        'Professional tools and equipment',
-        'Expert assembly technicians'
-      ]
-    },
-    {
-      name: 'TV Mounting',
-      price: '$60',
-      unit: 'flat rate',
-      description: 'Professional TV installation',
-      features: [
-        'Customer provides wall mount',
-        'Cable management',
-        'Professional installation',
-        'Mounting on various wall types'
-      ]
-    },
-    {
-      name: 'Junk Removal',
-      price: '$150',
-      unit: 'flat rate',
-      description: 'Hauling services for unwanted items',
-      features: [
-        'Potential dumping fees may apply',
-        'Eco-friendly disposal when possible',
-        'Removal of furniture and appliances',
-        'Quick and efficient service'
-      ]
-    }
-  ];
-
   return (
     <section className="py-16 md:py-24 bg-background">
       <div className="container mx-auto px-4">
@@ -97,85 +26,11 @@ const Pricing = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {services.map((service, index) => (
-            <div 
-              key={index} 
-              className={`bg-card rounded-lg border overflow-hidden transition-all duration-300 hover:shadow-md
-                ${service.featured ? 
-                  'col-span-full lg:col-span-2 border-primary/20 bg-primary/5' : 
-                  'border-border'}`}
-            >
-              <div className={`p-6 ${service.featured ? 'bg-primary/10' : 'bg-primary/10'}`}>
-                {service.featured && (
-                  <div className="flex items-center gap-2 mb-4">
-                    <PackageOpen size={20} className="text-primary" />
-                    <span className="bg-primary/20 text-primary px-3 py-1 rounded-full text-sm font-medium">
-                      Most Popular
-                    </span>
-                  </div>
-                )}
-                <h3 className={`text-xl font-semibold mb-1 ${service.featured ? 'text-2xl' : ''}`}>
-                  {service.name}
-                </h3>
-                <div className="flex items-end gap-1 mb-3">
-                  <span className={`font-bold ${service.featured ? 'text-4xl text-primary' : 'text-3xl'}`}>
-                    {service.price}
-                  </span>
-                  <span className="text-muted-foreground">{service.unit}</span>
-                </div>
-                <p className="text-sm text-muted-foreground">{service.description}</p>
-              </div>
-              
-              <div className="p-6">
-                <ul className="space-y-3">
-                  {service.features.map((feature, fIndex) => (
-                    <li key={fIndex} className="flex items-start gap-2">
-                      <div className={`p-1 rounded-full mt-0.5
-                        ${service.featured ? 'bg-primary/20' : 'bg-primary/10'}`}>
-                        {service.featured ? 
-                          <Sparkles size={14} className="text-primary" /> :
-                          <DollarSign size={14} className="text-primary" />
-                        }
-                      </div>
-                      <span className="text-sm">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+            <ServiceCard key={index} {...service} />
           ))}
         </div>
         
-        <div className="bg-muted rounded-lg p-6 md:p-8 max-w-4xl mx-auto">
-          <div className="flex items-start gap-4 mb-6">
-            <AlertCircle className="text-primary mt-1 flex-shrink-0" />
-            <div>
-              <h3 className="text-xl font-semibold mb-2">Additional Fees</h3>
-              <p className="text-muted-foreground">
-                The following fees may apply depending on your specific moving requirements:
-              </p>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            {additionalFees.map((fee, index) => (
-              <div key={index} className="flex justify-between p-3 bg-accent rounded-md">
-                <div>
-                  <p className="font-medium">{fee.name}</p>
-                  <p className="text-sm text-muted-foreground">{fee.description}</p>
-                </div>
-                <div className="text-primary font-semibold">{fee.price}</div>
-              </div>
-            ))}
-          </div>
-          
-          <div className="bg-primary/10 p-4 rounded-md flex items-start gap-3">
-            <AlertCircle className="text-primary mt-1 flex-shrink-0" />
-            <div>
-              <p className="font-medium">Deposit Required</p>
-              <p className="text-sm text-muted-foreground">$100 to confirm booking. This amount will be applied toward your final bill.</p>
-            </div>
-          </div>
-        </div>
+        <AdditionalFees />
         
         <div className="mt-16">
           <Accordion type="single" collapsible className="max-w-4xl mx-auto">
