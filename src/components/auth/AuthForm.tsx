@@ -7,9 +7,9 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Lead } from '@/components/ui/typography';
 import AuthFormField from './AuthFormField';
 import AuthFormButtons from './AuthFormButtons';
+import { isUserAdmin } from '@/utils/auth';
 
 interface AuthFormValues {
-  username: string;
   email: string;
   password: string;
 }
@@ -30,7 +30,6 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
     getValues
   } = useForm<AuthFormValues>({
     defaultValues: {
-      username: '',
       email: '',
       password: ''
     }
@@ -47,6 +46,13 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
 
       if (error) throw error;
 
+      // Check if the user is an admin after successful login
+      const isAdmin = await isUserAdmin();
+      if (!isAdmin) {
+        await supabase.auth.signOut();
+        throw new Error("Access denied. Admin privileges required.");
+      }
+
       toast({
         title: "Success",
         description: "Successfully logged in",
@@ -58,6 +64,8 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
         errorMessage = "Invalid email or password";
       } else if (error.message.includes("rate limit")) {
         errorMessage = "Too many login attempts. Please try again later.";
+      } else if (error.message.includes("Access denied")) {
+        errorMessage = "You do not have admin access";
       }
       
       toast({
