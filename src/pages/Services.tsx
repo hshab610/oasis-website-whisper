@@ -1,4 +1,3 @@
-
 import { Helmet } from 'react-helmet';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -98,6 +97,21 @@ const Services = () => {
         'Careful handling of donatable items',
         'Scheduling flexibility',
         'Support for various charitable organizations'
+      ]
+    },
+    {
+      icon: Package,
+      title: 'All-in-One Moving Package',
+      description: 'Get everything done in one go! This comprehensive package includes local moving services, furniture assembly/disassembly, and TV mounting for a seamless transition to your new home.',
+      price: '$299 flat rate + $120/hour for moving',
+      details: [
+        'Professional local moving service',
+        'Assembly of up to 5 furniture items',
+        'One TV mounting installation',
+        'Basic furniture protection included',
+        'Professional tools and equipment',
+        'Experienced moving & assembly team',
+        'Save compared to booking separately'
       ]
     },
     {
