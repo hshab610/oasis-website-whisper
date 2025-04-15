@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -37,6 +38,12 @@ const BookingForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Booking form submitted with data:", formData);
+    
+    // Prevent multiple submissions
+    if (isSubmitting) {
+      console.log("Form is already submitting, preventing duplicate submission");
+      return;
+    }
     
     try {
       const success = await handleFormSubmission(

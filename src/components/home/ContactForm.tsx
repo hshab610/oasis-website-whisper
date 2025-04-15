@@ -27,6 +27,12 @@ const ContactForm = () => {
     e.preventDefault();
     console.log("Home contact form submitted with data:", formData);
     
+    // Prevent multiple submissions
+    if (isSubmitting) {
+      console.log("Form is already submitting, preventing duplicate submission");
+      return;
+    }
+    
     try {
       const success = await handleFormSubmission(
         formData,

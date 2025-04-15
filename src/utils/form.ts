@@ -20,6 +20,8 @@ export const handleFormSubmission = async (
       throw result.error;
     }
 
+    // Successfully submitted
+    console.log("Form submitted successfully");
     toast({
       title: "Message submitted successfully!",
       description: "We'll get back to you as soon as possible.",
