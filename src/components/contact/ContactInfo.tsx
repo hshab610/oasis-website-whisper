@@ -22,7 +22,11 @@ const ContactInfo = () => {
           icon={<Phone className="text-primary h-5 w-5" />}
           title="Phone Number"
           content={
-            <a href="tel:+16147400275" className="text-muted-foreground hover:text-primary transition-colors">
+            <a 
+              href="tel:+16147400275" 
+              className="text-muted-foreground hover:text-primary transition-colors"
+              aria-label="Call our phone number: 614-740-0275"
+            >
               614-740-0275
             </a>
           }
@@ -32,7 +36,11 @@ const ContactInfo = () => {
           icon={<Mail className="text-primary h-5 w-5" />}
           title="Email Address"
           content={
-            <a href="mailto:zay@oasismovingandstorage.com" className="text-muted-foreground hover:text-primary transition-colors">
+            <a 
+              href="mailto:zay@oasismovingandstorage.com" 
+              className="text-muted-foreground hover:text-primary transition-colors"
+              aria-label="Email us at zay@oasismovingandstorage.com"
+            >
               zay@oasismovingandstorage.com
             </a>
           }
@@ -42,7 +50,13 @@ const ContactInfo = () => {
           icon={<MapPin className="text-primary h-5 w-5" />}
           title="Website"
           content={
-            <a href="https://oasismovingandstorage.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+            <a 
+              href="https://oasismovingandstorage.com" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-muted-foreground hover:text-primary transition-colors"
+              aria-label="Visit our website at oasismovingandstorage.com"
+            >
               oasismovingandstorage.com
             </a>
           }

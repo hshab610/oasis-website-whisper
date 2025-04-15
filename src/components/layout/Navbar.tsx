@@ -24,7 +24,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-8">
             <NavLinks />
             <div className="flex items-center space-x-2">
-              <a href="tel:+16147400275">
+              <a href="tel:+16147400275" aria-label="Call us at 614-740-0275">
                 <Button variant="ghost" size="sm" className="flex items-center gap-2">
                   <Phone size={16} />
                   <span>614-740-0275</span>
@@ -41,6 +41,8 @@ const Navbar = () => {
             <button
               onClick={toggleMenu}
               className="text-foreground hover:text-primary focus:outline-none"
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isMenuOpen}
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>

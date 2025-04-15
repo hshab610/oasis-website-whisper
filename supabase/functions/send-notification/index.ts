@@ -67,6 +67,12 @@ const handler = async (req: Request): Promise<Response> => {
         .value {
           margin-top: 5px;
         }
+        .footer {
+          margin-top: 20px;
+          text-align: center;
+          font-size: 12px;
+          color: #888;
+        }
       </style>
     `;
 
@@ -96,6 +102,9 @@ const handler = async (req: Request): Promise<Response> => {
               <div class="label">Message:</div>
               <div class="value">${formData.message}</div>
             </div>
+          </div>
+          <div class="footer">
+            <p>This message was sent from the Oasis Moving & Storage website contact form.</p>
           </div>
         </div>
       `;
@@ -140,28 +149,63 @@ const handler = async (req: Request): Promise<Response> => {
               <div class="value">${formData.notes || 'No additional notes provided'}</div>
             </div>
           </div>
+          <div class="footer">
+            <p>This message was sent from the Oasis Moving & Storage website booking form.</p>
+          </div>
         </div>
       `;
     }
 
-    const { data, error } = await resend.emails.send({
-      from: "Oasis Moving & Storage <onboarding@resend.dev>",
-      to: ["shabhuzayfah@gmail.com", "zay@oasismovingandstorage.com"],
-      subject: subject,
-      html: emailContent,
-    });
+    // Make multiple attempts to send the email if needed
+    let attempts = 0;
+    const maxAttempts = 3;
+    let lastError = null;
+    
+    while (attempts < maxAttempts) {
+      try {
+        console.log(`Attempt ${attempts + 1} to send email`);
+        
+        const { data, error } = await resend.emails.send({
+          from: "Oasis Moving & Storage <onboarding@resend.dev>",
+          to: ["shabhuzayfah@gmail.com", "zay@oasismovingandstorage.com"],
+          subject: subject,
+          html: emailContent,
+          reply_to: formData.email,
+        });
 
-    if (error) {
-      throw error;
+        if (error) {
+          console.error(`Error on attempt ${attempts + 1}:`, error);
+          lastError = error;
+          attempts++;
+          // Wait before retrying (exponential backoff)
+          await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, attempts)));
+          continue;
+        }
+
+        console.log("Email sent successfully:", data);
+        return new Response(JSON.stringify({ success: true }), {
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        });
+      } catch (error) {
+        console.error(`Unexpected error on attempt ${attempts + 1}:`, error);
+        lastError = error;
+        attempts++;
+        // Wait before retrying
+        await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, attempts)));
+      }
     }
 
-    console.log("Email sent successfully:", data);
-
-    return new Response(JSON.stringify({ success: true }), {
-      headers: { "Content-Type": "application/json", ...corsHeaders },
-    });
+    // If we've reached here, all attempts failed
+    console.error(`Failed to send email after ${maxAttempts} attempts. Last error:`, lastError);
+    return new Response(
+      JSON.stringify({ error: lastError?.message || "Failed to send email after multiple attempts" }),
+      { 
+        status: 500,
+        headers: { "Content-Type": "application/json", ...corsHeaders }
+      }
+    );
   } catch (error) {
-    console.error("Error sending email:", error);
+    console.error("Error processing request:", error);
     return new Response(
       JSON.stringify({ error: error.message }),
       { 

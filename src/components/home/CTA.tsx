@@ -16,14 +16,14 @@ const CTA = () => {
           
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link to="/contact">
-              <Button className="bg-white text-primary hover:bg-white/90 px-8 py-3 rounded-md font-medium">
+              <Button className="bg-white text-primary hover:bg-white/90 px-8 py-3 rounded-md font-medium w-full sm:w-auto">
                 Quote My Move!
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
             
-            <a href="tel:+16147400275">
-              <Button variant="outline" className="border-white text-white hover:bg-white/10 px-8 py-3 rounded-md font-medium">
+            <a href="tel:+16147400275" aria-label="Call us at 614-740-0275">
+              <Button variant="outline" className="border-white text-white hover:bg-white/10 px-8 py-3 rounded-md font-medium w-full sm:w-auto">
                 <Phone className="mr-2 h-5 w-5" />
                 Call 614-740-0275
               </Button>
