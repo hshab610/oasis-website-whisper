@@ -22,7 +22,7 @@ const ContactInfo = () => {
           icon={<Phone className="text-primary h-5 w-5" />}
           title="Phone Number"
           content={
-            <a href="tel:6147400275" className="text-muted-foreground hover:text-primary transition-colors">
+            <a href="tel:+16147400275" className="text-muted-foreground hover:text-primary transition-colors">
               614-740-0275
             </a>
           }
