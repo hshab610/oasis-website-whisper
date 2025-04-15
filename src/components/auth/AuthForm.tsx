@@ -87,13 +87,20 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
       const { error } = await supabase.auth.signUp({
         email: values.email,
         password: values.password,
+        options: {
+          emailRedirectTo: window.location.origin + '/auth',
+          // Skip email verification for now
+          data: {
+            email_confirmed: true
+          }
+        }
       });
 
       if (error) throw error;
 
       toast({
         title: "Success",
-        description: "Account created successfully. Please wait for admin approval.",
+        description: "Account created. You can now log in with your credentials.",
       });
     } catch (error: any) {
       let errorMessage = "Failed to create account. Please try again.";
