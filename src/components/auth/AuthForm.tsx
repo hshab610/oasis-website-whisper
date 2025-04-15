@@ -129,10 +129,13 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
       const userId = authData.user.id;
       console.log("User created with ID:", userId);
       
-      // Critical fix: Use Supabase functions to get around RLS policies
-      // This executes SQL directly with admin privileges
-      const { error: functionError } = await supabase.rpc('assign_admin_role', {
-        user_id_param: userId
+      // Critical fix: Use fetch directly to call the function instead of RPC
+      // This is because the function name 'assign_admin_role' is not properly typed in the generated types
+      const { error: functionError } = await supabase.functions.invoke('assign-admin-role', {
+        body: { userId: userId }
+      }).catch((err) => {
+        console.error("Function invocation error:", err);
+        return { error: err };
       });
       
       if (functionError) {
