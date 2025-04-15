@@ -17,7 +17,7 @@ const CTA = () => {
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link to="/contact">
               <Button className="bg-white text-primary hover:bg-white/90 px-8 py-3 rounded-md font-medium">
-                Get a Free Quote
+                Quote My Move!
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>

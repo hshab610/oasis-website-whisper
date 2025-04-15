@@ -39,13 +39,14 @@ const BookingForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("Form submitted with data:", formData);
+    
     const success = await handleFormSubmission(
       formData,
       setIsSubmitting,
       toast,
       async (data) => {
-        const result = await supabase.from('bookings').insert([data]);
-        return result;
+        return await supabase.from('bookings').insert([data]);
       }
     );
 

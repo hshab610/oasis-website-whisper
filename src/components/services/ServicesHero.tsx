@@ -1,5 +1,6 @@
 
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const ServicesHero = () => {
   return (
@@ -11,7 +12,9 @@ const ServicesHero = () => {
             Discover our comprehensive range of moving and storage services designed to make your transition smooth and stress-free.
           </p>
           <div className="flex justify-center">
-            <Button className="cta-button">Get a Quote Today</Button>
+            <Link to="/contact">
+              <Button className="cta-button">Quote My Move!</Button>
+            </Link>
           </div>
         </div>
       </div>

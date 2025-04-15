@@ -17,10 +17,12 @@ const Hero = () => {
             </p>
             
             <div className="flex flex-wrap gap-4 pt-2">
-              <Button className="cta-button">
-                Get a Free Quote
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
+              <Link to="/contact">
+                <Button className="cta-button">
+                  Quote My Move!
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
               <Button variant="outline" className="bg-white/80">
                 Explore Services
               </Button>
