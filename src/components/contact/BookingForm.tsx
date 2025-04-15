@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
 import { Send } from 'lucide-react';
 import { supabase } from "@/integrations/supabase/client";
 import FormField from './FormField';
@@ -43,7 +43,10 @@ const BookingForm = () => {
       formData,
       setIsSubmitting,
       toast,
-      (data) => supabase.from('bookings').insert([data])
+      async (data) => {
+        const result = await supabase.from('bookings').insert([data]);
+        return result;
+      }
     );
 
     if (success) {
