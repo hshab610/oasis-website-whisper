@@ -33,28 +33,114 @@ const handler = async (req: Request): Promise<Response> => {
     let emailContent: string;
     let subject: string;
 
+    const emailStyles = `
+      <style>
+        .email-container {
+          font-family: Arial, sans-serif;
+          max-width: 600px;
+          margin: 0 auto;
+          padding: 20px;
+          background-color: #f9f9f9;
+        }
+        .header {
+          background-color: #1a5f7a;
+          color: white;
+          padding: 20px;
+          text-align: center;
+          border-radius: 5px 5px 0 0;
+        }
+        .content {
+          background-color: white;
+          padding: 20px;
+          border-radius: 0 0 5px 5px;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .field {
+          margin-bottom: 15px;
+          padding-bottom: 10px;
+          border-bottom: 1px solid #eee;
+        }
+        .label {
+          font-weight: bold;
+          color: #1a5f7a;
+        }
+        .value {
+          margin-top: 5px;
+        }
+      </style>
+    `;
+
     if (formData.type === 'contact') {
-      subject = `New Contact Form Submission from ${formData.name}`;
+      subject = `🔔 New Contact Form Submission from ${formData.name}`;
       emailContent = `
-        <h1>New Contact Form Submission</h1>
-        <p><strong>Name:</strong> ${formData.name}</p>
-        <p><strong>Email:</strong> ${formData.email}</p>
-        <p><strong>Phone:</strong> ${formData.phone || 'Not provided'}</p>
-        <p><strong>Message:</strong> ${formData.message}</p>
+        ${emailStyles}
+        <div class="email-container">
+          <div class="header">
+            <h1>New Contact Form Submission</h1>
+            <p>Received on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}</p>
+          </div>
+          <div class="content">
+            <div class="field">
+              <div class="label">Name:</div>
+              <div class="value">${formData.name}</div>
+            </div>
+            <div class="field">
+              <div class="label">Email:</div>
+              <div class="value">${formData.email}</div>
+            </div>
+            <div class="field">
+              <div class="label">Phone:</div>
+              <div class="value">${formData.phone || 'Not provided'}</div>
+            </div>
+            <div class="field">
+              <div class="label">Message:</div>
+              <div class="value">${formData.message}</div>
+            </div>
+          </div>
+        </div>
       `;
     } else {
-      subject = `New Booking Request from ${formData.name}`;
+      subject = `📦 New Moving Service Request from ${formData.name}`;
       emailContent = `
-        <h1>New Booking Request</h1>
-        <p><strong>Name:</strong> ${formData.name}</p>
-        <p><strong>Email:</strong> ${formData.email}</p>
-        <p><strong>Phone:</strong> ${formData.phone}</p>
-        <p><strong>Move Date:</strong> ${formData.move_date}</p>
-        <p><strong>Move Time:</strong> ${formData.move_time}</p>
-        <p><strong>Address:</strong> ${formData.address}</p>
-        <p><strong>Package:</strong> ${formData.package_type}</p>
-        <p><strong>Additional Services:</strong> ${formData.additional_services || 'None'}</p>
-        <p><strong>Notes:</strong> ${formData.notes || 'None'}</p>
+        ${emailStyles}
+        <div class="email-container">
+          <div class="header">
+            <h1>New Moving Service Request</h1>
+            <p>Received on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}</p>
+          </div>
+          <div class="content">
+            <div class="field">
+              <div class="label">Customer Information</div>
+              <div class="value">
+                <strong>Name:</strong> ${formData.name}<br>
+                <strong>Email:</strong> ${formData.email}<br>
+                <strong>Phone:</strong> ${formData.phone}
+              </div>
+            </div>
+            
+            <div class="field">
+              <div class="label">Move Details</div>
+              <div class="value">
+                <strong>Date:</strong> ${formData.move_date}<br>
+                <strong>Time:</strong> ${formData.move_time}<br>
+                <strong>Address:</strong> ${formData.address}
+              </div>
+            </div>
+            
+            <div class="field">
+              <div class="label">Service Package</div>
+              <div class="value">
+                <strong>Selected Package:</strong> ${formData.package_type}<br>
+                <strong>Additional Services:</strong> ${formData.additional_services || 'None requested'}
+              </div>
+            </div>
+            
+            <div class="field">
+              <div class="label">Additional Notes</div>
+              <div class="value">${formData.notes || 'No additional notes provided'}</div>
+            </div>
+          </div>
+        </div>
       `;
     }
 
@@ -87,3 +173,4 @@ const handler = async (req: Request): Promise<Response> => {
 };
 
 serve(handler);
+
