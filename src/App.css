@@ -1,8 +1,12 @@
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
+}
+
+.bg-desert-sunset {
+  background: linear-gradient(135deg, #DFC9A5 0%, #E8945C 100%);
 }
 
 .logo {
@@ -12,10 +16,10 @@
   transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 2em #E8945Caa);
 }
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: drop-shadow(0 0 2em #E8945Caa);
 }
 
 @keyframes logo-spin {
@@ -39,4 +43,73 @@
 
 .read-the-docs {
   color: #888;
+}
+
+/* Egyptian-inspired decorative elements */
+.pharaoh-symbol::before {
+  content: "☥";
+  font-size: 1.2em;
+  margin-right: 0.5em;
+  color: #E8945C;
+}
+
+.eye-of-horus::before {
+  content: "𓂀";
+  font-size: 1.2em;
+  margin-right: 0.5em;
+  color: #E8945C;
+}
+
+.ankh-divider {
+  position: relative;
+}
+
+.ankh-divider::before,
+.ankh-divider::after {
+  content: "☥";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5em;
+  color: #E8945C;
+}
+
+.ankh-divider::before {
+  left: 0;
+}
+
+.ankh-divider::after {
+  right: 0;
+}
+
+/* Pyramid shaped elements */
+.pyramid-shape {
+  width: 0;
+  height: 0;
+  border-left: 25px solid transparent;
+  border-right: 25px solid transparent;
+  border-bottom: 40px solid #E6C17B;
+}
+
+/* Desert wave pattern */
+.desert-wave {
+  position: relative;
+  overflow: hidden;
+}
+
+.desert-wave::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 15px;
+  background: repeating-linear-gradient(
+    135deg,
+    #E8945C,
+    #E8945C 10px,
+    transparent 10px,
+    transparent 20px
+  );
+  opacity: 0.5;
 }

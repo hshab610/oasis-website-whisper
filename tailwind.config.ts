@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -52,9 +53,12 @@ export default {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))'
         },
-        sandyBeige: "#E6D7C3",
-        terracotta: "#C87A56",
-        oliveGreen: "#838B6F",
+        sandGold: "#E6C17B",
+        desertSand: "#DFC9A5",
+        nileTeal: "#73A6AD",
+        sunsetOrange: "#E8945C",
+        pyramidStone: "#B8A99A",
+        pharaohBlue: "#21415B",
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -81,15 +85,29 @@ export default {
         fadeIn: {
           from: { opacity: '0', transform: 'translateY(10px)' },
           to: { opacity: '1', transform: 'translateY(0)' }
+        },
+        shimmer: {
+          '0%': { backgroundPosition: '-500px 0' },
+          '100%': { backgroundPosition: '500px 0' }
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' }
         }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        'fadeIn': 'fadeIn 0.5s ease-out forwards'
+        'fadeIn': 'fadeIn 0.5s ease-out forwards',
+        'shimmer': 'shimmer 2s infinite linear',
+        'float': 'float 6s ease-in-out infinite'
       },
       backgroundImage: {
         'hero-pattern': "url('/src/assets/hero-pattern.svg')",
+        'desert-sunset': "linear-gradient(to bottom, #FFC988, #E8945C)",
+        'nile-gradient': "linear-gradient(135deg, #21415B 0%, #73A6AD 100%)",
+        'sand-texture': "url('/public/lovable-uploads/9afd8ea4-428a-4559-922e-c48973cd49f5.png')",
+        'ancient-pattern': "url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23E8945C\" fill-opacity=\"0.15\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')",
       }
     }
   },
