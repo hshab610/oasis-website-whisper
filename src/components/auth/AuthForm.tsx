@@ -3,12 +3,10 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Eye, EyeOff, Loader2 } from 'lucide-react';
 import { Lead } from '@/components/ui/typography';
-import { cn } from "@/lib/utils";
+import AuthFormField from './AuthFormField';
+import AuthFormButtons from './AuthFormButtons';
 
 interface AuthFormValues {
   username: string;
@@ -107,8 +105,6 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
     }
   };
 
-  const togglePasswordVisibility = () => setShowPassword(!showPassword);
-
   return (
     <Card className="w-full max-w-md animate-fadeIn">
       <CardHeader className="space-y-3">
@@ -121,106 +117,33 @@ const AuthForm = ({ loading, setLoading }: AuthFormProps) => {
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit(onLogin)} className="space-y-6">
-          <div className="space-y-2">
-            <label htmlFor="username" className="text-sm font-medium">
-              Username
-            </label>
-            <Input
-              id="username"
-              {...register("username", { 
-                required: "Username is required",
-                minLength: { value: 3, message: "Username must be at least 3 characters" }
-              })}
-              type="text"
-              placeholder="Enter your username"
-              disabled={loading}
-              className={cn(
-                "w-full",
-                errors.username ? "border-destructive focus-visible:ring-destructive" : ""
-              )}
-              autoComplete="username"
-            />
-            {errors.username && (
-              <p className="text-sm text-destructive">{errors.username.message}</p>
-            )}
-          </div>
+          <AuthFormField
+            id="username"
+            label="Username"
+            type="text"
+            error={errors.username?.message}
+            loading={loading}
+            register={register("username", { 
+              required: "Username is required",
+              minLength: { value: 3, message: "Username must be at least 3 characters" }
+            })}
+          />
           
-          <div className="space-y-2">
-            <label htmlFor="password" className="text-sm font-medium">
-              Password
-            </label>
-            <div className="relative">
-              <Input
-                id="password"
-                {...register("password", { 
-                  required: "Password is required",
-                  minLength: { value: 6, message: "Password must be at least 6 characters" }
-                })}
-                type={showPassword ? "text" : "password"}
-                placeholder="Enter your password"
-                disabled={loading}
-                className={cn(
-                  "w-full pr-10",
-                  errors.password ? "border-destructive focus-visible:ring-destructive" : ""
-                )}
-                autoComplete="current-password"
-              />
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
-                onClick={togglePasswordVisibility}
-              >
-                {showPassword ? (
-                  <EyeOff className="h-4 w-4 text-muted-foreground" />
-                ) : (
-                  <Eye className="h-4 w-4 text-muted-foreground" />
-                )}
-                <span className="sr-only">
-                  {showPassword ? "Hide password" : "Show password"}
-                </span>
-              </Button>
-            </div>
-            {errors.password && (
-              <p className="text-sm text-destructive">{errors.password.message}</p>
-            )}
-          </div>
+          <AuthFormField
+            id="password"
+            label="Password"
+            type="password"
+            error={errors.password?.message}
+            loading={loading}
+            register={register("password", { 
+              required: "Password is required",
+              minLength: { value: 6, message: "Password must be at least 6 characters" }
+            })}
+            showPassword={showPassword}
+            onTogglePassword={() => setShowPassword(!showPassword)}
+          />
 
-          <div className="space-y-4">
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={loading}
-              size="lg"
-            >
-              {loading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Logging in...
-                </>
-              ) : (
-                "Login"
-              )}
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              className="w-full"
-              onClick={onSignup}
-              disabled={loading}
-              size="lg"
-            >
-              {loading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Creating account...
-                </>
-              ) : (
-                "Sign Up"
-              )}
-            </Button>
-          </div>
+          <AuthFormButtons loading={loading} onSignup={onSignup} />
         </form>
       </CardContent>
     </Card>
