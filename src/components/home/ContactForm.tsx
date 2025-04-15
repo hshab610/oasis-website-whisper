@@ -27,41 +27,56 @@ const ContactForm = () => {
     e.preventDefault();
     console.log("Home contact form submitted with data:", formData);
     
-    const success = await handleFormSubmission(
-      formData,
-      setIsSubmitting,
-      toast,
-      async (data) => {
-        try {
-          // First store in database
-          const dbResult = await supabase.from('contact_messages').insert([data]);
-          if (dbResult.error) throw dbResult.error;
-
-          // Then send email notification
-          const emailResult = await supabase.functions.invoke('send-notification', {
-            body: { 
-              type: 'contact',
-              ...data
+    try {
+      const success = await handleFormSubmission(
+        formData,
+        setIsSubmitting,
+        toast,
+        async (data) => {
+          console.log("Submitting data to Supabase:", data);
+          try {
+            // First store in database
+            const dbResult = await supabase.from('contact_messages').insert([data]);
+            console.log("Database insert result:", dbResult);
+            if (dbResult.error) {
+              console.error("Database insert error:", dbResult.error);
+              throw dbResult.error;
             }
-          });
-          
-          if (emailResult.error) throw emailResult.error;
 
-          return { error: null, data: dbResult.data };
-        } catch (error) {
-          console.error("Error in form submission:", error);
-          return { error: error, data: null };
+            // Then send email notification
+            const emailResult = await supabase.functions.invoke('send-notification', {
+              body: { 
+                type: 'contact',
+                ...data
+              }
+            });
+            console.log("Email notification result:", emailResult);
+            
+            if (emailResult.error) {
+              console.error("Email notification error:", emailResult.error);
+              throw emailResult.error;
+            }
+
+            return { error: null, data: dbResult.data };
+          } catch (error) {
+            console.error("Error in form submission:", error);
+            return { error: error, data: null };
+          }
         }
-      }
-    );
+      );
 
-    if (success) {
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        message: ''
-      });
+      console.log("Form submission success:", success);
+
+      if (success) {
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          message: ''
+        });
+      }
+    } catch (error) {
+      console.error("Unexpected error in handleSubmit:", error);
     }
   };
 
