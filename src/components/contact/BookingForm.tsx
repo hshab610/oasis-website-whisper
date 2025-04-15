@@ -1,21 +1,15 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
 import { Send } from 'lucide-react';
 import { supabase } from "@/integrations/supabase/client";
-import { 
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue 
-} from '@/components/ui/select';
+import FormField from './FormField';
+import TimeSelect from './TimeSelect';
+import PackageSelect from './PackageSelect';
+import { handleFormSubmission } from '@/utils/form';
 
 const BookingForm = () => {
   const { toast } = useToast();
@@ -45,20 +39,14 @@ const BookingForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    const success = await handleFormSubmission(
+      formData,
+      setIsSubmitting,
+      toast,
+      (data) => supabase.from('bookings').insert([data])
+    );
 
-    try {
-      const { error } = await supabase
-        .from('bookings')
-        .insert([formData]);
-
-      if (error) throw error;
-
-      toast({
-        title: "Booking request submitted!",
-        description: "We'll get back to you as soon as possible.",
-      });
-
+    if (success) {
       setFormData({
         name: '',
         email: '',
@@ -72,15 +60,6 @@ const BookingForm = () => {
         additional_services: '',
         notes: ''
       });
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      toast({
-        title: "Error submitting form",
-        description: "Please try again later.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -129,26 +108,10 @@ const BookingForm = () => {
             required
           />
 
-          <div>
-            <Label htmlFor="move_time">Preferred Time</Label>
-            <Select 
-              name="move_time" 
-              value={formData.move_time} 
-              onValueChange={(value) => handleSelectChange('move_time', value)}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select preferred time" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Time Slots</SelectLabel>
-                  <SelectItem value="morning">Morning (8AM - 12PM)</SelectItem>
-                  <SelectItem value="afternoon">Afternoon (12PM - 4PM)</SelectItem>
-                  <SelectItem value="evening">Evening (4PM - 7PM)</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
+          <TimeSelect
+            value={formData.move_time}
+            onValueChange={(value) => handleSelectChange('move_time', value)}
+          />
 
           <FormField
             label="Moving Address"
@@ -159,32 +122,10 @@ const BookingForm = () => {
             placeholder="Enter the address"
           />
 
-          <div>
-            <Label htmlFor="package_type">Service Package</Label>
-            <Select 
-              name="package_type" 
-              value={formData.package_type} 
-              onValueChange={(value) => handleSelectChange('package_type', value)}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select a service package" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Moving Services</SelectLabel>
-                  <SelectItem value="all-in-one">All-in-One Moving Package</SelectItem>
-                  <SelectItem value="local">Local Moving</SelectItem>
-                  <SelectItem value="long-distance">Long Distance Moving</SelectItem>
-                  <SelectItem value="furniture">Furniture Assembly</SelectItem>
-                  <SelectItem value="tv">TV Mounting</SelectItem>
-                  <SelectItem value="junk">Hauling & Junk Removal</SelectItem>
-                  <SelectItem value="donation">Donation Pickup & Dropoff</SelectItem>
-                  <SelectItem value="storage">Storage Solutions</SelectItem>
-                  <SelectItem value="other">Other Services</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
+          <PackageSelect
+            value={formData.package_type}
+            onValueChange={(value) => handleSelectChange('package_type', value)}
+          />
           
           <FormField
             label="Additional Services (Optional)"
@@ -225,38 +166,5 @@ const BookingForm = () => {
     </div>
   );
 };
-
-type FormFieldProps = {
-  label: string;
-  name: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  placeholder?: string;
-  required?: boolean;
-  type?: string;
-};
-
-const FormField = ({ 
-  label, 
-  name, 
-  value, 
-  onChange, 
-  placeholder, 
-  required = false, 
-  type = "text" 
-}: FormFieldProps) => (
-  <div>
-    <Label htmlFor={name}>{label}</Label>
-    <Input 
-      id={name} 
-      name={name}
-      type={type}
-      value={value}
-      onChange={onChange}
-      required={required}
-      placeholder={placeholder}
-    />
-  </div>
-);
 
 export default BookingForm;
