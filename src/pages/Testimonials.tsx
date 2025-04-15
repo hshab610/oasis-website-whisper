@@ -1,9 +1,10 @@
-
 import { Helmet } from 'react-helmet';
+import { Star } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import CTA from '@/components/home/CTA';
-import { Star, Quote } from 'lucide-react';
+import TestimonialsHero from '@/components/testimonials/TestimonialsHero';
+import TestimonialCard from '@/components/testimonials/TestimonialCard';
 
 const Testimonials = () => {
   const testimonials = [
@@ -92,67 +93,14 @@ const Testimonials = () => {
         <Navbar />
         
         <main className="flex-grow">
-          {/* Hero Section */}
-          <section className="bg-accent py-16 md:py-24">
-            <div className="container mx-auto px-4">
-              <div className="max-w-3xl mx-auto text-center">
-                <h1 className="text-4xl md:text-5xl font-bold mb-6">Customer Testimonials</h1>
-                <p className="text-lg text-muted-foreground mb-6">
-                  Don't just take our word for it. See what our satisfied customers have to say about their experiences with Oasis Moving & Storage.
-                </p>
-                <div className="flex justify-center">
-                  <div className="flex items-center justify-center gap-1">
-                    <Star className="text-yellow-500 h-5 w-5 fill-yellow-500" />
-                    <Star className="text-yellow-500 h-5 w-5 fill-yellow-500" />
-                    <Star className="text-yellow-500 h-5 w-5 fill-yellow-500" />
-                    <Star className="text-yellow-500 h-5 w-5 fill-yellow-500" />
-                    <Star className="text-yellow-500 h-5 w-5 fill-yellow-500" />
-                    <span className="ml-2 font-medium">4.9/5 from over 500 reviews</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
+          <TestimonialsHero />
           
           {/* Testimonials Grid */}
           <section className="py-16 bg-background">
             <div className="container mx-auto px-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {testimonials.map((testimonial) => (
-                  <div 
-                    key={testimonial.id} 
-                    className="bg-card p-8 rounded-lg shadow-sm border border-border relative"
-                  >
-                    <div className="absolute top-8 right-8 text-primary">
-                      <Quote size={24} />
-                    </div>
-                    
-                    <div className="mb-4">
-                      <div className="flex">
-                        {[...Array(testimonial.rating)].map((_, i) => (
-                          <Star key={i} className="text-yellow-500 h-5 w-5 fill-yellow-500" />
-                        ))}
-                        {[...Array(5 - testimonial.rating)].map((_, i) => (
-                          <Star key={i + testimonial.rating} className="text-gray-300 h-5 w-5" />
-                        ))}
-                      </div>
-                    </div>
-                    
-                    <p className="mb-6 text-foreground">{testimonial.text}</p>
-                    
-                    <div className="border-t border-border pt-4">
-                      <div className="flex justify-between items-center">
-                        <div>
-                          <p className="font-semibold">{testimonial.name}</p>
-                          <p className="text-sm text-muted-foreground">{testimonial.location}</p>
-                        </div>
-                        <div className="text-right">
-                          <p className="text-sm font-medium text-primary">{testimonial.service}</p>
-                          <p className="text-xs text-muted-foreground">{testimonial.date}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <TestimonialCard key={testimonial.id} {...testimonial} />
                 ))}
               </div>
             </div>

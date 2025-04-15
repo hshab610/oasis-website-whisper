@@ -1,36 +1,14 @@
-
 import { Helmet } from 'react-helmet';
+import { Link } from 'react-router-dom';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import CTA from '@/components/home/CTA';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, CheckCircle, Users, Shield, Clock, Truck, Trophy, Heart } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { ArrowRight, CheckCircle, Clock, Truck } from 'lucide-react';
+import AboutHero from '@/components/about/AboutHero';
+import CoreValues from '@/components/about/CoreValues';
 
 const About = () => {
-  const values = [
-    {
-      icon: <Users size={32} />,
-      title: 'Customer First',
-      description: 'We prioritize your needs and satisfaction above all else, ensuring a positive experience from start to finish.'
-    },
-    {
-      icon: <Shield size={32} />,
-      title: 'Reliability',
-      description: 'Count on us to show up on time, handle your belongings with care, and deliver on our promises.'
-    },
-    {
-      icon: <Trophy size={32} />,
-      title: 'Excellence',
-      description: 'We strive for excellence in every move, paying attention to details and going the extra mile for our customers.'
-    },
-    {
-      icon: <Heart size={32} />,
-      title: 'Community',
-      description: 'We're proud to be part of the Westerville community and contribute positively to the areas we serve.'
-    }
-  ];
-
   const whyChooseUs = [
     'Professional and experienced movers',
     'Transparent pricing with no hidden fees',
@@ -53,17 +31,7 @@ const About = () => {
         <Navbar />
         
         <main className="flex-grow">
-          {/* Hero Section */}
-          <section className="bg-accent py-16 md:py-24">
-            <div className="container mx-auto px-4">
-              <div className="max-w-3xl mx-auto text-center">
-                <h1 className="text-4xl md:text-5xl font-bold mb-6">About Oasis Moving & Storage</h1>
-                <p className="text-lg text-muted-foreground mb-6">
-                  Get to know the team behind your smooth moving experience. We're more than just movers – we're your partners in transition.
-                </p>
-              </div>
-            </div>
-          </section>
+          <AboutHero />
           
           {/* Our Story */}
           <section className="py-16 md:py-20 bg-background">

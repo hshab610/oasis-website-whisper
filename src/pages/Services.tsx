@@ -1,15 +1,16 @@
-
 import { Helmet } from 'react-helmet';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import CTA from '@/components/home/CTA';
-import { Button } from '@/components/ui/button';
-import { Truck, MapPin, SlidersHorizontal, Tv, Trash2, Heart, Package, Info, DollarSign, CheckCircle, AlertCircle } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
+import { Truck, MapPin, SlidersHorizontal, Tv, Trash2, Heart, Package } from 'lucide-react';
+import ServicesHero from '@/components/services/ServicesHero';
+import ServiceCard from '@/components/services/ServiceCard';
 
 const Services = () => {
   const servicesData = [
     {
-      icon: <Truck size={32} />,
+      icon: Truck,
       title: 'Local Moving',
       description: 'Our local moving service covers Westerville and surrounding areas in Ohio. We provide professional movers who are trained to handle your belongings with care.',
       price: '$120 per hour',
@@ -133,20 +134,7 @@ const Services = () => {
         <Navbar />
         
         <main className="flex-grow">
-          {/* Hero Section */}
-          <section className="bg-accent py-16 md:py-24">
-            <div className="container mx-auto px-4">
-              <div className="max-w-3xl mx-auto text-center">
-                <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Services & Pricing</h1>
-                <p className="text-lg text-muted-foreground mb-6">
-                  Discover our comprehensive range of moving and storage services designed to make your transition smooth and stress-free.
-                </p>
-                <div className="flex justify-center">
-                  <Button className="cta-button">Get a Quote Today</Button>
-                </div>
-              </div>
-            </div>
-          </section>
+          <ServicesHero />
           
           {/* Services List */}
           <section className="py-16 bg-background">
@@ -161,41 +149,7 @@ const Services = () => {
               
               <div className="space-y-12">
                 {servicesData.map((service, index) => (
-                  <div 
-                    key={index} 
-                    className="bg-card rounded-lg shadow-sm overflow-hidden border border-border"
-                  >
-                    <div className="grid grid-cols-1 md:grid-cols-3">
-                      <div className="p-8 md:border-r border-border flex flex-col">
-                        <div className="text-primary mb-4">{service.icon}</div>
-                        <h3 className="text-2xl font-semibold mb-2">{service.title}</h3>
-                        <p className="text-muted-foreground mb-4 flex-grow">{service.description}</p>
-                        <div className="bg-primary/10 p-4 rounded-md">
-                          <div className="flex items-center gap-2 mb-1">
-                            <DollarSign size={18} className="text-primary" />
-                            <span className="font-medium">Pricing:</span>
-                          </div>
-                          <p className="font-semibold">{service.price}</p>
-                        </div>
-                      </div>
-                      
-                      <div className="col-span-2 p-8 bg-muted/30">
-                        <h4 className="flex items-center text-lg font-medium mb-4">
-                          <Info size={18} className="text-primary mr-2" />
-                          Service Details
-                        </h4>
-                        
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                          {service.details.map((detail, idx) => (
-                            <div key={idx} className="flex items-start gap-2">
-                              <CheckCircle size={16} className="text-primary mt-1 flex-shrink-0" />
-                              <span className="text-sm">{detail}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <ServiceCard key={index} {...service} />
                 ))}
               </div>
             </div>
