@@ -11,7 +11,7 @@ const Services = () => {
   const additionalFees = [
     { name: 'Travel Fee', description: 'For locations outside our service area', price: '$75+' },
     { name: 'Heavy Item Fee', description: 'Per item (pianos, safes, etc.)', price: '$50+' },
-    { name: 'Stairs Fee', description: 'Per single step of stairs', price: '$5' },
+    { name: 'Stairs Fee', description: 'Per staircase during move', price: '$20' },
     { name: 'Last Minute Booking', description: 'For bookings with less than 48 hours notice', price: '$75' }
   ];
 

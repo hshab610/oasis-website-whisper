@@ -12,7 +12,7 @@ const Pricing = () => {
   const additionalFees = [
     { name: 'Travel Fee', description: 'For locations outside service area', price: '$75+' },
     { name: 'Heavy Item Fee', description: 'Per item (pianos, safes, etc.)', price: '$50+' },
-    { name: 'Stairs Fee', description: 'Per single step of stairs', price: '$5' },
+    { name: 'Stairs Fee', description: 'Per staircase during move', price: '$20' },
     { name: 'Last Minute Booking', description: 'For bookings with less than 48 hours notice', price: '$75' }
   ];
 
@@ -26,7 +26,7 @@ const Pricing = () => {
         'Professional local moving service',
         'Assembly of up to 5 furniture items',
         'One TV mounting installation',
-        'Add stairs service for $50 flat rate',
+        'Add stairs service for $20 per staircase',
         'Add donation service for $100',
         'Add junk removal for $100',
         'Save over $120 on combined services'
