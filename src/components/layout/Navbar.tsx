@@ -15,8 +15,8 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-desertSand/90 sticky top-0 z-50 shadow-sm">
-      <div className="container mx-auto px-4 py-3">
+    <nav className="bg-desertSand/95 sticky top-0 z-50 shadow-sm safe-area-padding">
+      <div className="container mx-auto px-3 py-2">
         <div className="flex justify-between items-center">
           <Logo />
 
@@ -40,7 +40,7 @@ const Navbar = () => {
           <div className="md:hidden flex items-center">
             <button
               onClick={toggleMenu}
-              className="text-foreground hover:text-primary focus:outline-none"
+              className="text-foreground hover:text-primary focus:outline-none p-2"
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
               aria-expanded={isMenuOpen}
             >

@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -157,6 +158,8 @@
   .safe-area-padding {
     padding-top: env(safe-area-inset-top);
     padding-bottom: env(safe-area-inset-bottom);
+    padding-right: env(safe-area-inset-right);
+    padding-left: env(safe-area-inset-left);
   }
   
   /* iOS header adjustments */
@@ -179,5 +182,39 @@
 
 /* Status bar color match */
 .status-bar-bg {
-  background-color: #222222;
+  background-color: #DFC9A5;
+}
+
+/* Fix background text overlay */
+.bg-overlay-fix {
+  position: relative;
+}
+
+.bg-overlay-fix::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  z-index: -1;
+}
+
+/* Specific mobile fixes */
+@media (max-width: 768px) {
+  .hero-heading {
+    font-size: 2.5rem;
+    line-height: 1.2;
+  }
+  
+  .hero-description {
+    font-size: 1.125rem;
+    line-height: 1.5;
+  }
+  
+  .hero-button {
+    width: 100%;
+    margin-bottom: 0.75rem;
+  }
 }

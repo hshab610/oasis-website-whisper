@@ -1,3 +1,4 @@
+
 #root {
   width: 100%;
   margin: 0 auto;
@@ -161,7 +162,24 @@
 
 /* Enhanced button styles */
 .cta-button {
-  @apply bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-4 rounded-md font-medium transition-all duration-300 text-lg shadow-lg hover:shadow-xl hover:-translate-y-1;
+  @apply bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-3 rounded-md font-medium transition-all duration-300 text-lg shadow-lg hover:shadow-xl hover:-translate-y-1;
+}
+
+/* Fix for blurry background text on Samsung devices */
+@media screen and (max-width: 640px) {
+  .bg-overlay-fix {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .hero-heading {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .hero-description {
+    position: relative;
+    z-index: 2;
+  }
 }
 
 /* Responsive container utilities */
@@ -187,25 +205,29 @@
   }
 }
 
-/* Device-specific optimizations */
-@supports (-webkit-touch-callout: none) {
-  /* iOS-specific padding for notched devices */
-  .safe-area-padding {
-    padding-top: env(safe-area-inset-top);
-    padding-bottom: env(safe-area-inset-bottom);
+/* Mobile-specific fixes */
+@media (max-width: 768px) {
+  .mobile-logo {
+    max-width: 160px;
   }
-}
-
-/* Samsung S24 and modern Android optimizations */
-@media screen and (max-width: 400px) {
-  .mobile-text-adjust {
-    font-size: 95%;
+  
+  .mobile-nav {
+    padding: 0.5rem 0;
   }
-}
-
-@media (orientation: landscape) and (max-height: 500px) {
-  .landscape-adjust {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+  
+  .mobile-heading {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+  
+  .mobile-buttons {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .mobile-buttons .button {
+    width: 100%;
+    margin-bottom: 0.5rem;
   }
 }

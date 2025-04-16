@@ -13,10 +13,10 @@ export const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className="md:hidden mt-4 pb-4 animate-fadeIn">
+    <div className="md:hidden mt-3 pb-3 animate-fadeIn">
       <div className="flex flex-col space-y-4">
         <NavLinks mobile={true} closeMenu={onClose} />
-        <Link to="/contact" onClick={onClose}>
+        <Link to="/contact" onClick={onClose} className="mt-2">
           <Button className="cta-button w-full">Get a Quote</Button>
         </Link>
         <a href="tel:+16147400275">

@@ -25,8 +25,8 @@ export const NavLinks = ({ mobile = false, closeMenu }: NavLinksProps) => {
     <div 
       className={`
         ${mobile 
-          ? 'flex flex-col space-y-4 w-full' 
-          : 'hidden md:flex md:space-x-5 lg:space-x-6'
+          ? 'flex flex-col space-y-3 w-full' 
+          : 'hidden md:flex md:space-x-4 lg:space-x-5'
         }
       `}
     >
@@ -36,7 +36,7 @@ export const NavLinks = ({ mobile = false, closeMenu }: NavLinksProps) => {
           to={link.path}
           className={`
             font-medium text-sm lg:text-base text-foreground hover:text-sunsetOrange transition-colors duration-300 
-            ${mobile ? 'py-3 border-b border-primary/10' : 'relative group py-2'}
+            ${mobile ? 'py-2.5 border-b border-primary/10' : 'relative group py-2'}
           `}
           onClick={handleClick}
         >

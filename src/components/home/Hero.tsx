@@ -5,7 +5,7 @@ import { ArrowRight, Package, Truck, Star, Shield } from 'lucide-react';
 
 const Hero = () => {
   return (
-    <div className="relative overflow-hidden bg-desert-sunset min-h-[90vh] flex items-center">
+    <div className="relative overflow-hidden bg-desert-sunset min-h-[80vh] flex items-center">
       <div className="absolute inset-0 z-0 opacity-20">
         <img 
           src="/public/lovable-uploads/9afd8ea4-428a-4559-922e-c48973cd49f5.png"
@@ -15,47 +15,47 @@ const Hero = () => {
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-8 animate-fadeIn">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight text-pharaohBlue font-playfair">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          <div className="space-y-6 animate-fadeIn">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-pharaohBlue font-playfair">
               Your <span className="text-primary">Journey</span> To A New Beginning
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-xl leading-relaxed">
+            <p className="text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed">
               Professional and reliable moving services in Westerville, Ohio. Let us guide your possessions safely to their new home.
             </p>
             
-            <div className="flex flex-wrap gap-6 pt-4">
-              <Link to="/contact">
-                <Button className="bg-primary hover:bg-primary/90 text-white font-medium px-8 py-6 rounded-md shadow-lg hover:shadow-xl transition-all duration-300 text-lg flex items-center">
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              <Link to="/contact" className="w-full sm:w-auto">
+                <Button className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white font-medium px-6 py-5 rounded-md shadow-lg hover:shadow-xl transition-all duration-300 text-lg flex items-center justify-center">
                   Request Your Quote
-                  <ArrowRight className="ml-2 h-6 w-6" />
+                  <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
-              <Link to="/services">
-                <Button variant="outline" className="border-primary text-primary hover:bg-primary/10 font-medium px-8 py-6 rounded-md transition-all duration-300 text-lg">
+              <Link to="/services" className="w-full sm:w-auto">
+                <Button variant="outline" className="w-full sm:w-auto border-primary text-primary hover:bg-primary/10 font-medium px-6 py-5 rounded-md transition-all duration-300 text-lg">
                   Explore Services
                 </Button>
               </Link>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-8">
-              <div className="flex items-center gap-3 bg-white/80 p-4 rounded-lg shadow-sm">
-                <div className="bg-primary/10 p-3 rounded-full">
-                  <Truck size={24} className="text-primary" />
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-6 max-w-3xl">
+              <div className="flex items-center gap-2 bg-white/80 p-3 rounded-lg shadow-sm">
+                <div className="bg-primary/10 p-2 rounded-full">
+                  <Truck size={20} className="text-primary" />
                 </div>
-                <span className="font-medium text-lg">Local & Long Distance</span>
+                <span className="font-medium">Local & Long Distance</span>
               </div>
-              <div className="flex items-center gap-3 bg-white/80 p-4 rounded-lg shadow-sm">
-                <div className="bg-primary/10 p-3 rounded-full">
-                  <Package size={24} className="text-primary" />
+              <div className="flex items-center gap-2 bg-white/80 p-3 rounded-lg shadow-sm">
+                <div className="bg-primary/10 p-2 rounded-full">
+                  <Package size={20} className="text-primary" />
                 </div>
-                <span className="font-medium text-lg">Storage Solutions</span>
+                <span className="font-medium">Storage Solutions</span>
               </div>
-              <div className="flex items-center gap-3 bg-white/80 p-4 rounded-lg shadow-sm">
-                <div className="bg-primary/10 p-3 rounded-full">
-                  <Shield size={24} className="text-primary" />
+              <div className="flex items-center gap-2 bg-white/80 p-3 rounded-lg shadow-sm">
+                <div className="bg-primary/10 p-2 rounded-full">
+                  <Shield size={20} className="text-primary" />
                 </div>
-                <span className="font-medium text-lg">Fully Insured</span>
+                <span className="font-medium">Fully Insured</span>
               </div>
             </div>
           </div>
