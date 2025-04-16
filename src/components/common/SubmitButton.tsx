@@ -1,6 +1,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Send, Loader2 } from 'lucide-react';
+import { cn } from "@/lib/utils";
 
 type SubmitButtonProps = {
   isSubmitting: boolean;
@@ -35,8 +36,5 @@ const SubmitButton = ({
     )}
   </Button>
 );
-
-// Import cn utility
-import { cn } from "@/lib/utils";
 
 export default SubmitButton;

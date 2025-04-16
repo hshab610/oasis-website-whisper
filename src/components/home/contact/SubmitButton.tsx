@@ -6,11 +6,12 @@ type SubmitButtonProps = {
 };
 
 // This is a wrapper component that uses the common SubmitButton
-// It's kept for backward compatibility
 const ContactSubmitButton = ({ isSubmitting }: SubmitButtonProps) => (
   <SubmitButton 
     isSubmitting={isSubmitting} 
     className="w-full"
+    text="Send Message"
+    loadingText="Sending..."
   />
 );
 
