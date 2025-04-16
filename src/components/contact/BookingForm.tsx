@@ -21,8 +21,8 @@ const BookingForm = () => {
     notes: ''
   });
   
-  // Replace XXXXX with your actual Formspree form ID
-  const { submitToFormspree, isSubmitting } = useFormspree('XXXXX');
+  // Using the same form ID as in ContactForm since it's working
+  const { submitToFormspree, isSubmitting } = useFormspree('mnnpyppa');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
