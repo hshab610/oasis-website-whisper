@@ -10,9 +10,10 @@ const CTA = () => {
       
       <div className="absolute inset-0">
         <img 
-          src="/public/lovable-uploads/47292459-4120-44c2-8f4a-ce4648a96e90.png" 
-          alt="Background" 
+          src="/lovable-uploads/47292459-4120-44c2-8f4a-ce4648a96e90.png" 
+          alt="Background texture" 
           className="w-full h-full object-cover mix-blend-overlay opacity-10"
+          aria-hidden="true"
         />
       </div>
       
@@ -43,7 +44,7 @@ const CTA = () => {
       </div>
       
       {/* Decorative elements inspired by Egyptian patterns */}
-      <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none" aria-hidden="true">
         <div className="absolute top-10 left-10 w-24 h-24 rounded-full bg-white/5"></div>
         <div className="absolute bottom-10 right-10 w-32 h-32 rounded-full bg-white/5"></div>
         

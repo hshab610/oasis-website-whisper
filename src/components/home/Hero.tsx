@@ -65,7 +65,7 @@ const Hero = () => {
             <div className="relative bg-white/90 p-8 rounded-lg shadow-xl animate-fadeIn" style={{animationDelay: '0.3s'}}>
               <img 
                 src="/lovable-uploads/295a11a3-e163-4559-922e-c48973cd49f7.png" 
-                alt="Oasis Moving" 
+                alt="Professional movers carefully handling furniture" 
                 className="rounded-lg shadow-sm mb-4 w-full h-auto"
               />
               
