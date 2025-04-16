@@ -8,19 +8,20 @@ const Hero = () => {
     <div className="relative overflow-hidden bg-desert-sunset min-h-[80vh] flex items-center">
       <div className="absolute inset-0 z-0 opacity-20">
         <img 
-          src="/public/lovable-uploads/9afd8ea4-428a-4559-922e-c48973cd49f5.png"
-          alt="Background texture" 
+          src="/lovable-uploads/9afd8ea4-428a-4559-922e-c48973cd49f5.png"
+          alt="" 
+          aria-hidden="true"
           className="w-full h-full object-cover"
         />
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-          <div className="space-y-6 animate-fadeIn">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-pharaohBlue font-playfair">
+          <div className="space-y-6 animate-fadeIn bg-overlay-fix">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-pharaohBlue font-playfair hero-heading">
               Your <span className="text-primary">Journey</span> To A New Beginning
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed">
+            <p className="text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed hero-description">
               Professional and reliable moving services in Westerville, Ohio. Let us guide your possessions safely to their new home.
             </p>
             
@@ -63,7 +64,7 @@ const Hero = () => {
           <div className="relative hidden lg:block">
             <div className="relative bg-white/90 p-8 rounded-lg shadow-xl animate-fadeIn" style={{animationDelay: '0.3s'}}>
               <img 
-                src="/public/lovable-uploads/295a11a3-e163-4559-922e-c48973cd49f7.png" 
+                src="/lovable-uploads/295a11a3-e163-4559-922e-c48973cd49f7.png" 
                 alt="Oasis Moving" 
                 className="rounded-lg shadow-sm mb-4 w-full h-auto"
               />
@@ -82,7 +83,7 @@ const Hero = () => {
             
             <div className="hidden md:block absolute -bottom-12 -right-12 w-48 h-48 opacity-50 rounded-full animate-float">
               <img 
-                src="/public/lovable-uploads/46ed7f82-e370-4a39-8fe6-1b5612146354.png" 
+                src="/lovable-uploads/46ed7f82-e370-4a39-8fe6-1b5612146354.png" 
                 alt="Decorative element" 
                 className="w-full h-full object-contain opacity-40"
               />

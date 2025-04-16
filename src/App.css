@@ -168,17 +168,34 @@
 /* Fix for blurry background text on Samsung devices */
 @media screen and (max-width: 640px) {
   .bg-overlay-fix {
-    background-color: rgba(255, 255, 255, 0.7);
+    position: relative;
+  }
+  
+  .bg-overlay-fix::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 0.5rem;
+    z-index: -1;
   }
   
   .hero-heading {
     position: relative;
     z-index: 2;
+    font-size: 2.5rem;
+    line-height: 1.2;
+    padding: 0.5rem 0;
   }
   
   .hero-description {
     position: relative;
     z-index: 2;
+    font-size: 1.125rem;
+    line-height: 1.5;
   }
 }
 
