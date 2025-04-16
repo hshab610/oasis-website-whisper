@@ -25,8 +25,8 @@ export const NavLinks = ({ mobile = false, closeMenu }: NavLinksProps) => {
     <div 
       className={`
         ${mobile 
-          ? 'flex flex-col space-y-6 w-full' 
-          : 'hidden md:flex md:space-x-6 lg:space-x-10'
+          ? 'flex flex-col space-y-4 w-full' 
+          : 'hidden md:flex md:space-x-5 lg:space-x-6'
         }
       `}
     >
@@ -34,11 +34,16 @@ export const NavLinks = ({ mobile = false, closeMenu }: NavLinksProps) => {
         <Link
           key={link.path}
           to={link.path}
-          className="font-medium text-base lg:text-lg text-foreground hover:text-primary transition-colors duration-300 relative group py-2"
+          className={`
+            font-medium text-sm lg:text-base text-foreground hover:text-sunsetOrange transition-colors duration-300 
+            ${mobile ? 'py-3 border-b border-primary/10' : 'relative group py-2'}
+          `}
           onClick={handleClick}
         >
           {link.name}
-          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+          {!mobile && (
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-sunsetOrange transition-all duration-300 group-hover:w-full"></span>
+          )}
         </Link>
       ))}
     </div>

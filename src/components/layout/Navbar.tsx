@@ -15,23 +15,23 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-background sticky top-0 z-50 shadow-sm">
-      <div className="container mx-auto px-4 py-4">
+    <nav className="bg-desertSand/90 sticky top-0 z-50 shadow-sm">
+      <div className="container mx-auto px-4 py-3">
         <div className="flex justify-between items-center">
           <Logo />
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-6">
             <NavLinks />
             <div className="flex items-center space-x-2">
               <a href="tel:+16147400275" aria-label="Call us at 614-740-0275">
-                <Button variant="ghost" size="sm" className="flex items-center gap-2">
+                <Button variant="ghost" size="sm" className="flex items-center gap-2 text-foreground">
                   <Phone size={16} />
                   <span>614-740-0275</span>
                 </Button>
               </a>
               <Link to="/contact">
-                <Button className="cta-button">Get a Quote</Button>
+                <Button className="bg-sunsetOrange hover:bg-sunsetOrange/90 text-white">Get a Quote</Button>
               </Link>
             </div>
           </div>
