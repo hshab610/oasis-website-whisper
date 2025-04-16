@@ -1,8 +1,6 @@
-
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { supabase } from "@/integrations/supabase/client";
-import { handleFormSubmission } from '@/utils/form';
+import { useFormspree } from '@/hooks/use-formspree';
 import PersonalFields from './contact/PersonalFields';
 import MessageField from './contact/MessageField';
 import SubmitButton from './contact/SubmitButton';
@@ -15,7 +13,8 @@ const ContactForm = () => {
     phone: '',
     message: ''
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  const { submitToFormspree, isSubmitting } = useFormspree('XXXXX');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -28,50 +27,25 @@ const ContactForm = () => {
     
     console.log("Submitting contact form with data:", formData);
     
-    const success = await handleFormSubmission(
-      formData,
-      setIsSubmitting,
-      toast,
-      async (data) => {
-        console.log("Calling Supabase functions with data:", data);
-        try {
-          const dbResult = await supabase.from('contact_messages').insert([data]);
-          console.log("Database insertion result:", dbResult);
-          
-          if (dbResult.error) {
-            console.error("Database error:", dbResult.error);
-            return { error: dbResult.error, data: null };
-          }
-
-          const emailResult = await supabase.functions.invoke('send-notification', {
-            body: { 
-              type: 'contact',
-              ...data
-            }
-          });
-          console.log("Email notification result:", emailResult);
-          
-          if (emailResult.error) {
-            console.error("Email notification error:", emailResult.error);
-            return { error: emailResult.error, data: null };
-          }
-
-          return { error: null, data: dbResult.data };
-        } catch (error) {
-          console.error("Error in form submission process:", error);
-          return { error, data: null };
-        }
-      }
-    );
-
-    console.log("Form submission completed with success:", success);
+    const success = await submitToFormspree(formData);
     
     if (success) {
+      toast({
+        title: "Message sent successfully!",
+        description: "We'll get back to you as soon as possible.",
+      });
+      
       setFormData({
         name: '',
         email: '',
         phone: '',
         message: ''
+      });
+    } else {
+      toast({
+        title: "Error sending message",
+        description: "Please try again later.",
+        variant: "destructive",
       });
     }
   };

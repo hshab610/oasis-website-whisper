@@ -1,8 +1,7 @@
 
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { supabase } from "@/integrations/supabase/client";
-import { handleFormSubmission } from '@/utils/form';
+import { useFormspree } from '@/hooks/use-formspree';
 import PersonalInfoFields from './booking/PersonalInfoFields';
 import MoveDetailsFields from './booking/MoveDetailsFields';
 import ServiceDetailsFields from './booking/ServiceDetailsFields';
@@ -21,7 +20,9 @@ const BookingForm = () => {
     additional_services: '',
     notes: ''
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // Replace XXXXX with your actual Formspree form ID
+  const { submitToFormspree, isSubmitting } = useFormspree('XXXXX');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -39,51 +40,14 @@ const BookingForm = () => {
     
     console.log("Submitting booking form with data:", formData);
     
-    const success = await handleFormSubmission(
-      formData,
-      setIsSubmitting,
-      toast,
-      async (data) => {
-        console.log("Calling Supabase functions with data:", data);
-        try {
-          // First store in database
-          const dbResult = await supabase.from('bookings').insert([{
-            ...data,
-            move_date: data.move_date ? new Date(data.move_date).toISOString() : null
-          }]);
-          
-          console.log("Database insertion result:", dbResult);
-          
-          if (dbResult.error) {
-            console.error("Database error:", dbResult.error);
-            return { error: dbResult.error, data: null };
-          }
-
-          // Then send email notification
-          const emailResult = await supabase.functions.invoke('send-notification', {
-            body: { 
-              type: 'booking',
-              ...data
-            }
-          });
-          console.log("Email notification result:", emailResult);
-          
-          if (emailResult.error) {
-            console.error("Email notification error:", emailResult.error);
-            return { error: emailResult.error, data: null };
-          }
-
-          return { error: null, data: dbResult.data };
-        } catch (error) {
-          console.error("Error in booking submission process:", error);
-          return { error, data: null };
-        }
-      }
-    );
-
-    console.log("Form submission completed with success:", success);
+    const success = await submitToFormspree(formData);
     
     if (success) {
+      toast({
+        title: "Booking request sent successfully!",
+        description: "We'll get back to you as soon as possible to confirm your booking.",
+      });
+      
       setFormData({
         name: '',
         email: '',
@@ -94,6 +58,12 @@ const BookingForm = () => {
         package_type: '',
         additional_services: '',
         notes: ''
+      });
+    } else {
+      toast({
+        title: "Error submitting booking",
+        description: "Please try again later.",
+        variant: "destructive",
       });
     }
   };
