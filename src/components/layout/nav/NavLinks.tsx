@@ -22,12 +22,19 @@ export const NavLinks = ({ mobile = false, closeMenu }: NavLinksProps) => {
   ];
 
   return (
-    <div className={`${mobile ? 'flex flex-col space-y-6' : 'flex space-x-10'}`}>
+    <div 
+      className={`
+        ${mobile 
+          ? 'flex flex-col space-y-6 w-full' 
+          : 'hidden md:flex md:space-x-6 lg:space-x-10'
+        }
+      `}
+    >
       {links.map(link => (
         <Link
           key={link.path}
           to={link.path}
-          className="font-medium text-lg text-foreground hover:text-primary transition-colors duration-300 relative group"
+          className="font-medium text-base lg:text-lg text-foreground hover:text-primary transition-colors duration-300 relative group py-2"
           onClick={handleClick}
         >
           {link.name}

@@ -1,7 +1,8 @@
 #root {
-  max-width: 1280px;
+  width: 100%;
   margin: 0 auto;
   text-align: center;
+  overflow-x: hidden;
 }
 
 .bg-desert-sunset {
@@ -161,4 +162,50 @@
 /* Enhanced button styles */
 .cta-button {
   @apply bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-4 rounded-md font-medium transition-all duration-300 text-lg shadow-lg hover:shadow-xl hover:-translate-y-1;
+}
+
+/* Responsive container utilities */
+.container-fluid {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-fluid {
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-fluid {
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
+}
+
+/* Device-specific optimizations */
+@supports (-webkit-touch-callout: none) {
+  /* iOS-specific padding for notched devices */
+  .safe-area-padding {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Samsung S24 and modern Android optimizations */
+@media screen and (max-width: 400px) {
+  .mobile-text-adjust {
+    font-size: 95%;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .landscape-adjust {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
 }
