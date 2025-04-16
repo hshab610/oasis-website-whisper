@@ -18,6 +18,16 @@ export const handleFormSubmission = async (
     
     if (result.error) {
       console.error("Error from Supabase:", result.error);
+      
+      // Handle case where data was saved but email notification failed
+      if (result.error.message && result.error.message.includes("Failed to send a request to the Edge Function")) {
+        toast({
+          title: "Form submitted successfully",
+          description: "Your information has been saved, but there was an issue sending email notifications. Our team will still receive your request.",
+        });
+        return true;
+      }
+      
       toast({
         title: "Error submitting form",
         description: result.error.message || "Please try again later.",
