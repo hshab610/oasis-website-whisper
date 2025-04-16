@@ -1,7 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { CheckCircle, ArrowRight, Users } from 'lucide-react';
+import { CheckCircle, ArrowRight } from 'lucide-react';
 
 const About = () => {
   const features = [
@@ -61,25 +61,6 @@ const About = () => {
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
-          </div>
-        </div>
-      </div>
-      
-      {/* Team section with fixed image display */}
-      <div className="container mx-auto px-4 mt-16">
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-          <div className="flex flex-col md:flex-row">
-            <div className="w-full md:w-1/3 p-6 flex items-center justify-center bg-primary/10">
-              <div className="flex items-center justify-center">
-                <Users size={64} className="text-primary" />
-              </div>
-            </div>
-            <div className="w-full md:w-2/3 p-8">
-              <h3 className="text-2xl font-bold mb-3">Meet Our Professional Team</h3>
-              <p className="text-muted-foreground">
-                Our expert movers are trained, background-checked, and focused on delivering exceptional service. With years of industry experience, we know how to make your transition seamless and worry-free.
-              </p>
-            </div>
           </div>
         </div>
       </div>
