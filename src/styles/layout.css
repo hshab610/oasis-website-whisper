@@ -1,0 +1,61 @@
+
+.container-fluid {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-fluid {
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-fluid {
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
+}
+
+/* Mobile-specific fixes */
+@media (max-width: 768px) {
+  .mobile-logo {
+    max-width: 160px;
+  }
+  
+  .mobile-nav {
+    padding: 0.5rem 0;
+  }
+  
+  .mobile-heading {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+  
+  .mobile-buttons {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .mobile-buttons .button {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Landscape orientation for mobile devices */
+@media (orientation: landscape) and (max-height: 500px) {
+  .landscape-adjust {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  
+  .landscape-nav {
+    max-height: 60px;
+  }
+}
