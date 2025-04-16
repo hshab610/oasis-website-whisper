@@ -20,7 +20,7 @@ const SubmitButton = ({
     type="submit" 
     className={cn(className, isSubmitting ? "" : "animate-pulse")}
     disabled={isSubmitting}
-    variant={className.includes("bg-primary") ? "default" : "default"}
+    variant="default"
     size={className.includes("py-6") ? "xl" : "default"}
   >
     {isSubmitting ? (

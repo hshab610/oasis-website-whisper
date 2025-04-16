@@ -47,7 +47,11 @@ const BookingForm = () => {
         console.log("Calling Supabase functions with data:", data);
         try {
           // First store in database
-          const dbResult = await supabase.from('bookings').insert([data]);
+          const dbResult = await supabase.from('bookings').insert([{
+            ...data,
+            move_date: data.move_date ? new Date(data.move_date).toISOString() : null
+          }]);
+          
           console.log("Database insertion result:", dbResult);
           
           if (dbResult.error) {
@@ -96,7 +100,7 @@ const BookingForm = () => {
 
   return (
     <div className="bg-white p-8 rounded-lg shadow-md border border-border">
-      <h3 className="text-2xl font-semibold mb-6">Send Us a Message</h3>
+      <h3 className="text-2xl font-semibold mb-6">Request a Quote</h3>
       
       <form onSubmit={handleSubmit} className="space-y-6">
         <PersonalInfoFields 

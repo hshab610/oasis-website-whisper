@@ -20,7 +20,7 @@ export const handleFormSubmission = async (
       console.error("Error from Supabase:", result.error);
       toast({
         title: "Error submitting form",
-        description: "Please try again later.",
+        description: result.error.message || "Please try again later.",
         variant: "destructive",
       });
       return false;
@@ -38,7 +38,7 @@ export const handleFormSubmission = async (
     console.error('Unexpected error during form submission:', error);
     toast({
       title: "Error submitting form",
-      description: "Please try again later.",
+      description: error instanceof Error ? error.message : "Please try again later.",
       variant: "destructive",
     });
     return false;

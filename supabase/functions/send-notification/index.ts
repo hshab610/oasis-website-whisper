@@ -29,7 +29,10 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    console.log("Function invoked with method:", req.method);
     const formData: FormData = await req.json();
+    console.log("Received form data:", formData);
+    
     let emailContent: string;
     let subject: string;
 
@@ -156,6 +159,7 @@ const handler = async (req: Request): Promise<Response> => {
       `;
     }
 
+    console.log("Preparing to send email with subject:", subject);
     // Make multiple attempts to send the email if needed
     let attempts = 0;
     const maxAttempts = 3;
@@ -183,6 +187,56 @@ const handler = async (req: Request): Promise<Response> => {
         }
 
         console.log("Email sent successfully:", data);
+        
+        // Also send confirmation to the customer
+        try {
+          const confirmationSubject = formData.type === 'contact' 
+            ? "We've received your message" 
+            : "Your moving quote request has been received";
+            
+          const confirmationHtml = formData.type === 'contact'
+            ? `
+              ${emailStyles}
+              <div class="email-container">
+                <div class="header">
+                  <h1>Thank You for Contacting Us</h1>
+                </div>
+                <div class="content">
+                  <p>Hello ${formData.name},</p>
+                  <p>Thank you for reaching out to Oasis Moving & Storage. We have received your message and will get back to you as soon as possible.</p>
+                  <p>Our team strives to respond to all inquiries within 24 hours.</p>
+                  <p>Best regards,<br>The Oasis Moving & Storage Team</p>
+                </div>
+              </div>
+            `
+            : `
+              ${emailStyles}
+              <div class="email-container">
+                <div class="header">
+                  <h1>Your Moving Quote Request</h1>
+                </div>
+                <div class="content">
+                  <p>Hello ${formData.name},</p>
+                  <p>Thank you for requesting a quote from Oasis Moving & Storage. We have received your information and will prepare a personalized quote for your upcoming move.</p>
+                  <p>A member of our team will contact you within 24 hours to discuss your moving needs and finalize your quote.</p>
+                  <p>Best regards,<br>The Oasis Moving & Storage Team</p>
+                </div>
+              </div>
+            `;
+            
+          await resend.emails.send({
+            from: "Oasis Moving & Storage <onboarding@resend.dev>",
+            to: [formData.email],
+            subject: confirmationSubject,
+            html: confirmationHtml,
+          });
+          
+          console.log("Confirmation email sent to customer");
+        } catch (confirmError) {
+          console.error("Error sending confirmation email to customer:", confirmError);
+          // Continue even if customer confirmation fails
+        }
+        
         return new Response(JSON.stringify({ success: true }), {
           headers: { "Content-Type": "application/json", ...corsHeaders },
         });
