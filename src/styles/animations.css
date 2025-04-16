@@ -30,6 +30,18 @@
   }
 }
 
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(230, 150, 80, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(230, 150, 80, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(230, 150, 80, 0);
+  }
+}
+
 .animate-fadeIn {
   animation: fadeIn 0.5s ease-out forwards;
 }
@@ -42,4 +54,17 @@
   background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
   background-size: 200% 100%;
   animation: shimmer 2s infinite;
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+.transition-smooth {
+  transition: all 0.3s ease;
+}
+
+.focus-effect:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(230, 150, 80, 0.3);
 }

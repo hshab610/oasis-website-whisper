@@ -17,8 +17,10 @@ const SubmitButton = ({
 }: SubmitButtonProps) => (
   <Button 
     type="submit" 
-    className={className}
+    className={cn(className, isSubmitting ? "" : "animate-pulse")}
     disabled={isSubmitting}
+    variant={className.includes("bg-primary") ? "default" : "default"}
+    size={className.includes("py-6") ? "xl" : "default"}
   >
     {isSubmitting ? (
       <span className="flex items-center">
@@ -33,5 +35,8 @@ const SubmitButton = ({
     )}
   </Button>
 );
+
+// Import cn utility
+import { cn } from "@/lib/utils";
 
 export default SubmitButton;
