@@ -41,11 +41,15 @@ const MoveCalculator = () => {
   
   // Handle package selection changes
   useEffect(() => {
+    console.log('Package Selected:', selectedPackage);
+    
     // Auto-update service selections for All-in-One package
     if (selectedPackage === 'all-in-one') {
+      console.log('Configuring All-in-One Package defaults');
       setNeedsAssembly(true);
       setAssemblyItems(5);
       setNeedsTvMount(true);
+      setNeedsJunkRemoval(false);  // Reset junk removal for All-in-One
     }
   }, [selectedPackage]);
   

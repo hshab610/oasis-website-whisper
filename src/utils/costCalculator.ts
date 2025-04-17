@@ -1,4 +1,3 @@
-
 /**
  * Utility functions for calculating moving costs
  */
@@ -28,6 +27,10 @@ export const calculateMovingCost = (
     needsJunkRemoval?: boolean;
   }
 ) => {
+  // Log the package type and options for debugging
+  console.log('Package Type:', packageType);
+  console.log('Additional Options:', additionalOptions);
+  
   // Default options
   const options = {
     hasHeavyItems: false,

@@ -1,4 +1,3 @@
-
 import { DollarSign, Clock, CheckCircle, Info, Package } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tooltip } from '@/components/ui/tooltip';
@@ -31,6 +30,8 @@ const CostSummary = ({
       'Loading and unloading',
       'Standard insurance'
     ];
+    
+    console.log('Selected Package for Included Services:', selectedPackage);
     
     if (selectedPackage === 'all-in-one') {
       return [
