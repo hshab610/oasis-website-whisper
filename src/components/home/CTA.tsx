@@ -59,10 +59,12 @@ const CTA = () => {
                   <span>500+ satisfied customers</span>
                 </li>
               </ul>
-              <Link to="/testimonials" className="text-primary inline-flex items-center hover:underline">
-                Read our customer reviews
-                <ArrowRight className="ml-1 h-4 w-4" />
-              </Link>
+              <div className="mt-2">
+                <Link to="/pricing" className="text-primary inline-flex items-center hover:underline">
+                  See our detailed pricing
+                  <ArrowRight className="ml-1 h-4 w-4" />
+                </Link>
+              </div>
             </div>
           </div>
         </div>

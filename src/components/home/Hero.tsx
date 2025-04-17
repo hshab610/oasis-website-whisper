@@ -2,6 +2,8 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Package, Truck, Star, Shield, DollarSign, CalendarCheck } from 'lucide-react';
+import HeroButtons from './hero/HeroButtons';
+import HeroFeatures from './hero/HeroFeatures';
 
 const Hero = () => {
   return (
@@ -25,42 +27,9 @@ const Hero = () => {
               Professional and reliable moving services in Westerville, Ohio. Let us guide your possessions safely to their new home.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center">
-              <Link to="/contact" className="w-full sm:w-auto mx-auto">
-                <Button className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white font-medium px-6 py-5 rounded-md shadow-lg hover:shadow-xl transition-all duration-300 text-lg flex items-center justify-center">
-                  <CalendarCheck className="mr-2 h-5 w-5" />
-                  Book Your Move
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-              <a href="#quick-estimate" className="w-full sm:w-auto mx-auto">
-                <Button variant="outline" className="w-full sm:w-auto border-primary text-primary hover:bg-primary/10 font-medium px-6 py-5 rounded-md transition-all duration-300 text-lg flex items-center justify-center">
-                  <DollarSign className="mr-2 h-5 w-5" />
-                  Calculate Cost
-                </Button>
-              </a>
-            </div>
+            <HeroButtons />
             
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-6 max-w-3xl mx-auto">
-              <div className="flex flex-col items-center gap-2 bg-white/80 p-3 rounded-lg shadow-sm">
-                <div className="bg-primary/10 p-2 rounded-full flex items-center justify-center">
-                  <Truck size={20} className="text-primary" />
-                </div>
-                <span className="font-medium text-center">Local & Long Distance</span>
-              </div>
-              <div className="flex flex-col items-center gap-2 bg-white/80 p-3 rounded-lg shadow-sm">
-                <div className="bg-primary/10 p-2 rounded-full flex items-center justify-center">
-                  <Package size={20} className="text-primary" />
-                </div>
-                <span className="font-medium text-center">Storage Solutions</span>
-              </div>
-              <div className="flex flex-col items-center gap-2 bg-white/80 p-3 rounded-lg shadow-sm">
-                <div className="bg-primary/10 p-2 rounded-full flex items-center justify-center">
-                  <Shield size={20} className="text-primary" />
-                </div>
-                <span className="font-medium text-center">Fully Insured</span>
-              </div>
-            </div>
+            <HeroFeatures />
           </div>
           
           <div className="relative hidden lg:block mx-auto text-center">
