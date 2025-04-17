@@ -43,7 +43,7 @@ export function useFormspree(formId: string) {
       let formspreeSuccess = false;
       let edgeFunctionSuccess = false;
       
-      // First attempt Formspree submission (backup service)
+      // First attempt Formspree submission (primary service)
       try {
         console.log("Submitting to Formspree...");
         const formspreeResponse = await fetch(`https://formspree.io/f/${formId}`, {
@@ -66,38 +66,74 @@ export function useFormspree(formId: string) {
         // Continue with edge function even if Formspree fails
       }
       
-      // Then attempt edge function submission for email delivery
+      // Then attempt edge function submission for email delivery (backup service)
       console.log("Submitting to edge function:", submissionData);
-      const { data: result, error } = await supabase.functions.invoke('send-notification', {
-        body: submissionData,
-      });
       
-      if (error) {
-        console.warn('Edge function notification failed:', error);
-        
-        // If Formspree succeeded but edge function failed
-        if (formspreeSuccess) {
-          toast({
-            title: "Form submitted",
-            description: "Your submission was received, but there was a minor issue with email notifications. We'll still get your request.",
+      // Apply multiple retry attempts for edge function
+      let attempts = 0;
+      const maxAttempts = 3;
+      let edgeFunctionError = null;
+      
+      while (attempts < maxAttempts && !edgeFunctionSuccess) {
+        try {
+          console.log(`Edge function attempt ${attempts + 1} of ${maxAttempts}`);
+          
+          const { data: result, error } = await supabase.functions.invoke('send-notification', {
+            body: submissionData,
           });
-          return true;
+          
+          if (error) {
+            console.warn(`Edge function attempt ${attempts + 1} failed:`, error);
+            edgeFunctionError = error;
+            attempts++;
+            
+            // Exponential backoff (wait longer between each retry)
+            if (attempts < maxAttempts) {
+              const backoffMs = Math.pow(2, attempts) * 1000;
+              console.log(`Retrying in ${backoffMs}ms...`);
+              await new Promise(resolve => setTimeout(resolve, backoffMs));
+            }
+            continue;
+          }
+          
+          console.log("Edge function submission successful", result);
+          edgeFunctionSuccess = true;
+          break;
+        } catch (error) {
+          console.error(`Unexpected error on attempt ${attempts + 1}:`, error);
+          edgeFunctionError = error;
+          attempts++;
+          
+          if (attempts < maxAttempts) {
+            const backoffMs = Math.pow(2, attempts) * 1000;
+            await new Promise(resolve => setTimeout(resolve, backoffMs));
+          }
         }
-        
-        // If both failed
-        throw new Error('Failed to submit form. Please try again later.');
       }
       
-      edgeFunctionSuccess = true;
-      console.log("Edge function submission successful", result);
+      // Handle success scenarios with detailed logging
+      if (edgeFunctionSuccess || formspreeSuccess) {
+        console.log("Submission successful through:", {
+          formspree: formspreeSuccess ? "✓" : "✗",
+          edgeFunction: edgeFunctionSuccess ? "✓" : "✗"
+        });
+        
+        // Success toast
+        toast({
+          title: formType === 'contact' ? "Message sent successfully!" : "Booking request sent successfully!",
+          description: "We'll get back to you as soon as possible.",
+        });
+        
+        return true;
+      }
       
-      // Success toast
-      toast({
-        title: formType === 'contact' ? "Message sent successfully!" : "Booking request sent successfully!",
-        description: "We'll get back to you as soon as possible.",
-      });
+      // Handle failure if both methods failed
+      console.error("All submission methods failed");
+      console.error("Formspree:", formspreeSuccess ? "Success" : "Failed");
+      console.error("Edge Function:", edgeFunctionSuccess ? "Success" : "Failed", edgeFunctionError);
       
-      return true;
+      throw new Error('Failed to submit form. Please try again later.');
+      
     } catch (error) {
       console.error('Form submission error:', error);
       

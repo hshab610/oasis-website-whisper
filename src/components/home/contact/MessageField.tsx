@@ -9,6 +9,8 @@ interface MessageFieldProps {
   error?: string;
   minLength?: number;
   maxLength?: number;
+  label?: string;
+  required?: boolean;
 }
 
 const MessageField = ({ 
@@ -16,9 +18,12 @@ const MessageField = ({
   onChange, 
   error, 
   minLength = 10, 
-  maxLength = 1000 
+  maxLength = 1000,
+  label = "Message",
+  required = true
 }: MessageFieldProps) => {
   const [charCount, setCharCount] = useState(0);
+  const [isFocused, setIsFocused] = useState(false);
   
   useEffect(() => {
     setCharCount(value.length);
@@ -30,13 +35,22 @@ const MessageField = ({
       onChange(e);
     }
   };
+
+  const getCounterClass = () => {
+    if (charCount === 0) return "text-muted-foreground";
+    if (charCount < minLength) return "text-amber-500";
+    if (charCount > maxLength * 0.9) return "text-orange-500";
+    return "text-green-600";
+  };
   
   return (
     <div className="space-y-2">
       <div className="flex justify-between items-center">
-        <Label htmlFor="message" className={error ? "text-destructive" : ""}>Message *</Label>
-        <span className={`text-xs ${charCount < minLength ? 'text-destructive' : 'text-muted-foreground'}`}>
-          {charCount}/{maxLength} characters {charCount < minLength ? `(minimum ${minLength})` : ''}
+        <Label htmlFor="message" className={error ? "text-destructive" : ""}>
+          {label} {required && <span className="text-destructive">*</span>}
+        </Label>
+        <span className={`text-xs ${getCounterClass()}`}>
+          {charCount}/{maxLength} characters {charCount < minLength && !isFocused ? `(minimum ${minLength})` : ''}
         </span>
       </div>
       
@@ -45,8 +59,10 @@ const MessageField = ({
         name="message"
         value={value}
         onChange={handleChange}
-        placeholder="How can we help you?"
-        className={`min-h-[120px] ${error ? "border-destructive" : ""}`}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        placeholder="How can we help you with your move? Please provide details about your needs."
+        className={`min-h-[120px] resize-y ${error ? "border-destructive" : ""}`}
         required
       />
       
