@@ -15,14 +15,16 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-desertSand/95 sticky top-0 z-50 shadow-sm safe-area-padding">
+    <nav className="bg-desertSand/95 sticky top-0 z-50 shadow-sm safe-area-padding text-center">
       <div className="container mx-auto px-3 py-2">
         <div className="flex flex-col items-center justify-center space-y-2">
           <div className="flex justify-between items-center w-full">
-            <Logo />
+            <div className="flex justify-center items-center mx-auto md:mx-0">
+              <Logo />
+            </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-6">
+            <div className="hidden md:flex items-center space-x-6 justify-center">
               <NavLinks />
               <div className="flex items-center space-x-2">
                 <a href="tel:+16147400275" aria-label="Call us at 614-740-0275">
@@ -58,4 +60,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-

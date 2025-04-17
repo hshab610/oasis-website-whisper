@@ -1,5 +1,5 @@
 
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { 
@@ -9,7 +9,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ServiceCard } from '@/components/pricing/ServiceCard';
-import { AdditionalFees } from '@/components/pricing/AdditionalFees';
+import { PriceList } from '@/components/pricing/PriceList';
 import { services } from '@/data/pricing';
 
 const Pricing = () => {
@@ -33,7 +33,7 @@ const Pricing = () => {
           ))}
         </div>
         
-        <AdditionalFees />
+        <PriceList />
         
         <div className="mt-16">
           <Accordion type="single" collapsible className="max-w-4xl mx-auto">

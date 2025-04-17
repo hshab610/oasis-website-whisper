@@ -16,8 +16,8 @@ const Hero = () => {
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center text-center lg:text-left">
-          <div className="space-y-6 animate-fadeIn bg-overlay-fix">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          <div className="space-y-6 animate-fadeIn bg-overlay-fix text-center lg:text-left mx-auto">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-pharaohBlue font-playfair hero-heading text-center">
               Your <span className="text-primary">Journey</span> To A New Beginning
             </h1>
@@ -26,20 +26,20 @@ const Hero = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center">
-              <Link to="/contact" className="w-full sm:w-auto">
-                <Button className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white font-medium px-6 py-5 rounded-md shadow-lg hover:shadow-xl transition-all duration-300 text-lg flex items-center justify-center mx-auto">
+              <Link to="/contact" className="w-full sm:w-auto mx-auto">
+                <Button className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white font-medium px-6 py-5 rounded-md shadow-lg hover:shadow-xl transition-all duration-300 text-lg flex items-center justify-center">
                   Request Your Quote
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
-              <Link to="/services" className="w-full sm:w-auto">
-                <Button variant="outline" className="w-full sm:w-auto border-primary text-primary hover:bg-primary/10 font-medium px-6 py-5 rounded-md transition-all duration-300 text-lg mx-auto">
+              <Link to="/services" className="w-full sm:w-auto mx-auto">
+                <Button variant="outline" className="w-full sm:w-auto border-primary text-primary hover:bg-primary/10 font-medium px-6 py-5 rounded-md transition-all duration-300 text-lg">
                   Explore Services
                 </Button>
               </Link>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-6 max-w-3xl mx-auto text-center">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-6 max-w-3xl mx-auto">
               <div className="flex flex-col items-center gap-2 bg-white/80 p-3 rounded-lg shadow-sm">
                 <div className="bg-primary/10 p-2 rounded-full flex items-center justify-center">
                   <Truck size={20} className="text-primary" />
@@ -61,7 +61,7 @@ const Hero = () => {
             </div>
           </div>
           
-          <div className="relative hidden lg:block text-center">
+          <div className="relative hidden lg:block mx-auto text-center">
             <div className="relative bg-white/90 p-8 rounded-lg shadow-xl animate-fadeIn mx-auto" style={{animationDelay: '0.3s'}}>
               <img 
                 src="/lovable-uploads/295a11a3-e163-4559-922e-c48973cd49f7.png" 
@@ -90,4 +90,3 @@ const Hero = () => {
 };
 
 export default Hero;
-
