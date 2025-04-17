@@ -19,14 +19,14 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Helmet>
-        <title>Oasis Moving & Storage | Professional Moving Services</title>
-        <meta name="description" content="Professional moving and storage services in Westerville, Ohio. Local and long-distance moving, furniture assembly, and more." />
-      </Helmet>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
+    <BrowserRouter>
+      <TooltipProvider>
+        <Helmet>
+          <title>Oasis Moving & Storage | Professional Moving Services</title>
+          <meta name="description" content="Professional moving and storage services in Westerville, Ohio. Local and long-distance moving, furniture assembly, and more." />
+        </Helmet>
+        <Toaster />
+        <Sonner />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/services" element={<Services />} />
@@ -41,8 +41,8 @@ const App = () => (
           } />
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+      </TooltipProvider>
+    </BrowserRouter>
   </QueryClientProvider>
 );
 
