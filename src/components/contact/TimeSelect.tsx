@@ -1,41 +1,32 @@
 
-import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 
-type TimeSelectProps = {
+interface TimeSelectProps {
   value: string;
-  onValueChange: (value: string) => void;
-};
+  onChange: (value: string) => void;
+  error?: string;
+}
 
-const TimeSelect = ({ value, onValueChange }: TimeSelectProps) => (
-  <div>
-    <Label htmlFor="move_time">Preferred Time</Label>
-    <Select 
-      name="move_time" 
-      value={value} 
-      onValueChange={onValueChange}
-    >
-      <SelectTrigger>
+const TimeSelect = ({ value, onChange, error }: TimeSelectProps) => {
+  return (
+    <Select value={value} onValueChange={onChange}>
+      <SelectTrigger className={error ? "border-destructive" : ""}>
         <SelectValue placeholder="Select preferred time" />
       </SelectTrigger>
       <SelectContent>
-        <SelectGroup>
-          <SelectLabel>Time Slots</SelectLabel>
-          <SelectItem value="morning">Morning (8AM - 12PM)</SelectItem>
-          <SelectItem value="afternoon">Afternoon (12PM - 4PM)</SelectItem>
-          <SelectItem value="evening">Evening (4PM - 7PM)</SelectItem>
-        </SelectGroup>
+        <SelectItem value="morning">Morning (8:00 AM - 12:00 PM)</SelectItem>
+        <SelectItem value="afternoon">Afternoon (12:00 PM - 4:00 PM)</SelectItem>
+        <SelectItem value="evening">Evening (4:00 PM - 7:00 PM)</SelectItem>
+        <SelectItem value="flexible">Flexible (Anytime)</SelectItem>
       </SelectContent>
     </Select>
-  </div>
-);
+  );
+};
 
 export default TimeSelect;

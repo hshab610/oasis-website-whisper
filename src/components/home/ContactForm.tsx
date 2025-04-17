@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useFormspree } from '@/hooks/use-formspree';
@@ -14,16 +15,65 @@ const ContactForm = () => {
     message: ''
   });
   
+  const [errors, setErrors] = useState<{
+    name?: string;
+    email?: string;
+    message?: string;
+  }>({});
+  
   const { submitToFormspree, isSubmitting } = useFormspree('mnnpyppa');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+    
+    // Clear error when user starts typing
+    if (errors[name as keyof typeof errors]) {
+      setErrors(prev => ({ ...prev, [name]: undefined }));
+    }
+  };
+  
+  const validateForm = () => {
+    const newErrors: {
+      name?: string;
+      email?: string;
+      message?: string;
+    } = {};
+    
+    if (!formData.name.trim()) {
+      newErrors.name = 'Name is required';
+    } else if (formData.name.trim().length < 2) {
+      newErrors.name = 'Name must be at least 2 characters';
+    }
+    
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+    
+    if (!formData.message.trim()) {
+      newErrors.message = 'Message is required';
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = 'Please provide a more detailed message';
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isSubmitting) return;
+    
+    if (!validateForm()) {
+      toast({
+        title: "Form validation failed",
+        description: "Please check the form for errors and try again.",
+        variant: "destructive",
+      });
+      return;
+    }
     
     console.log("Submitting contact form with data:", formData);
     
@@ -60,11 +110,13 @@ const ContactForm = () => {
             <PersonalFields 
               formData={formData}
               onChange={handleChange}
+              errors={errors}
             />
             
             <MessageField
               value={formData.message}
               onChange={handleChange}
+              error={errors.message}
             />
             
             <SubmitButton isSubmitting={isSubmitting} />

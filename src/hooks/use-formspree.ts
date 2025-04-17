@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { handleFormSubmission } from '@/utils/form';
+import { supabase } from '@/integrations/supabase/client';
 
 export function useFormspree(formId: string) {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -16,6 +16,14 @@ export function useFormspree(formId: string) {
       if (!data || Object.keys(data).length === 0) {
         throw new Error('Form data is empty');
       }
+
+      if (!data.email || !/^\S+@\S+\.\S+$/.test(data.email)) {
+        throw new Error('Please enter a valid email address');
+      }
+
+      if (!data.name || data.name.trim().length < 2) {
+        throw new Error('Please enter your name (at least 2 characters)');
+      }
       
       // First submit to Formspree for their email service
       const formspreeResponse = await fetch(`https://formspree.io/f/${formId}`, {
@@ -27,6 +35,8 @@ export function useFormspree(formId: string) {
       });
       
       if (!formspreeResponse.ok) {
+        const error = await formspreeResponse.json();
+        console.error('Formspree error:', error);
         throw new Error('Failed to submit form to Formspree');
       }
       
@@ -41,21 +51,21 @@ export function useFormspree(formId: string) {
       
       // Call the edge function to send notification emails
       console.log("Sending to edge function:", edgeFunctionData);
-      const supabaseResult = await fetch('/api/send-notification', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(edgeFunctionData),
+      const { data: result, error } = await supabase.functions.invoke('send-notification', {
+        body: edgeFunctionData,
       });
       
-      if (!supabaseResult.ok) {
-        console.warn('Edge function notification failed, but form data was saved in Formspree');
+      if (error) {
+        console.warn('Edge function notification failed:', error);
         // We still return true since the primary submission to Formspree succeeded
-      } else {
-        console.log("Edge function submission successful");
+        toast({
+          title: "Form submitted",
+          description: "Your submission was received, but there was a minor issue with email notifications. We'll still get your request.",
+        });
+        return true;
       }
       
+      console.log("Edge function submission successful", result);
       return true;
     } catch (error) {
       console.error('Form submission error:', error);

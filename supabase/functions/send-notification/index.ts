@@ -1,3 +1,4 @@
+
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 
@@ -46,14 +47,46 @@ const handler = async (req: Request): Promise<Response> => {
       formData = await req.json();
       console.log("Received form data:", formData);
       
-      // Basic validation - require minimum fields
-      if (!formData || !formData.name || !formData.email || !formData.type) {
-        throw new Error("Missing required form data");
+      // Enhanced validation with more descriptive errors
+      if (!formData) {
+        throw new Error("Missing form data");
+      }
+      
+      if (!formData.name || formData.name.trim().length < 2) {
+        throw new Error("Name is required (minimum 2 characters)");
+      }
+      
+      if (!formData.email || !/^\S+@\S+\.\S+$/.test(formData.email)) {
+        throw new Error("Valid email address is required");
+      }
+      
+      if (!formData.type || !['contact', 'booking'].includes(formData.type)) {
+        throw new Error("Invalid form type");
+      }
+      
+      // Additional validation for booking forms
+      if (formData.type === 'booking') {
+        if (!formData.move_date) {
+          throw new Error("Move date is required for booking requests");
+        }
+        
+        if (!formData.move_time) {
+          throw new Error("Move time is required for booking requests");
+        }
+        
+        if (!formData.package_type) {
+          throw new Error("Package type is required for booking requests");
+        }
+      } else {
+        // Contact form validation
+        if (!formData.message || formData.message.trim().length < 10) {
+          throw new Error("Please provide a detailed message (minimum 10 characters)");
+        }
       }
     } catch (parseError) {
-      console.error("Error parsing request body:", parseError);
+      console.error("Error parsing or validating request body:", parseError);
       return new Response(
-        JSON.stringify({ error: "Invalid request body" }), 
+        JSON.stringify({ error: parseError instanceof Error ? parseError.message : "Invalid request body" }), 
         { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
       );
     }

@@ -1,47 +1,32 @@
 
-import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 
-type PackageSelectProps = {
+interface PackageSelectProps {
   value: string;
-  onValueChange: (value: string) => void;
-};
+  onChange: (value: string) => void;
+  error?: string;
+}
 
-const PackageSelect = ({ value, onValueChange }: PackageSelectProps) => (
-  <div>
-    <Label htmlFor="package_type">Service Package</Label>
-    <Select 
-      name="package_type" 
-      value={value} 
-      onValueChange={onValueChange}
-    >
-      <SelectTrigger>
-        <SelectValue placeholder="Select a service package" />
+const PackageSelect = ({ value, onChange, error }: PackageSelectProps) => {
+  return (
+    <Select value={value} onValueChange={onChange}>
+      <SelectTrigger className={error ? "border-destructive" : ""}>
+        <SelectValue placeholder="Select service package" />
       </SelectTrigger>
       <SelectContent>
-        <SelectGroup>
-          <SelectLabel>Moving Services</SelectLabel>
-          <SelectItem value="all-in-one">All-in-One Moving Package</SelectItem>
-          <SelectItem value="local">Local Moving</SelectItem>
-          <SelectItem value="long-distance">Long Distance Moving</SelectItem>
-          <SelectItem value="furniture">Furniture Assembly</SelectItem>
-          <SelectItem value="tv">TV Mounting</SelectItem>
-          <SelectItem value="junk">Hauling & Junk Removal</SelectItem>
-          <SelectItem value="donation">Donation Pickup & Dropoff</SelectItem>
-          <SelectItem value="storage">Storage Solutions</SelectItem>
-          <SelectItem value="other">Other Services</SelectItem>
-        </SelectGroup>
+        <SelectItem value="all-in-one">All-in-One Package</SelectItem>
+        <SelectItem value="local">Local Moving</SelectItem>
+        <SelectItem value="long-distance">Long Distance Moving</SelectItem>
+        <SelectItem value="custom">Custom Service</SelectItem>
       </SelectContent>
     </Select>
-  </div>
-);
+  );
+};
 
 export default PackageSelect;
