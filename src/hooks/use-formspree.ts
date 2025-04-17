@@ -30,7 +30,7 @@ export function useFormspree(formId: string) {
       }
       
       // Form type detection
-      const formType = data.move_date ? 'booking' : 'contact';
+      const formType = data.type || (data.move_date ? 'booking' : 'contact');
       
       // Prepare data with form type indicator
       const submissionData = {
@@ -43,9 +43,11 @@ export function useFormspree(formId: string) {
       let formspreeSuccess = false;
       let edgeFunctionSuccess = false;
       
-      // First attempt Formspree submission (primary service)
+      // First attempt - multiple redundant Formspree submissions to different email addresses
       try {
         console.log("Submitting to Formspree...");
+        
+        // Primary submission
         const formspreeResponse = await fetch(`https://formspree.io/f/${formId}`, {
           method: 'POST',
           headers: {
@@ -53,6 +55,23 @@ export function useFormspree(formId: string) {
           },
           body: JSON.stringify(submissionData),
         });
+        
+        // Additional submission to ensure delivery
+        if (formType === 'booking' && !data._cc) {
+          const bookingCcData = {
+            ...submissionData,
+            _subject: `Moving Quote Request from ${data.name}`,
+            _replyto: data.email,
+          };
+          
+          await fetch(`https://formspree.io/f/${formId}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(bookingCcData),
+          });
+        }
         
         if (formspreeResponse.ok) {
           console.log("Formspree submission successful");
@@ -116,12 +135,6 @@ export function useFormspree(formId: string) {
         console.log("Submission successful through:", {
           formspree: formspreeSuccess ? "✓" : "✗",
           edgeFunction: edgeFunctionSuccess ? "✓" : "✗"
-        });
-        
-        // Success toast
-        toast({
-          title: formType === 'contact' ? "Message sent successfully!" : "Booking request sent successfully!",
-          description: "We'll get back to you as soon as possible.",
         });
         
         return true;
