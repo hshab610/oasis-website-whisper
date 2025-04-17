@@ -10,6 +10,13 @@ export function useFormspree(formId: string) {
   const submitToFormspree = async (data: any) => {
     setIsSubmitting(true);
     try {
+      console.log("Submitting form data:", data);
+      
+      // Basic validation
+      if (!data || Object.keys(data).length === 0) {
+        throw new Error('Form data is empty');
+      }
+      
       // First submit to Formspree for their email service
       const formspreeResponse = await fetch(`https://formspree.io/f/${formId}`, {
         method: 'POST',
@@ -33,6 +40,7 @@ export function useFormspree(formId: string) {
       };
       
       // Call the edge function to send notification emails
+      console.log("Sending to edge function:", edgeFunctionData);
       const supabaseResult = await fetch('/api/send-notification', {
         method: 'POST',
         headers: {
@@ -43,6 +51,9 @@ export function useFormspree(formId: string) {
       
       if (!supabaseResult.ok) {
         console.warn('Edge function notification failed, but form data was saved in Formspree');
+        // We still return true since the primary submission to Formspree succeeded
+      } else {
+        console.log("Edge function submission successful");
       }
       
       return true;

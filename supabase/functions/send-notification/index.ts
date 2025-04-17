@@ -1,4 +1,3 @@
-
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 
@@ -26,14 +25,38 @@ interface FormData {
 }
 
 const handler = async (req: Request): Promise<Response> => {
+  // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
     console.log("Function invoked with method:", req.method);
-    const formData: FormData = await req.json();
-    console.log("Received form data:", formData);
+    
+    if (req.method !== 'POST') {
+      return new Response(
+        JSON.stringify({ error: "Method not allowed" }),
+        { status: 405, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+    
+    let formData: FormData;
+    
+    try {
+      formData = await req.json();
+      console.log("Received form data:", formData);
+      
+      // Basic validation - require minimum fields
+      if (!formData || !formData.name || !formData.email || !formData.type) {
+        throw new Error("Missing required form data");
+      }
+    } catch (parseError) {
+      console.error("Error parsing request body:", parseError);
+      return new Response(
+        JSON.stringify({ error: "Invalid request body" }), 
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
     
     // Check if API key is properly set
     if (!Deno.env.get("RESEND_API_KEY") || Deno.env.get("RESEND_API_KEY") === "re_dummy_key_for_development") {
