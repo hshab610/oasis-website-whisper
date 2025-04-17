@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useFormspree } from '@/hooks/use-formspree';
@@ -9,7 +8,8 @@ import SubmitButton from './booking/SubmitButton';
 import DatePickerField from './DatePickerField';
 import TimeSelect from './TimeSelect';
 import QuoteButton from './QuoteButton';
-import { CalendarCheck, Clock, Check } from 'lucide-react';
+import SuccessMessage from './booking/SuccessMessage';
+import { CalendarCheck, Clock } from 'lucide-react';
 
 const BookingForm = () => {
   const { toast } = useToast();
@@ -38,14 +38,12 @@ const BookingForm = () => {
     package_type?: string;
   }>({});
   
-  // Using the same form ID as in ContactForm since it's working
   const { submitToFormspree, isSubmitting } = useFormspree('mnnpyppa');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
     
-    // Clear error when user starts typing
     if (errors[name as keyof typeof errors]) {
       setErrors(prev => ({ ...prev, [name]: undefined }));
     }
@@ -54,7 +52,6 @@ const BookingForm = () => {
   const handleSelectChange = (name: string, value: string) => {
     setFormData(prev => ({ ...prev, [name]: value }));
     
-    // Clear error when user makes a selection
     if (errors[name as keyof typeof errors]) {
       setErrors(prev => ({ ...prev, [name]: undefined }));
     }
@@ -67,7 +64,6 @@ const BookingForm = () => {
       const formattedDate = date.toISOString().split('T')[0];
       setFormData(prev => ({ ...prev, move_date: formattedDate }));
       
-      // Clear error when user selects a date
       if (errors.move_date) {
         setErrors(prev => ({ ...prev, move_date: undefined }));
       }
@@ -141,7 +137,6 @@ const BookingForm = () => {
     
     console.log("Submitting booking form with data:", formData);
     
-    // Add extra recipient emails to ensure proper delivery
     const enhancedFormData = {
       ...formData,
       type: 'booking',
@@ -157,7 +152,6 @@ const BookingForm = () => {
         description: "We'll get back to you as soon as possible to confirm your booking.",
       });
       
-      // Reset form data
       setFormData({
         name: '',
         email: '',
@@ -177,21 +171,7 @@ const BookingForm = () => {
   if (formSubmitted) {
     return (
       <div className="bg-white p-6 md:p-8 rounded-lg shadow-md border border-border">
-        <div className="flex flex-col items-center justify-center py-12 text-center">
-          <div className="bg-primary/10 p-4 rounded-full mb-6">
-            <Check className="h-12 w-12 text-primary" />
-          </div>
-          <h3 className="text-2xl font-semibold mb-4">Thank You!</h3>
-          <p className="text-muted-foreground mb-6 max-w-md">
-            Your booking request has been received. We'll get back to you within 24 hours to confirm your move details.
-          </p>
-          <button 
-            onClick={() => setFormSubmitted(false)} 
-            className="px-5 py-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md font-medium"
-          >
-            Request Another Quote
-          </button>
-        </div>
+        <SuccessMessage onRequestAnother={() => setFormSubmitted(false)} />
       </div>
     );
   }
