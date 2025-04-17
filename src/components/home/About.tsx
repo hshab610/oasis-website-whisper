@@ -22,9 +22,10 @@ const About = () => {
             
             <div className="bg-white p-6 rounded-lg shadow-lg relative z-10">
               <img 
-                src="https://images.unsplash.com/photo-1600518464441-9306b00c4746?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                src="/lovable-uploads/47292459-4120-44c2-8f4a-ce4648a96e90.png" 
                 alt="Our professional moving team" 
-                className="rounded-lg w-full h-auto"
+                className="rounded-lg w-full h-auto object-cover aspect-[4/3]"
+                loading="lazy"
               />
             </div>
             
