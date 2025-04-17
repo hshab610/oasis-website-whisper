@@ -7,6 +7,7 @@ import MoveDetailsFields from './booking/MoveDetailsFields';
 import ServiceDetailsFields from './booking/ServiceDetailsFields';
 import SubmitButton from './booking/SubmitButton';
 import DatePickerField from './DatePickerField';
+import TimeSelect from './TimeSelect';
 import QuoteButton from './QuoteButton';
 import { CalendarCheck, Clock } from 'lucide-react';
 
