@@ -12,10 +12,16 @@ export const handleFormSubmission = async (
     // Set submission state to prevent multiple clicks
     setIsSubmitting(true);
     console.log("Form submission started with data:", formData);
-
-    // Submit to Formspree if ID is provided
+    
+    // Initialize submission status tracking
+    let formspreeSuccess = false;
+    let supabaseSuccess = false;
+    let emailSent = false;
+    
+    // Submit to Formspree if ID is provided (backup service)
     if (formspreeId) {
       try {
+        console.log("Attempting Formspree submission...");
         const formspreeResponse = await fetch(`https://formspree.io/f/${formspreeId}`, {
           method: 'POST',
           headers: {
@@ -25,9 +31,10 @@ export const handleFormSubmission = async (
         });
         
         if (!formspreeResponse.ok) {
-          console.warn("Formspree submission failed, continuing with Supabase...");
+          console.warn("Formspree submission failed:", await formspreeResponse.text());
         } else {
           console.log("Formspree submission successful");
+          formspreeSuccess = true;
         }
       } catch (error) {
         console.warn("Error submitting to Formspree:", error);
@@ -36,6 +43,7 @@ export const handleFormSubmission = async (
     }
 
     // Call the provided supabase submission function
+    console.log("Attempting Supabase edge function submission...");
     const result = await supabaseSubmit(formData);
     console.log("Supabase submission result:", result);
     
@@ -51,6 +59,17 @@ export const handleFormSubmission = async (
         return true;
       }
       
+      // If Formspree worked but Supabase failed
+      if (formspreeSuccess) {
+        toast({
+          title: "Form submitted successfully",
+          description: "Your information has been received. Our team will contact you soon.",
+        });
+        emailSent = true;
+        return true;
+      }
+      
+      // If both failed
       toast({
         title: "Error submitting form",
         description: result.error.message || "Please try again later.",
@@ -59,6 +78,10 @@ export const handleFormSubmission = async (
       return false;
     }
 
+    // Supabase success
+    supabaseSuccess = true;
+    emailSent = true;
+    
     // Success case
     console.log("Form submitted successfully");
     toast({

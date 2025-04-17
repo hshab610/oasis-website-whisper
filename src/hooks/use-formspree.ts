@@ -12,7 +12,7 @@ export function useFormspree(formId: string) {
     try {
       console.log("Submitting form data:", data);
       
-      // Basic validation
+      // Enhanced validation
       if (!data || Object.keys(data).length === 0) {
         throw new Error('Form data is empty');
       }
@@ -25,47 +25,78 @@ export function useFormspree(formId: string) {
         throw new Error('Please enter your name (at least 2 characters)');
       }
       
-      // First submit to Formspree for their email service
-      const formspreeResponse = await fetch(`https://formspree.io/f/${formId}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-      
-      if (!formspreeResponse.ok) {
-        const error = await formspreeResponse.json();
-        console.error('Formspree error:', error);
-        throw new Error('Failed to submit form to Formspree');
+      if (data.message && data.message.trim().length < 10) {
+        throw new Error('Please provide a more detailed message (at least 10 characters)');
       }
       
-      // Then submit to our edge function to send emails to additional recipients
+      // Form type detection
       const formType = data.move_date ? 'booking' : 'contact';
       
-      // Prepare data for edge function with form type indicator
-      const edgeFunctionData = {
+      // Prepare data with form type indicator
+      const submissionData = {
         ...data,
-        type: formType
+        type: formType,
+        submission_time: new Date().toISOString()
       };
       
-      // Call the edge function to send notification emails
-      console.log("Sending to edge function:", edgeFunctionData);
+      // Track submission methods
+      let formspreeSuccess = false;
+      let edgeFunctionSuccess = false;
+      
+      // First attempt Formspree submission (backup service)
+      try {
+        console.log("Submitting to Formspree...");
+        const formspreeResponse = await fetch(`https://formspree.io/f/${formId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(submissionData),
+        });
+        
+        if (formspreeResponse.ok) {
+          console.log("Formspree submission successful");
+          formspreeSuccess = true;
+        } else {
+          const formspreeError = await formspreeResponse.json();
+          console.warn('Formspree submission failed:', formspreeError);
+        }
+      } catch (formspreeErr) {
+        console.warn('Error during Formspree submission:', formspreeErr);
+        // Continue with edge function even if Formspree fails
+      }
+      
+      // Then attempt edge function submission for email delivery
+      console.log("Submitting to edge function:", submissionData);
       const { data: result, error } = await supabase.functions.invoke('send-notification', {
-        body: edgeFunctionData,
+        body: submissionData,
       });
       
       if (error) {
         console.warn('Edge function notification failed:', error);
-        // We still return true since the primary submission to Formspree succeeded
-        toast({
-          title: "Form submitted",
-          description: "Your submission was received, but there was a minor issue with email notifications. We'll still get your request.",
-        });
-        return true;
+        
+        // If Formspree succeeded but edge function failed
+        if (formspreeSuccess) {
+          toast({
+            title: "Form submitted",
+            description: "Your submission was received, but there was a minor issue with email notifications. We'll still get your request.",
+          });
+          return true;
+        }
+        
+        // If both failed
+        throw new Error('Failed to submit form. Please try again later.');
       }
       
+      edgeFunctionSuccess = true;
       console.log("Edge function submission successful", result);
+      
+      // Success toast
+      toast({
+        title: formType === 'contact' ? "Message sent successfully!" : "Booking request sent successfully!",
+        description: "We'll get back to you as soon as possible.",
+      });
+      
       return true;
     } catch (error) {
       console.error('Form submission error:', error);

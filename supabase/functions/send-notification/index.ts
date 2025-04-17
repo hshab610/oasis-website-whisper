@@ -2,9 +2,13 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 
-// Fallback to dummy API key if environment variable is not set
+// Configure Resend API key
 const resendApiKey = Deno.env.get("RESEND_API_KEY") || "re_dummy_key_for_development";
 const resend = new Resend(resendApiKey);
+
+// Define recipient emails (both personal and business)
+const RECIPIENT_EMAILS = ["shabhuzayfah@gmail.com", "zay@oasismovingandstorage.com"];
+const FROM_EMAIL = "notifications@oasismovingandstorage.com";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -23,6 +27,7 @@ interface FormData {
   package_type?: string;
   additional_services?: string;
   notes?: string;
+  submission_time?: string;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -92,7 +97,7 @@ const handler = async (req: Request): Promise<Response> => {
     }
     
     // Check if API key is properly set
-    if (!Deno.env.get("RESEND_API_KEY") || Deno.env.get("RESEND_API_KEY") === "re_dummy_key_for_development") {
+    if (resendApiKey === "re_dummy_key_for_development") {
       console.warn("RESEND_API_KEY is not set. This would normally prevent emails from being sent.");
       // For development purposes, we'll return a success response
       return new Response(
@@ -107,6 +112,9 @@ const handler = async (req: Request): Promise<Response> => {
     
     let emailContent: string;
     let subject: string;
+    const submissionTime = formData.submission_time || new Date().toISOString();
+    const formattedDate = new Date(submissionTime).toLocaleDateString();
+    const formattedTime = new Date(submissionTime).toLocaleTimeString();
 
     const emailStyles = `
       <style>
@@ -158,7 +166,7 @@ const handler = async (req: Request): Promise<Response> => {
         <div class="email-container">
           <div class="header">
             <h1>New Contact Form Submission</h1>
-            <p>Received on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}</p>
+            <p>Received on ${formattedDate} at ${formattedTime}</p>
           </div>
           <div class="content">
             <div class="field">
@@ -190,7 +198,7 @@ const handler = async (req: Request): Promise<Response> => {
         <div class="email-container">
           <div class="header">
             <h1>New Moving Service Request</h1>
-            <p>Received on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}</p>
+            <p>Received on ${formattedDate} at ${formattedTime}</p>
           </div>
           <div class="content">
             <div class="field">
@@ -231,8 +239,8 @@ const handler = async (req: Request): Promise<Response> => {
       `;
     }
 
-    // Always return success in development mode
-    if (!Deno.env.get("RESEND_API_KEY") || Deno.env.get("RESEND_API_KEY") === "re_dummy_key_for_development") {
+    // For development mode without API key, return mock success
+    if (resendApiKey === "re_dummy_key_for_development") {
       return new Response(
         JSON.stringify({ 
           success: true, 
@@ -244,18 +252,19 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     console.log("Preparing to send email with subject:", subject);
-    // Make multiple attempts to send the email if needed
+    
+    // Make multiple attempts to send the email
     let attempts = 0;
     const maxAttempts = 3;
     let lastError = null;
     
     while (attempts < maxAttempts) {
       try {
-        console.log(`Attempt ${attempts + 1} to send email`);
+        console.log(`Attempt ${attempts + 1} to send notification email`);
         
         const { data, error } = await resend.emails.send({
-          from: "Oasis Moving & Storage <onboarding@resend.dev>",
-          to: ["shabhuzayfah@gmail.com", "zay@oasismovingandstorage.com"],
+          from: FROM_EMAIL,
+          to: RECIPIENT_EMAILS,
           subject: subject,
           html: emailContent,
           reply_to: formData.email,
@@ -270,10 +279,11 @@ const handler = async (req: Request): Promise<Response> => {
           continue;
         }
 
-        console.log("Email sent successfully:", data);
+        console.log("Notification email sent successfully:", data);
         
         // Also send confirmation to the customer
         try {
+          console.log("Sending confirmation email to customer");
           const confirmationSubject = formData.type === 'contact' 
             ? "We've received your message" 
             : "Your moving quote request has been received";
@@ -308,20 +318,27 @@ const handler = async (req: Request): Promise<Response> => {
               </div>
             `;
             
-          await resend.emails.send({
-            from: "Oasis Moving & Storage <onboarding@resend.dev>",
+          const { error: confirmError } = await resend.emails.send({
+            from: FROM_EMAIL,
             to: [formData.email],
             subject: confirmationSubject,
             html: confirmationHtml,
           });
           
-          console.log("Confirmation email sent to customer");
+          if (confirmError) {
+            console.error("Error sending confirmation email to customer:", confirmError);
+          } else {
+            console.log("Confirmation email sent to customer");
+          }
         } catch (confirmError) {
-          console.error("Error sending confirmation email to customer:", confirmError);
+          console.error("Exception sending confirmation email to customer:", confirmError);
           // Continue even if customer confirmation fails
         }
         
-        return new Response(JSON.stringify({ success: true }), {
+        return new Response(JSON.stringify({ 
+          success: true,
+          message: "Form submitted successfully and notifications sent" 
+        }), {
           headers: { "Content-Type": "application/json", ...corsHeaders },
         });
       } catch (error) {
@@ -340,7 +357,7 @@ const handler = async (req: Request): Promise<Response> => {
     return new Response(
       JSON.stringify({ 
         success: true, 
-        warning: "Data saved, but email notification couldn't be sent. Our team will still process your request."
+        warning: "Your submission was received, but email notification couldn't be sent. Our team will still process your request."
       }),
       { 
         status: 200,
@@ -350,7 +367,10 @@ const handler = async (req: Request): Promise<Response> => {
   } catch (error) {
     console.error("Error processing request:", error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ 
+        error: error instanceof Error ? error.message : "An unexpected error occurred",
+        success: false
+      }),
       { 
         status: 500,
         headers: { "Content-Type": "application/json", ...corsHeaders }
