@@ -1,6 +1,8 @@
 
-import { DollarSign, Clock } from 'lucide-react';
+import { DollarSign, Clock, CheckCircle, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Tooltip } from '@/components/ui/tooltip';
+import { TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface CostBreakdownItem {
   name: string;
@@ -11,6 +13,7 @@ interface CostSummaryProps {
   estimatedCost: number;
   estimatedTime: number;
   breakdown: CostBreakdownItem[];
+  selectedPackage: string;
   onGetQuote: () => void;
 }
 
@@ -18,8 +21,38 @@ const CostSummary = ({
   estimatedCost, 
   estimatedTime, 
   breakdown,
+  selectedPackage,
   onGetQuote
 }: CostSummaryProps) => {
+  const getIncludedServices = () => {
+    const baseServices = [
+      'Professional movers',
+      'Loading and unloading',
+      'Standard insurance'
+    ];
+    
+    if (selectedPackage === 'all-in-one') {
+      return [
+        ...baseServices,
+        'Furniture assembly (up to 5 items)',
+        'TV mounting (1 TV)'
+      ];
+    } else if (selectedPackage === 'local') {
+      return [
+        ...baseServices,
+        'Local transportation'
+      ];
+    } else if (selectedPackage === 'long-distance') {
+      return [
+        ...baseServices,
+        'Long distance transportation',
+        'Moving blankets and equipment'
+      ];
+    }
+    
+    return baseServices;
+  };
+  
   return (
     <div className="bg-primary/5 p-4 rounded-lg">
       <h3 className="font-semibold mb-2">Estimate Summary</h3>
@@ -43,7 +76,17 @@ const CostSummary = ({
       
       {breakdown.length > 0 && (
         <div className="border-t border-border pt-3 space-y-1">
-          <p className="text-sm font-medium">Cost Breakdown:</p>
+          <div className="flex items-center justify-between mb-1">
+            <p className="text-sm font-medium">Cost Breakdown:</p>
+            <Tooltip>
+              <TooltipTrigger>
+                <Info className="h-4 w-4 text-muted-foreground" />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p className="text-xs">Detailed breakdown of your estimated costs</p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
           {breakdown.map((item, index) => (
             <div key={index} className="flex justify-between text-sm">
               <span className="text-muted-foreground">{item.name}</span>
@@ -52,6 +95,18 @@ const CostSummary = ({
           ))}
         </div>
       )}
+      
+      <div className="mt-4 border-t border-border pt-3">
+        <p className="text-sm font-medium mb-2">What's Included:</p>
+        <ul className="text-xs space-y-1 mb-4">
+          {getIncludedServices().map((service, index) => (
+            <li key={index} className="flex items-start">
+              <CheckCircle className="h-3 w-3 text-primary mr-1 mt-0.5 flex-shrink-0" />
+              <span>{service}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
       
       <div className="mt-4">
         <Button 

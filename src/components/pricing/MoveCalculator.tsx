@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Calculator } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
@@ -17,11 +17,9 @@ const MoveCalculator = () => {
   // Basic information
   const [bedrooms, setBedrooms] = useState<number>(2);
   const [distance, setDistance] = useState<number>(10);
-  const [moveDate, setMoveDate] = useState<Date | undefined>(undefined);
   
   // Service selection
   const [selectedPackage, setSelectedPackage] = useState<string>('local');
-  const [estimatedHours, setEstimatedHours] = useState<number>(3);
   
   // Additional services
   const [hasHeavyItems, setHasHeavyItems] = useState<boolean>(false);
@@ -40,6 +38,26 @@ const MoveCalculator = () => {
   const [breakdown, setBreakdown] = useState<{name: string, cost: number}[]>([]);
   
   const { toast } = useToast();
+  
+  // Use useMemo to reduce unnecessary recalculations
+  const calculationParams = useMemo(() => ({
+    selectedPackage,
+    bedrooms,
+    distance,
+    hasHeavyItems,
+    heavyItemsCount,
+    hasStairs,
+    stairsCount,
+    lastMinuteBooking,
+    needsAssembly,
+    assemblyItems,
+    needsTvMount,
+    needsJunkRemoval
+  }), [
+    selectedPackage, bedrooms, distance, hasHeavyItems, heavyItemsCount, 
+    hasStairs, stairsCount, needsAssembly, assemblyItems, needsTvMount, 
+    needsJunkRemoval, lastMinuteBooking
+  ]);
   
   // Calculate estimated move cost using our utility
   useEffect(() => {
@@ -70,8 +88,7 @@ const MoveCalculator = () => {
       setAssemblyItems(5);
       setNeedsTvMount(true);
     }
-  }, [selectedPackage, bedrooms, distance, hasHeavyItems, heavyItemsCount, hasStairs, 
-      stairsCount, needsAssembly, assemblyItems, needsTvMount, needsJunkRemoval, lastMinuteBooking]);
+  }, [calculationParams]);
   
   const handleGetQuote = () => {
     toast({
@@ -147,6 +164,7 @@ const MoveCalculator = () => {
           estimatedCost={estimatedCost}
           estimatedTime={estimatedTime}
           breakdown={breakdown}
+          selectedPackage={selectedPackage}
           onGetQuote={handleGetQuote}
         />
       </CardContent>
