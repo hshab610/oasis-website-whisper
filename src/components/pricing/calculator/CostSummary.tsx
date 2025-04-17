@@ -1,5 +1,5 @@
 
-import { DollarSign, Clock, CheckCircle, Info } from 'lucide-react';
+import { DollarSign, Clock, CheckCircle, Info, Package } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tooltip } from '@/components/ui/tooltip';
 import { TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
@@ -25,6 +25,7 @@ const CostSummary = ({
   onGetQuote
 }: CostSummaryProps) => {
   const getIncludedServices = () => {
+    // Base services included in all packages
     const baseServices = [
       'Professional movers',
       'Loading and unloading',
@@ -35,12 +36,18 @@ const CostSummary = ({
       return [
         ...baseServices,
         'Furniture assembly (up to 5 items)',
-        'TV mounting (1 TV)'
+        'One TV mounting installation',
+        'Save over $120 on combined services',
+        'Add stairs service for $20 per staircase',
+        'Add donation service for $100',
+        'Add junk removal for $100'
       ];
     } else if (selectedPackage === 'local') {
       return [
         ...baseServices,
-        'Local transportation'
+        'Local transportation',
+        'Fully equipped moving truck',
+        'Basic furniture protection'
       ];
     } else if (selectedPackage === 'long-distance') {
       return [
@@ -48,6 +55,23 @@ const CostSummary = ({
         'Long distance transportation',
         'Moving blankets and equipment'
       ];
+    } else if (selectedPackage === 'custom') {
+      // Custom package with selected services
+      const customServices = [...baseServices];
+      
+      if (breakdown.some(item => item.name.includes('Assembly'))) {
+        customServices.push('Furniture assembly service');
+      }
+      
+      if (breakdown.some(item => item.name.includes('TV'))) {
+        customServices.push('TV mounting service');
+      }
+      
+      if (breakdown.some(item => item.name.includes('Junk'))) {
+        customServices.push('Junk removal service');
+      }
+      
+      return customServices;
     }
     
     return baseServices;
@@ -73,6 +97,16 @@ const CostSummary = ({
           </div>
         </div>
       </div>
+      
+      {selectedPackage === 'all-in-one' && (
+        <div className="mb-4 bg-primary/10 p-3 rounded-lg">
+          <div className="flex items-center gap-2 mb-2">
+            <Package className="h-4 w-4 text-primary" />
+            <p className="font-medium">All-in-One Moving Package</p>
+          </div>
+          <p className="text-sm text-muted-foreground">Best value! Complete moving solution with optional add-ons.</p>
+        </div>
+      )}
       
       {breakdown.length > 0 && (
         <div className="border-t border-border pt-3 space-y-1">

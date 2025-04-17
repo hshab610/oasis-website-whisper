@@ -39,6 +39,16 @@ const MoveCalculator = () => {
   
   const { toast } = useToast();
   
+  // Handle package selection changes
+  useEffect(() => {
+    // Auto-update service selections for All-in-One package
+    if (selectedPackage === 'all-in-one') {
+      setNeedsAssembly(true);
+      setAssemblyItems(5);
+      setNeedsTvMount(true);
+    }
+  }, [selectedPackage]);
+  
   // Use useMemo to reduce unnecessary recalculations
   const calculationParams = useMemo(() => ({
     selectedPackage,
@@ -81,13 +91,6 @@ const MoveCalculator = () => {
     setEstimatedCost(result.estimatedCost);
     setEstimatedTime(result.estimatedTime);
     setBreakdown(result.breakdown);
-    
-    // Auto-update service selections for All-in-One package
-    if (selectedPackage === 'all-in-one') {
-      setNeedsAssembly(true);
-      setAssemblyItems(5);
-      setNeedsTvMount(true);
-    }
   }, [calculationParams]);
   
   const handleGetQuote = () => {
