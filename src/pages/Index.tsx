@@ -4,10 +4,9 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import Hero from '@/components/home/Hero';
 import Services from '@/components/home/Services';
+import QuickEstimate from '@/components/home/QuickEstimate';
 import About from '@/components/home/About';
 import Testimonials from '@/components/home/Testimonials';
-import PricingSection from '@/components/pricing/PricingSection';
-import ContactForm from '@/components/home/ContactForm';
 import CTA from '@/components/home/CTA';
 
 const Index = () => {
@@ -25,11 +24,10 @@ const Index = () => {
         
         <main className="flex-grow">
           <Hero />
+          <QuickEstimate />
           <Services />
           <About />
-          <PricingSection />
           <Testimonials />
-          <ContactForm />
           <CTA />
         </main>
         
