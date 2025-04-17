@@ -17,24 +17,6 @@ const About = () => {
     <section className="py-16 md:py-20 bg-accent" id="about-section">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="relative">
-            <div className="pattern-divider absolute top-0 left-0 w-32 h-32 -translate-x-1/2 -translate-y-1/2 opacity-50 z-0"></div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-lg relative z-10">
-              <img 
-                src="/lovable-uploads/47292459-4120-44c2-8f4a-ce4648a96e90.png" 
-                alt="Our professional moving team" 
-                className="rounded-lg w-full h-auto object-cover aspect-[4/3]"
-                loading="lazy"
-              />
-            </div>
-            
-            <div className="bg-primary text-primary-foreground p-6 rounded-lg shadow-lg absolute -bottom-8 -right-8 max-w-xs">
-              <p className="text-lg font-medium mb-2">Serving Westerville & surrounding areas</p>
-              <p className="opacity-90">With years of experience, we've helped hundreds of families and businesses relocate smoothly.</p>
-            </div>
-          </div>
-          
           <div className="space-y-5">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">About Oasis Moving & Storage</h2>
             <div className="w-24 h-1 bg-primary mb-5"></div>
@@ -70,3 +52,4 @@ const About = () => {
 };
 
 export default About;
+
