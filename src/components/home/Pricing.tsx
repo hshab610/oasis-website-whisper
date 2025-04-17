@@ -18,7 +18,7 @@ const Pricing = () => {
       <div className="absolute inset-0 opacity-5 z-0 hieroglyphic-pattern"></div>
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-3xl mx-auto text-center mb-16">
+        <div className="max-w-3xl mx-auto text-center mb-12 md:mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Transparent Pricing</h2>
           <div className="w-24 h-1 bg-primary mx-auto mb-6"></div>
           <p className="text-lg text-muted-foreground">
@@ -27,7 +27,7 @@ const Pricing = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-12 md:mb-16">
           {services.map((service, index) => (
             <ServiceCard key={index} {...service} />
           ))}
@@ -35,7 +35,7 @@ const Pricing = () => {
         
         <PriceList />
         
-        <div className="mt-16">
+        <div className="mt-12 md:mt-16">
           <Accordion type="single" collapsible className="max-w-4xl mx-auto">
             <AccordionItem value="item-1" className="border-sandGold/50 bg-desertSand/10 rounded-md overflow-hidden mb-4">
               <AccordionTrigger className="text-lg font-medium px-4 py-4 hover:bg-sandGold/10">
@@ -69,10 +69,10 @@ const Pricing = () => {
           </Accordion>
         </div>
         
-        <div className="mt-16 text-center">
+        <div className="mt-12 md:mt-16 text-center">
           <p className="mb-6 text-lg">Ready to get started with your move? Get a free, no-obligation quote today!</p>
           <Link to="/contact">
-            <Button className="bg-primary text-white hover:bg-primary/90 font-medium px-8 py-4 rounded-md shadow-lg hover:shadow-xl transition-all duration-300 flex items-center">
+            <Button className="bg-primary text-white hover:bg-primary/90 font-medium px-6 py-3 rounded-md shadow-md hover:shadow-lg transition-all duration-300 flex items-center">
               Get a Free Quote
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>

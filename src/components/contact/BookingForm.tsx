@@ -69,8 +69,8 @@ const BookingForm = () => {
   };
 
   return (
-    <div className="bg-white p-8 rounded-lg shadow-md border border-border">
-      <h3 className="text-2xl font-semibold mb-6">Request a Quote</h3>
+    <div className="bg-white p-6 md:p-8 rounded-lg shadow-md border border-border">
+      <h3 className="text-2xl font-semibold mb-6 text-center md:text-left">Request a Quote</h3>
       
       <form onSubmit={handleSubmit} className="space-y-6">
         <PersonalInfoFields 

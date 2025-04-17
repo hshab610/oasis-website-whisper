@@ -61,7 +61,7 @@ const ContactForm = () => {
           </p>
         </div>
         
-        <div className="max-w-2xl mx-auto bg-card rounded-lg shadow-md border border-border p-8">
+        <div className="max-w-2xl mx-auto bg-card rounded-lg shadow-md border border-border p-6 md:p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
             <PersonalFields 
               formData={formData}

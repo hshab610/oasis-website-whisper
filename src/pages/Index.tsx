@@ -16,6 +16,8 @@ const Index = () => {
       <Helmet>
         <title>Oasis Moving & Storage | Professional Moving Services in Westerville, Ohio</title>
         <meta name="description" content="Professional moving and storage services in Westerville, Ohio. Local and long-distance moving, furniture assembly, junk removal, and more." />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <meta name="theme-color" content="#DFC9A5" />
       </Helmet>
       
       <div className="flex flex-col min-h-screen">

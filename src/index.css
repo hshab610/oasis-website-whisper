@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -221,35 +222,67 @@
   transform: scale(1.05);
 }
 
-/* Specific mobile fixes */
+/* Mobile-specific improvements */
 @media (max-width: 768px) {
-  /* Enhanced mobile text centering */
-  body {
+  /* Better mobile text alignment for readability */
+  .mobile-text-center {
     text-align: center;
   }
 
-  /* Center all images */
+  /* Center all images on mobile */
   img {
     margin-left: auto;
     margin-right: auto;
   }
 
-  /* Ensure buttons are centered and full width on mobile */
+  /* Improved button group handling on mobile */
   .mobile-button-group {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
+    gap: 0.75rem;
   }
 
   .mobile-button-group > * {
     width: 100%;
-    margin-bottom: 0.5rem;
-    text-align: center;
   }
+  
+  /* Fix for form elements on mobile */
+  input, select, textarea {
+    font-size: 16px !important; /* Prevents iOS zoom on focus */
+  }
+  
+  /* Improved touch targets for mobile */
+  button, a {
+    min-height: 44px; /* Apple's recommended minimum */
+    min-width: 44px;
+  }
+  
+  /* Better spacing for stacked elements */
+  .mobile-stack > * + * {
+    margin-top: 1rem;
+  }
+}
 
-  /* Responsive text alignment */
-  .mobile-text-center {
-    text-align: center;
-  }
+/* Animations for page elements */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Better card transitions */
+.hover-card {
+  transition: all 0.3s ease;
+}
+
+.hover-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }

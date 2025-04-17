@@ -3,9 +3,9 @@ import { MapPin, Phone, Mail, Clock, Calendar } from 'lucide-react';
 
 const ContactInfo = () => {
   return (
-    <div>
+    <div className="text-center lg:text-left">
       <h2 className="text-3xl md:text-4xl font-bold mb-4">Get In Touch</h2>
-      <div className="w-24 h-1 bg-primary mb-6"></div>
+      <div className="w-24 h-1 bg-primary mb-6 mx-auto lg:mx-0"></div>
       
       <p className="text-lg text-muted-foreground mb-8">
         Have questions or ready to start planning your move? Reach out to us using the form or contact information below.
@@ -95,7 +95,7 @@ type ContactInfoItemProps = {
 };
 
 const ContactInfoItem = ({ icon, title, content }: ContactInfoItemProps) => (
-  <div className="flex items-start space-x-4">
+  <div className="flex items-start space-x-4 text-left">
     <div className="bg-primary/10 p-3 rounded-full">
       {icon}
     </div>

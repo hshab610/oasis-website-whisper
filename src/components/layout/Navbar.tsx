@@ -15,11 +15,11 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-desertSand/95 sticky top-0 z-50 shadow-sm safe-area-padding text-center">
+    <nav className="bg-desertSand/95 sticky top-0 z-50 shadow-sm safe-area-padding">
       <div className="container mx-auto px-3 py-2">
-        <div className="flex flex-col items-center justify-center space-y-2">
+        <div className="flex flex-col items-center justify-center">
           <div className="flex justify-between items-center w-full">
-            <div className="flex justify-center items-center mx-auto md:mx-0">
+            <div className="flex justify-center items-center">
               <Logo />
             </div>
 

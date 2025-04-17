@@ -12,20 +12,20 @@ export const PriceList = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="bg-muted rounded-lg overflow-hidden max-w-4xl mx-auto">
+    <div className="bg-muted rounded-lg overflow-hidden max-w-4xl mx-auto shadow-sm">
       <Collapsible
         open={isOpen}
         onOpenChange={setIsOpen}
         className="w-full"
       >
-        <CollapsibleTrigger className="flex items-center justify-between w-full p-6 text-left hover:bg-muted/80 border-b border-border">
+        <CollapsibleTrigger className="flex items-center justify-between w-full p-6 text-left hover:bg-muted/80 border-b border-border transition-colors duration-200">
           <div className="flex-1">
             <h3 className="text-xl font-semibold">Additional Fees</h3>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground text-sm md:text-base">
               The following fees may apply depending on your specific moving requirements
             </p>
           </div>
-          <div className="flex items-center justify-center bg-primary/10 rounded-full p-1.5 ml-4">
+          <div className="flex items-center justify-center bg-primary/10 rounded-full p-1.5 ml-4 transition-all duration-300">
             {isOpen ? (
               <ChevronUp className="text-primary h-5 w-5" />
             ) : (
@@ -34,11 +34,11 @@ export const PriceList = () => {
           </div>
         </CollapsibleTrigger>
         
-        <CollapsibleContent>
-          <div className="p-6 space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <CollapsibleContent className="animate-accordion-down">
+          <div className="p-4 md:p-6 space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mb-6">
               {additionalFees.map((fee, index) => (
-                <div key={index} className="flex justify-between p-3 bg-accent rounded-md">
+                <div key={index} className="flex justify-between p-3 bg-accent rounded-md hover:shadow-sm transition-shadow duration-200">
                   <div>
                     <p className="font-medium">{fee.name}</p>
                     <p className="text-sm text-muted-foreground">{fee.description}</p>
