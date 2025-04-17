@@ -44,9 +44,12 @@ const TimeSelect = ({
           <SelectValue placeholder="Select preferred time" />
         </SelectTrigger>
         <SelectContent className="bg-background">
-          <SelectItem value="morning">Morning (8:00 AM - 12:00 PM)</SelectItem>
-          <SelectItem value="afternoon">Afternoon (12:00 PM - 4:00 PM)</SelectItem>
-          <SelectItem value="evening">Evening (4:00 PM - 7:00 PM)</SelectItem>
+          <SelectItem value="early-morning">Early Morning (7:00 AM - 9:00 AM)</SelectItem>
+          <SelectItem value="mid-morning">Mid Morning (9:00 AM - 11:00 AM)</SelectItem>
+          <SelectItem value="lunch">Lunch Time (11:00 AM - 1:00 PM)</SelectItem>
+          <SelectItem value="early-afternoon">Early Afternoon (1:00 PM - 3:00 PM)</SelectItem>
+          <SelectItem value="late-afternoon">Late Afternoon (3:00 PM - 5:00 PM)</SelectItem>
+          <SelectItem value="evening">Evening (5:00 PM - 7:00 PM)</SelectItem>
           <SelectItem value="flexible">Flexible (Anytime)</SelectItem>
         </SelectContent>
       </Select>

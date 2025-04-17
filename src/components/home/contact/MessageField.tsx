@@ -11,6 +11,7 @@ interface MessageFieldProps {
   maxLength?: number;
   label?: string;
   required?: boolean;
+  placeholder?: string;
 }
 
 const MessageField = ({ 
@@ -20,7 +21,8 @@ const MessageField = ({
   minLength = 10, 
   maxLength = 1000,
   label = "Message",
-  required = true
+  required = true,
+  placeholder = "How can we help you with your move? Please provide details about your needs."
 }: MessageFieldProps) => {
   const [charCount, setCharCount] = useState(0);
   const [isFocused, setIsFocused] = useState(false);
@@ -42,6 +44,13 @@ const MessageField = ({
     if (charCount > maxLength * 0.9) return "text-orange-500";
     return "text-green-600";
   };
+
+  const getMessageTips = () => {
+    if (charCount < minLength) {
+      return "Include details like: move date, size of home, special items, etc.";
+    }
+    return "";
+  };
   
   return (
     <div className="space-y-2">
@@ -61,13 +70,17 @@ const MessageField = ({
         onChange={handleChange}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
-        placeholder="How can we help you with your move? Please provide details about your needs."
+        placeholder={placeholder}
         className={`min-h-[120px] resize-y ${error ? "border-destructive" : ""}`}
         required
       />
       
       {error && (
         <p className="text-sm text-destructive">{error}</p>
+      )}
+      
+      {!error && charCount < minLength && (
+        <p className="text-xs text-amber-500">{getMessageTips()}</p>
       )}
     </div>
   );
