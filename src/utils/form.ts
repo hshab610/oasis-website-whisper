@@ -5,12 +5,35 @@ export const handleFormSubmission = async (
   formData: any,
   setIsSubmitting: (value: boolean) => void,
   toast: typeof toastType,
-  supabaseSubmit: (data: any) => Promise<{ error: any, data: any }>
+  supabaseSubmit: (data: any) => Promise<{ error: any, data: any }>,
+  formspreeId?: string
 ) => {
   try {
     // Set submission state to prevent multiple clicks
     setIsSubmitting(true);
     console.log("Form submission started with data:", formData);
+
+    // Submit to Formspree if ID is provided
+    if (formspreeId) {
+      try {
+        const formspreeResponse = await fetch(`https://formspree.io/f/${formspreeId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+        
+        if (!formspreeResponse.ok) {
+          console.warn("Formspree submission failed, continuing with Supabase...");
+        } else {
+          console.log("Formspree submission successful");
+        }
+      } catch (error) {
+        console.warn("Error submitting to Formspree:", error);
+        // Continue with Supabase even if Formspree fails
+      }
+    }
 
     // Call the provided supabase submission function
     const result = await supabaseSubmit(formData);

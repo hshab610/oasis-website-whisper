@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useFormspree } from '@/hooks/use-formspree';
@@ -58,12 +57,6 @@ const BookingForm = () => {
         package_type: '',
         additional_services: '',
         notes: ''
-      });
-    } else {
-      toast({
-        title: "Error submitting booking",
-        description: "Please try again later.",
-        variant: "destructive",
       });
     }
   };

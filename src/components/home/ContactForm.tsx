@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useFormspree } from '@/hooks/use-formspree';
@@ -42,13 +41,8 @@ const ContactForm = () => {
         phone: '',
         message: ''
       });
-    } else {
-      toast({
-        title: "Error sending message",
-        description: "Please try again later.",
-        variant: "destructive",
-      });
     }
+    // Error handled in the useFormspree hook
   };
 
   return (
