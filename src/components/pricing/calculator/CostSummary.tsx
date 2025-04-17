@@ -37,10 +37,9 @@ const CostSummary = ({
         ...baseServices,
         'Furniture assembly (up to 5 items)',
         'One TV mounting installation',
-        'Save over $120 on combined services',
-        'Add stairs service for $20 per staircase',
-        'Add donation service for $100',
-        'Add junk removal for $100'
+        'Fully equipped moving truck',
+        'Basic furniture protection',
+        'Save over $120 on combined services'
       ];
     } else if (selectedPackage === 'local') {
       return [
@@ -75,6 +74,18 @@ const CostSummary = ({
     }
     
     return baseServices;
+  };
+  
+  // Get optional add-ons for All-in-One package
+  const getOptionalAddOns = () => {
+    if (selectedPackage === 'all-in-one') {
+      return [
+        'Add stairs service for $20 per staircase',
+        'Add donation service for $100',
+        'Add junk removal for $100'
+      ];
+    }
+    return [];
   };
   
   return (
@@ -140,6 +151,20 @@ const CostSummary = ({
             </li>
           ))}
         </ul>
+        
+        {getOptionalAddOns().length > 0 && (
+          <>
+            <p className="text-sm font-medium mb-2">Optional Add-ons:</p>
+            <ul className="text-xs space-y-1 mb-4">
+              {getOptionalAddOns().map((addon, index) => (
+                <li key={index} className="flex items-start">
+                  <Info className="h-3 w-3 text-primary mr-1 mt-0.5 flex-shrink-0" />
+                  <span>{addon}</span>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
       </div>
       
       <div className="mt-4">

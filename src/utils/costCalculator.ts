@@ -62,6 +62,10 @@ export const calculateMovingCost = (
     costBreakdown.push({ name: `Hourly Rate (${totalHours} hrs @ $100/hr)`, cost: totalHours * hourlyRate });
     
     baseCost = packageFlatRate + (totalHours * hourlyRate);
+    
+    // All-in-One includes assembly and TV mount, so don't add these separately
+    options.needsAssembly = true;
+    options.needsTvMount = true;
   } else if (packageType === "local") {
     // Local Moving: $120 per hour
     const hourlyRate = 120;
