@@ -9,6 +9,7 @@ import DatePickerField from './DatePickerField';
 import TimeSelect from './TimeSelect';
 import QuoteButton from './QuoteButton';
 import SuccessMessage from './booking/SuccessMessage';
+import FormHeader from './booking/FormHeader';
 import { CalendarCheck, Clock } from 'lucide-react';
 
 const BookingForm = () => {
@@ -178,24 +179,7 @@ const BookingForm = () => {
 
   return (
     <div className="bg-white p-6 md:p-8 rounded-lg shadow-md border border-border">
-      <div className="flex flex-col space-y-4 mb-6">
-        <h3 className="text-2xl font-semibold text-center md:text-left">Request a Quote</h3>
-        <p className="text-muted-foreground text-sm">
-          Fill out the form below to get a free, no-obligation quote for your move.
-          Our team will contact you within 24 hours.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-3 sm:items-center text-sm text-muted-foreground">
-          <div className="flex items-center gap-2">
-            <CalendarCheck className="h-4 w-4 text-primary" />
-            <span>Book as early as tomorrow</span>
-          </div>
-          <div className="hidden sm:block h-1 w-1 rounded-full bg-muted-foreground"></div>
-          <div className="flex items-center gap-2">
-            <Clock className="h-4 w-4 text-primary" />
-            <span>Free same-day quotes</span>
-          </div>
-        </div>
-      </div>
+      <FormHeader />
       
       <form onSubmit={handleSubmit} className="space-y-6">
         <PersonalInfoFields 
