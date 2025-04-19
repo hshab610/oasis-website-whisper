@@ -38,6 +38,9 @@ const Hero = () => {
                 src="/lovable-uploads/295a11a3-e163-4559-922e-c48973cd49f7.png" 
                 alt="Professional movers carefully handling furniture" 
                 className="rounded-lg shadow-sm mb-4 w-full h-auto mx-auto"
+                onError={(e) => {
+                  e.currentTarget.src = "https://images.unsplash.com/photo-1600518464441-9306a5461596?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80";
+                }}
               />
               
               <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-lg shadow-xl border border-primary/20">
