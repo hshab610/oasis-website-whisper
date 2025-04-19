@@ -14,6 +14,9 @@ const Hero = () => {
           alt="" 
           aria-hidden="true"
           className="w-full h-full object-cover"
+          onError={(e) => {
+            e.currentTarget.src = "data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='200' height='200' fill='%23EDE6D6' fill-opacity='0.3'/%3E%3Cg fill='%23C2AF83' fill-opacity='0.2'%3E%3Cpath d='M20 20h10v10H20z'/%3E%3Cpath d='M50 20h10v10H50z'/%3E%3Cpath d='M80 20h10v10H80'/%3E%3Cpath d='M110 20h10v10H110z'/%3E%3Cpath d='M140 20h10v10H140z'/%3E%3Cpath d='M35 40h10v10H35z'/%3E%3Cpath d='M65 40h10v10H65z'/%3E%3Cpath d='M95 40h10v10H95z'/%3E%3Cpath d='M125 40h10v10H125z'/%3E%3C/g%3E%3C/svg%3E";
+          }}
         />
       </div>
       
@@ -39,7 +42,7 @@ const Hero = () => {
                 alt="Professional movers carefully handling furniture" 
                 className="rounded-lg shadow-sm mb-4 w-full h-auto mx-auto"
                 onError={(e) => {
-                  e.currentTarget.src = "https://images.unsplash.com/photo-1600518464441-9306a5461596?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80";
+                  e.currentTarget.src = "data:image/svg+xml,%3Csvg width='600' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='600' height='400' fill='%23f3f4f6'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='24' fill='%239ca3af'%3EMoving Professionals%3C/text%3E%3C/svg%3E";
                 }}
               />
               
