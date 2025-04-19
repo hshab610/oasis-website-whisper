@@ -36,6 +36,193 @@
         --egypt-sand: #EDE6D6;
         --egypt-blue: #0077BE;
         --egypt-red: #9E2B22;
+        --egypt-stone: #D4C9AB;
+        --egypt-dark: #21415B;
+        --egypt-papyrus: #F5F1E6;
+      }
+      
+      /* Egyptian chatbot styling */
+      #oasis-chatbot {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 350px;
+        background: linear-gradient(to bottom, var(--egypt-sand), var(--egypt-papyrus));
+        border-radius: 10px;
+        box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+        z-index: 1000;
+        font-family: 'Arial', sans-serif;
+        border: 3px solid var(--egypt-gold);
+        overflow: hidden;
+        transition: all 0.3s ease;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: chatbotFadeIn 0.5s ease forwards;
+      }
+      
+      @keyframes chatbotFadeIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .chatbot-header {
+        background: linear-gradient(to right, var(--egypt-red), var(--egypt-blue));
+        color: var(--egypt-gold);
+        padding: 12px;
+        border-radius: 7px 7px 0 0;
+        font-weight: bold;
+        font-size: 18px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+      }
+      
+      .close-button {
+        cursor: pointer;
+        font-size: 22px;
+        color: var(--egypt-sand);
+        transition: color 0.2s;
+      }
+      
+      .close-button:hover {
+        color: var(--egypt-gold);
+      }
+      
+      #chat-messages {
+        height: 300px;
+        overflow-y: auto;
+        padding: 15px;
+        background-color: rgba(255, 255, 255, 0.9);
+        background-image: url('https://i.imgur.com/XKZ5vKQ.png');
+        background-size: 180px;
+        background-blend-mode: overlay;
+        color: #333;
+        scroll-behavior: smooth;
+      }
+      
+      #chat-messages::-webkit-scrollbar {
+        width: 6px;
+      }
+      
+      #chat-messages::-webkit-scrollbar-thumb {
+        background-color: var(--egypt-stone);
+        border-radius: 3px;
+      }
+      
+      .message-bubble {
+        margin: 8px 0;
+        padding: 10px 12px;
+        border-radius: 10px;
+        max-width: 80%;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        line-height: 1.4;
+        position: relative;
+        animation: messageFadeIn 0.3s ease forwards;
+      }
+      
+      @keyframes messageFadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .user-message {
+        background: linear-gradient(135deg, var(--egypt-gold), #E6C17B);
+        color: #222;
+        margin-left: auto;
+        border-radius: 10px 10px 0 10px;
+      }
+      
+      .bot-message {
+        background: linear-gradient(135deg, var(--egypt-blue), #4F99C5);
+        color: white;
+        border-radius: 10px 10px 10px 0;
+      }
+      
+      .bot-message a, .bot-message button {
+        color: var(--egypt-gold);
+        text-decoration: underline;
+      }
+      
+      .input-container {
+        position: relative;
+        border-top: 1px solid rgba(0,0,0,0.1);
+      }
+      
+      #chat-input {
+        width: 100%;
+        padding: 12px 15px 12px 40px;
+        border: none;
+        border-radius: 0 0 7px 7px;
+        background: var(--egypt-papyrus);
+        font-size: 14px;
+        outline: none;
+        transition: background 0.3s;
+      }
+      
+      #chat-input:focus {
+        background: white;
+      }
+      
+      .horus-eye {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 18px;
+        color: var(--egypt-dark);
+      }
+      
+      .trigger-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, var(--egypt-red), var(--egypt-blue));
+        color: var(--egypt-gold);
+        border: none;
+        padding: 12px 20px;
+        border-radius: 50px;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        font-weight: bold;
+        z-index: 999;
+        font-size: 15px;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+      
+      .trigger-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+      }
+      
+      .option-button {
+        background: var(--egypt-stone);
+        color: var(--egypt-dark);
+        border: none;
+        padding: 8px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-top: 8px;
+        margin-right: 5px;
+        font-weight: bold;
+        transition: background 0.2s;
+      }
+      
+      .option-button:hover {
+        background: var(--egypt-gold);
+      }
+      
+      .hieroglyph {
+        font-weight: normal;
+        margin-right: 5px;
       }
     </style>
   </head>
@@ -48,7 +235,19 @@
     
     <!-- Egyptian Chatbot Script -->
     <script>
-      function launchEgyptianChatbot() {
+      document.addEventListener('DOMContentLoaded', function() {
+        // Add the trigger button
+        const triggerButton = document.createElement('button');
+        triggerButton.innerHTML = '𓃭 Ask the Pharaoh\'s Advisor';
+        triggerButton.classList.add('trigger-button');
+        triggerButton.onclick = toggleEgyptianChatbot;
+        document.body.appendChild(triggerButton);
+        
+        // Initialize the chatbot as hidden
+        let chatbotVisible = false;
+      });
+      
+      function toggleEgyptianChatbot() {
         // Remove existing chatbot if it exists
         const existingChatbot = document.getElementById('oasis-chatbot');
         if (existingChatbot) {
@@ -56,69 +255,26 @@
           return;
         }
         
+        // Create and add the chatbot
         const chatbotHTML = `
-        <div id="oasis-chatbot" style="
-          position: fixed;
-          bottom: 20px;
-          right: 20px;
-          width: 350px;
-          background: linear-gradient(to bottom, var(--egypt-sand), #FFF);
-          border-radius: 8px;
-          box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-          z-index: 1000;
-          font-family: 'Arial', sans-serif;
-          border: 3px solid var(--egypt-gold);
-        ">
+        <div id="oasis-chatbot">
           <!-- Header with Ankh symbol -->
-          <div style="
-            background: linear-gradient(to right, var(--egypt-red), var(--egypt-blue));
-            color: var(--egypt-gold);
-            padding: 12px;
-            border-radius: 8px 8px 0 0;
-            text-align: center;
-            font-weight: bold;
-            font-size: 18px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-          ">
+          <div class="chatbot-header">
             <span>𓋹 Oasis Pharaoh's Moving Advisor 𓋹</span>
-            <span onclick="launchEgyptianChatbot()" style="cursor:pointer; font-size: 16px;">✕</span>
+            <span class="close-button" onclick="toggleEgyptianChatbot()">✕</span>
           </div>
           
           <!-- Chat messages (hieroglyphic bg) -->
-          <div id="chat-messages" style="
-            height: 300px;
-            overflow-y: auto;
-            padding: 15px;
-            background-color: rgba(255, 255, 255, 0.9);
-            background-image: url('https://i.imgur.com/XKZ5vKQ.png');
-            background-size: 200px;
-            background-blend-mode: overlay;
-            color: #333;
-          "></div>
+          <div id="chat-messages"></div>
           
           <!-- Input with Eye of Horus -->
-          <div style="position: relative;">
+          <div class="input-container">
             <input 
               type="text" 
               id="chat-input" 
               placeholder="Ask about moving, oh seeker of the Nile..." 
-              style="
-                width: 100%;
-                padding: 12px 15px 12px 40px;
-                border: 2px solid var(--egypt-gold);
-                border-radius: 0 0 8px 8px;
-                background: var(--egypt-sand);
-              "
             >
-            <span style="
-              position: absolute;
-              left: 10px;
-              top: 50%;
-              transform: translateY(-50%);
-              font-size: 20px;
-            ">𓂀</span> <!-- Eye of Horus symbol -->
+            <span class="horus-eye">𓂀</span>
           </div>
         </div>`;
 
@@ -128,23 +284,14 @@
         const chatInput = document.getElementById('chat-input');
         chatInput.addEventListener('keypress', function(e) {
           if (e.key === 'Enter') {
-            const userQuestion = this.value;
-            if (!userQuestion.trim()) return;
+            const userQuestion = this.value.trim();
+            if (!userQuestion) return;
             
             const chatMessages = document.getElementById('chat-messages');
             
             // User message (gold bubble)
             chatMessages.innerHTML += `
-              <div style="
-                background: var(--egypt-gold);
-                color: #000;
-                padding: 8px 12px;
-                border-radius: 8px 8px 0 8px;
-                margin: 5px 0;
-                max-width: 80%;
-                margin-left: auto;
-                box-shadow: 0 2px 3px rgba(0,0,0,0.1);
-              ">
+              <div class="message-bubble user-message">
                 <strong>You:</strong> ${userQuestion}
               </div>`;
             
@@ -155,68 +302,38 @@
               let botResponse = '';
               
               if (userQuestion.toLowerCase().includes('price') || userQuestion.toLowerCase().includes('cost') || userQuestion.toLowerCase().includes('quote')) {
-                botResponse = `𓃭 <em>"As the sun crosses the sky, so shall your items move affordably..."</em><br>
-                  Our sacred calculator reveals true costs. <button 
+                botResponse = `<em>"As the sun crosses the sky, so shall your items move affordably..."</em><br><br>
+                  Our sacred calculator reveals true costs. <br><button 
                     onclick='document.getElementById("quote-form") ? document.getElementById("quote-form").scrollIntoView({behavior: "smooth"}) : window.location.href="/contact"'
-                    style="
-                      background: var(--egypt-red);
-                      color: white;
-                      border: none;
-                      padding: 5px 10px;
-                      border-radius: 4px;
-                      cursor: pointer;
-                      margin-top: 5px;
-                    "
-                  >Consult the Calculator 𓃭</button>`;
+                    class="option-button"
+                  ><span class="hieroglyph">𓃭</span> Consult the Calculator</button>`;
               } 
               else if (userQuestion.toLowerCase().includes('date') || userQuestion.toLowerCase().includes('book') || userQuestion.toLowerCase().includes('schedule')) {
-                botResponse = `𓆣 <em>"The stars align for your journey..."</em><br>
-                  Our scribes await your command. <button 
+                botResponse = `<em>"The stars align for your journey..."</em><br><br>
+                  Our scribes await your command. <br><button 
                     onclick='window.location.href="/contact"'
-                    style="
-                      background: var(--egypt-blue);
-                      color: white;
-                      border: none;
-                      padding: 5px 10px;
-                      border-radius: 4px;
-                      cursor: pointer;
-                      margin-top: 5px;
-                    "
-                  >Check Dates 𓋴</button>`;
+                    class="option-button"
+                  ><span class="hieroglyph">𓋴</span> Check Dates</button>`;
               }
               else if (userQuestion.toLowerCase().includes('service') || userQuestion.toLowerCase().includes('pack') || userQuestion.toLowerCase().includes('storage')) {
-                botResponse = `𓈖 <em>"Like sacred treasures of the tomb, we protect your belongings..."</em><br>
-                  We offer full packing services and climate-controlled storage. <button 
+                botResponse = `<em>"Like sacred treasures of the tomb, we protect your belongings..."</em><br><br>
+                  We offer full packing services and climate-controlled storage. <br><button 
                     onclick='window.location.href="/services"'
-                    style="
-                      background: var(--egypt-gold);
-                      color: black;
-                      border: none;
-                      padding: 5px 10px;
-                      border-radius: 4px;
-                      cursor: pointer;
-                      margin-top: 5px;
-                    "
-                  >View Services 𓏏</button>`;
+                    class="option-button"
+                  ><span class="hieroglyph">𓏏</span> View Services</button>`;
               }
               else {
-                botResponse = `𓂀 <em>"I am Thoth, advisor to movers..."</em><br>
+                botResponse = `<em>"I am Thoth, advisor to movers..."</em><br><br>
                   Ask me about:<br>
                   • <strong>Pricing</strong> ("What's the cost for 2 bedrooms?")<br>
                   • <strong>Dates</strong> ("Is June available?")<br>
-                  • <strong>Services</strong> ("Do you pack artifacts?")`;
+                  • <strong>Services</strong> ("Do you pack artifacts?")<br><br>
+                  <button onclick='document.getElementById("chat-input").value="What pricing do you offer?";document.getElementById("chat-input").focus()' class="option-button"><span class="hieroglyph">𓇯</span> Pricing</button>
+                  <button onclick='document.getElementById("chat-input").value="What services do you offer?";document.getElementById("chat-input").focus()' class="option-button"><span class="hieroglyph">𓃀</span> Services</button>`;
               }
               
               chatMessages.innerHTML += `
-                <div style="
-                  background: var(--egypt-blue);
-                  color: white;
-                  padding: 8px 12px;
-                  border-radius: 8px 8px 8px 0;
-                  margin: 5px 0;
-                  max-width: 80%;
-                  box-shadow: 0 2px 3px rgba(0,0,0,0.1);
-                ">
+                <div class="message-bubble bot-message">
                   <strong>𓁟 Advisor:</strong> ${botResponse}
                 </div>`;
                 
@@ -230,42 +347,139 @@
         setTimeout(() => {
           const chatMessages = document.getElementById('chat-messages');
           chatMessages.innerHTML += `
-            <div style="
-              background: var(--egypt-blue);
-              color: white;
-              padding: 8px 12px;
-              border-radius: 8px 8px 8px 0;
-              margin: 5px 0;
-              max-width: 80%;
-              box-shadow: 0 2px 3px rgba(0,0,0,0.1);
-            ">
-              <strong>𓁟 Advisor:</strong> 𓂀 <em>"Greetings, noble one! I am the sacred advisor of Oasis Moving & Storage."</em><br>
-              How may I assist with your journey today?
+            <div class="message-bubble bot-message">
+              <strong>𓁟 Advisor:</strong> <em>"Greetings, noble one! I am the sacred advisor of Oasis Moving & Storage."</em><br><br>
+              How may I assist with your journey today?<br><br>
+              <button onclick='document.getElementById("chat-input").value="What pricing do you offer?";document.getElementById("chat-input").focus()' class="option-button"><span class="hieroglyph">𓇯</span> Pricing</button>
+              <button onclick='document.getElementById("chat-input").value="What services do you offer?";document.getElementById("chat-input").focus()' class="option-button"><span class="hieroglyph">𓃀</span> Services</button>
+              <button onclick='document.getElementById("chat-input").value="When can I book?";document.getElementById("chat-input").focus()' class="option-button"><span class="hieroglyph">𓆓</span> Booking</button>
             </div>`;
         }, 300);
+        
+        // Focus the input field
+        setTimeout(() => {
+          document.getElementById('chat-input').focus();
+        }, 400);
       }
       
-      // Add the trigger button when the page loads
-      document.addEventListener('DOMContentLoaded', function() {
-        const triggerButton = document.createElement('button');
-        triggerButton.innerHTML = '𓃭 Ask the Pharaoh\'s Advisor';
-        triggerButton.onclick = launchEgyptianChatbot;
-        triggerButton.style.cssText = `
-          position: fixed;
-          bottom: 20px;
-          right: 20px;
-          background: linear-gradient(to right, var(--egypt-red), var(--egypt-blue));
-          color: var(--egypt-gold);
-          border: none;
-          padding: 12px 15px;
-          border-radius: 50px;
-          cursor: pointer;
-          box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-          font-weight: bold;
-          z-index: 999;
-        `;
-        document.body.appendChild(triggerButton);
-      });
+      function toggleEgyptianChatbot() {
+        const existingChatbot = document.getElementById('oasis-chatbot');
+        if (existingChatbot) {
+          existingChatbot.remove();
+          document.querySelector('.trigger-button').style.display = 'block';
+        } else {
+          document.querySelector('.trigger-button').style.display = 'none';
+          launchEgyptianChatbot();
+        }
+      }
+      
+      function launchEgyptianChatbot() {
+        // Create and add the chatbot
+        const chatbotHTML = `
+        <div id="oasis-chatbot">
+          <!-- Header with Ankh symbol -->
+          <div class="chatbot-header">
+            <span>𓋹 Oasis Pharaoh's Moving Advisor 𓋹</span>
+            <span class="close-button" onclick="toggleEgyptianChatbot()">✕</span>
+          </div>
+          
+          <!-- Chat messages (hieroglyphic bg) -->
+          <div id="chat-messages"></div>
+          
+          <!-- Input with Eye of Horus -->
+          <div class="input-container">
+            <input 
+              type="text" 
+              id="chat-input" 
+              placeholder="Ask about moving, oh seeker of the Nile..." 
+            >
+            <span class="horus-eye">𓂀</span>
+          </div>
+        </div>`;
+
+        document.body.insertAdjacentHTML('beforeend', chatbotHTML);
+        
+        // AI Logic
+        const chatInput = document.getElementById('chat-input');
+        chatInput.addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') {
+            const userQuestion = this.value.trim();
+            if (!userQuestion) return;
+            
+            const chatMessages = document.getElementById('chat-messages');
+            
+            // User message (gold bubble)
+            chatMessages.innerHTML += `
+              <div class="message-bubble user-message">
+                <strong>You:</strong> ${userQuestion}
+              </div>`;
+            
+            this.value = '';
+            
+            // AI Response (blue bubble)
+            setTimeout(() => {
+              let botResponse = '';
+              
+              if (userQuestion.toLowerCase().includes('price') || userQuestion.toLowerCase().includes('cost') || userQuestion.toLowerCase().includes('quote')) {
+                botResponse = `<em>"As the sun crosses the sky, so shall your items move affordably..."</em><br><br>
+                  Our sacred calculator reveals true costs. <br><button 
+                    onclick='document.getElementById("quote-form") ? document.getElementById("quote-form").scrollIntoView({behavior: "smooth"}) : window.location.href="/contact"'
+                    class="option-button"
+                  ><span class="hieroglyph">𓃭</span> Consult the Calculator</button>`;
+              } 
+              else if (userQuestion.toLowerCase().includes('date') || userQuestion.toLowerCase().includes('book') || userQuestion.toLowerCase().includes('schedule')) {
+                botResponse = `<em>"The stars align for your journey..."</em><br><br>
+                  Our scribes await your command. <br><button 
+                    onclick='window.location.href="/contact"'
+                    class="option-button"
+                  ><span class="hieroglyph">𓋴</span> Check Dates</button>`;
+              }
+              else if (userQuestion.toLowerCase().includes('service') || userQuestion.toLowerCase().includes('pack') || userQuestion.toLowerCase().includes('storage')) {
+                botResponse = `<em>"Like sacred treasures of the tomb, we protect your belongings..."</em><br><br>
+                  We offer full packing services and climate-controlled storage. <br><button 
+                    onclick='window.location.href="/services"'
+                    class="option-button"
+                  ><span class="hieroglyph">𓏏</span> View Services</button>`;
+              }
+              else {
+                botResponse = `<em>"I am Thoth, advisor to movers..."</em><br><br>
+                  Ask me about:<br>
+                  • <strong>Pricing</strong> ("What's the cost for 2 bedrooms?")<br>
+                  • <strong>Dates</strong> ("Is June available?")<br>
+                  • <strong>Services</strong> ("Do you pack artifacts?")<br><br>
+                  <button onclick='document.getElementById("chat-input").value="What pricing do you offer?";document.getElementById("chat-input").focus()' class="option-button"><span class="hieroglyph">𓇯</span> Pricing</button>
+                  <button onclick='document.getElementById("chat-input").value="What services do you offer?";document.getElementById("chat-input").focus()' class="option-button"><span class="hieroglyph">𓃀</span> Services</button>`;
+              }
+              
+              chatMessages.innerHTML += `
+                <div class="message-bubble bot-message">
+                  <strong>𓁟 Advisor:</strong> ${botResponse}
+                </div>`;
+                
+              // Auto-scroll
+              chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 500);
+          }
+        });
+        
+        // Add welcome message
+        setTimeout(() => {
+          const chatMessages = document.getElementById('chat-messages');
+          chatMessages.innerHTML += `
+            <div class="message-bubble bot-message">
+              <strong>𓁟 Advisor:</strong> <em>"Greetings, noble one! I am the sacred advisor of Oasis Moving & Storage."</em><br><br>
+              How may I assist with your journey today?<br><br>
+              <button onclick='document.getElementById("chat-input").value="What pricing do you offer?";document.getElementById("chat-input").focus()' class="option-button"><span class="hieroglyph">𓇯</span> Pricing</button>
+              <button onclick='document.getElementById("chat-input").value="What services do you offer?";document.getElementById("chat-input").focus()' class="option-button"><span class="hieroglyph">𓃀</span> Services</button>
+              <button onclick='document.getElementById("chat-input").value="When can I book?";document.getElementById("chat-input").focus()' class="option-button"><span class="hieroglyph">𓆓</span> Booking</button>
+            </div>`;
+        }, 300);
+        
+        // Focus the input field
+        setTimeout(() => {
+          document.getElementById('chat-input').focus();
+        }, 400);
+      }
     </script>
   </body>
 </html>
