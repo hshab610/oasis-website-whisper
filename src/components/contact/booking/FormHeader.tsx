@@ -1,5 +1,5 @@
 
-import { CalendarCheck, Clock } from 'lucide-react';
+import { CalendarCheck, Clock, Mail } from 'lucide-react';
 
 const FormHeader = () => {
   return (
@@ -18,6 +18,11 @@ const FormHeader = () => {
         <div className="flex items-center gap-2">
           <Clock className="h-4 w-4 text-primary" />
           <span>Free same-day quotes</span>
+        </div>
+        <div className="hidden sm:block h-1 w-1 rounded-full bg-muted-foreground"></div>
+        <div className="flex items-center gap-2">
+          <Mail className="h-4 w-4 text-primary" />
+          <span>Instant notifications to our team</span>
         </div>
       </div>
     </div>

@@ -18,7 +18,16 @@ export const handleFormSubmission = async (
     let supabaseSuccess = false;
     let emailSent = false;
     
-    // Submit to Formspree if ID is provided (backup service)
+    // Add timestamps to track performance
+    const startTime = performance.now();
+    
+    // Ensure _cc field for Formspree to include both email addresses
+    // This ensures delivery to both personal and business emails
+    if (!formData._cc) {
+      formData._cc = 'zay@oasismovingandstorage.com';
+    }
+    
+    // Submit to Formspree if ID is provided (primary email service)
     if (formspreeId) {
       try {
         console.log("Attempting Formspree submission...");
@@ -34,6 +43,8 @@ export const handleFormSubmission = async (
           console.warn("Formspree submission failed:", await formspreeResponse.text());
         } else {
           console.log("Formspree submission successful");
+          const formspreeEndTime = performance.now();
+          console.log(`Formspree submission took ${formspreeEndTime - startTime}ms`);
           formspreeSuccess = true;
         }
       } catch (error) {
@@ -42,10 +53,13 @@ export const handleFormSubmission = async (
       }
     }
 
-    // Call the provided supabase submission function
+    // Call the provided supabase submission function (backup email service)
     console.log("Attempting Supabase edge function submission...");
     const result = await supabaseSubmit(formData);
     console.log("Supabase submission result:", result);
+    
+    const supabaseEndTime = performance.now();
+    console.log(`Supabase submission took ${supabaseEndTime - startTime}ms`);
     
     if (result.error) {
       console.error("Error from Supabase:", result.error);
