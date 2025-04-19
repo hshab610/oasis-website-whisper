@@ -1,4 +1,3 @@
-
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 
@@ -119,42 +118,77 @@ const handler = async (req: Request): Promise<Response> => {
     const emailStyles = `
       <style>
         .email-container {
-          font-family: Arial, sans-serif;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
           max-width: 600px;
           margin: 0 auto;
           padding: 20px;
-          background-color: #f9f9f9;
+          background-color: #ffffff;
         }
         .header {
           background-color: #1a5f7a;
           color: white;
-          padding: 20px;
+          padding: 24px;
+          border-radius: 8px 8px 0 0;
           text-align: center;
-          border-radius: 5px 5px 0 0;
         }
         .content {
-          background-color: white;
-          padding: 20px;
-          border-radius: 0 0 5px 5px;
+          background-color: #f8f9fa;
+          padding: 24px;
+          border-radius: 0 0 8px 8px;
           box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
+        .section {
+          margin-bottom: 24px;
+          padding: 16px;
+          background: white;
+          border-radius: 8px;
+          border: 1px solid #e9ecef;
+        }
+        .section-title {
+          color: #1a5f7a;
+          font-size: 18px;
+          font-weight: 600;
+          margin-bottom: 16px;
+          padding-bottom: 8px;
+          border-bottom: 2px solid #e9ecef;
+        }
         .field {
-          margin-bottom: 15px;
-          padding-bottom: 10px;
-          border-bottom: 1px solid #eee;
+          margin-bottom: 12px;
+          display: flex;
+          flex-direction: column;
         }
         .label {
-          font-weight: bold;
-          color: #1a5f7a;
+          font-weight: 600;
+          color: #495057;
+          margin-bottom: 4px;
         }
         .value {
-          margin-top: 5px;
+          color: #212529;
         }
         .footer {
-          margin-top: 20px;
+          margin-top: 24px;
           text-align: center;
-          font-size: 12px;
-          color: #888;
+          color: #6c757d;
+          font-size: 14px;
+        }
+        .urgent {
+          background-color: #fff3cd;
+          color: #856404;
+          padding: 12px;
+          border-radius: 4px;
+          margin-bottom: 16px;
+          border: 1px solid #ffeeba;
+        }
+        @media (max-width: 600px) {
+          .email-container {
+            padding: 12px;
+          }
+          .content {
+            padding: 16px;
+          }
+          .section {
+            padding: 12px;
+          }
         }
       </style>
     `;
@@ -165,75 +199,115 @@ const handler = async (req: Request): Promise<Response> => {
         ${emailStyles}
         <div class="email-container">
           <div class="header">
-            <h1>New Contact Form Submission</h1>
-            <p>Received on ${formattedDate} at ${formattedTime}</p>
+            <h1 style="margin:0;font-size:24px;">New Contact Form Submission</h1>
           </div>
           <div class="content">
-            <div class="field">
-              <div class="label">Name:</div>
-              <div class="value">${formData.name}</div>
+            <div class="section">
+              <div class="section-title">Customer Information</div>
+              <div class="field">
+                <div class="label">Name</div>
+                <div class="value">${formData.name}</div>
+              </div>
+              <div class="field">
+                <div class="label">Email</div>
+                <div class="value">${formData.email}</div>
+              </div>
+              <div class="field">
+                <div class="label">Phone</div>
+                <div class="value">${formData.phone || 'Not provided'}</div>
+              </div>
             </div>
-            <div class="field">
-              <div class="label">Email:</div>
-              <div class="value">${formData.email}</div>
-            </div>
-            <div class="field">
-              <div class="label">Phone:</div>
-              <div class="value">${formData.phone || 'Not provided'}</div>
-            </div>
-            <div class="field">
-              <div class="label">Message:</div>
-              <div class="value">${formData.message}</div>
+            
+            <div class="section">
+              <div class="section-title">Message</div>
+              <div class="value" style="white-space: pre-wrap;">${formData.message}</div>
             </div>
           </div>
           <div class="footer">
-            <p>This message was sent from the Oasis Moving & Storage website contact form.</p>
+            <p>Submitted via Oasis Moving & Storage website contact form</p>
           </div>
         </div>
       `;
     } else {
-      subject = `📦 New Moving Service Request from ${formData.name}`;
+      // Check if it's an urgent request (within 7 days)
+      const moveDate = new Date(formData.move_date);
+      const today = new Date();
+      const daysDifference = Math.ceil((moveDate - today) / (1000 * 60 * 60 * 24));
+      const isUrgent = daysDifference <= 7;
+      
+      subject = `📦 ${isUrgent ? '[URGENT] ' : ''}New Moving Quote Request from ${formData.name}`;
       emailContent = `
         ${emailStyles}
         <div class="email-container">
           <div class="header">
-            <h1>New Moving Service Request</h1>
-            <p>Received on ${formattedDate} at ${formattedTime}</p>
+            <h1 style="margin:0;font-size:24px;">New Moving Quote Request</h1>
           </div>
           <div class="content">
-            <div class="field">
-              <div class="label">Customer Information</div>
-              <div class="value">
-                <strong>Name:</strong> ${formData.name}<br>
-                <strong>Email:</strong> ${formData.email}<br>
-                <strong>Phone:</strong> ${formData.phone}
+            ${isUrgent ? `
+              <div class="urgent">
+                ⚡ URGENT REQUEST: Move scheduled in ${daysDifference} day${daysDifference === 1 ? '' : 's'}
+              </div>
+            ` : ''}
+            
+            <div class="section">
+              <div class="section-title">Customer Information</div>
+              <div class="field">
+                <div class="label">Name</div>
+                <div class="value">${formData.name}</div>
+              </div>
+              <div class="field">
+                <div class="label">Email</div>
+                <div class="value">${formData.email}</div>
+              </div>
+              <div class="field">
+                <div class="label">Phone</div>
+                <div class="value">${formData.phone}</div>
               </div>
             </div>
             
-            <div class="field">
-              <div class="label">Move Details</div>
-              <div class="value">
-                <strong>Date:</strong> ${formData.move_date}<br>
-                <strong>Time:</strong> ${formData.move_time}<br>
-                <strong>Address:</strong> ${formData.address}
+            <div class="section">
+              <div class="section-title">Move Details</div>
+              <div class="field">
+                <div class="label">Date</div>
+                <div class="value">${new Date(formData.move_date).toLocaleDateString('en-US', {
+                  weekday: 'long',
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}</div>
+              </div>
+              <div class="field">
+                <div class="label">Preferred Time</div>
+                <div class="value">${formData.move_time}</div>
+              </div>
+              <div class="field">
+                <div class="label">Location</div>
+                <div class="value">${formData.address}</div>
               </div>
             </div>
             
-            <div class="field">
-              <div class="label">Service Package</div>
-              <div class="value">
-                <strong>Selected Package:</strong> ${formData.package_type}<br>
-                <strong>Additional Services:</strong> ${formData.additional_services || 'None requested'}
+            <div class="section">
+              <div class="section-title">Service Details</div>
+              <div class="field">
+                <div class="label">Selected Package</div>
+                <div class="value">${formData.package_type}</div>
               </div>
-            </div>
-            
-            <div class="field">
-              <div class="label">Additional Notes</div>
-              <div class="value">${formData.notes || 'No additional notes provided'}</div>
+              ${formData.additional_services ? `
+                <div class="field">
+                  <div class="label">Additional Services</div>
+                  <div class="value">${formData.additional_services}</div>
+                </div>
+              ` : ''}
+              ${formData.notes ? `
+                <div class="field">
+                  <div class="label">Additional Notes</div>
+                  <div class="value">${formData.notes}</div>
+                </div>
+              ` : ''}
             </div>
           </div>
           <div class="footer">
-            <p>This message was sent from the Oasis Moving & Storage website booking form.</p>
+            <p>Submitted via Oasis Moving & Storage website booking form</p>
           </div>
         </div>
       `;
