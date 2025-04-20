@@ -2,9 +2,9 @@
 import { Button } from "@/components/ui/button";
 import { CalendarCheck, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { ButtonProps } from "@radix-ui/react-button";
+import { ButtonHTMLAttributes } from "react";
 
-interface QuoteButtonProps extends ButtonProps {
+interface QuoteButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   text?: string;
   className?: string;
   icon?: boolean;
@@ -16,11 +16,11 @@ interface QuoteButtonProps extends ButtonProps {
 const QuoteButton = ({
   text = "Request a Free Quote",
   className,
-  onClick,
   icon = true,
   arrow = true,
   variant = "quote",
   size = "lg",
+  children,
   ...props
 }: QuoteButtonProps) => {
   return (
@@ -31,12 +31,15 @@ const QuoteButton = ({
         "font-bold shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 transform-gpu bg-primary text-primary-foreground",
         className
       )}
-      onClick={onClick}
       {...props}
     >
-      {icon && <CalendarCheck className="mr-2 h-5 w-5" />}
-      {text}
-      {arrow && <ArrowRight className="ml-2 h-5 w-5 animate-pulse" />}
+      {children || (
+        <>
+          {icon && <CalendarCheck className="mr-2 h-5 w-5" />}
+          {text}
+          {arrow && <ArrowRight className="ml-2 h-5 w-5 animate-pulse" />}
+        </>
+      )}
     </Button>
   );
 };

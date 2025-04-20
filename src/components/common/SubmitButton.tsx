@@ -1,10 +1,10 @@
 
 import { Button } from "@/components/ui/button";
 import { Loader, LockIcon } from "lucide-react";
-import { ButtonProps } from "@radix-ui/react-button";
+import { ButtonHTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
 
-interface SubmitButtonProps extends ButtonProps {
+interface SubmitButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   isSubmitting: boolean;
   text?: string;
   loadingText?: string;
