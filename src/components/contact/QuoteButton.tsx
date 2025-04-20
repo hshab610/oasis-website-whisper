@@ -2,11 +2,11 @@
 import { Button } from "@/components/ui/button";
 import { CalendarCheck, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ButtonProps } from "@radix-ui/react-button";
 
-interface QuoteButtonProps {
+interface QuoteButtonProps extends ButtonProps {
   text?: string;
   className?: string;
-  onClick?: () => void;
   icon?: boolean;
   arrow?: boolean;
   variant?: "default" | "outline" | "secondary" | "ghost" | "link" | "destructive" | "quote";
@@ -20,7 +20,8 @@ const QuoteButton = ({
   icon = true,
   arrow = true,
   variant = "quote",
-  size = "lg"
+  size = "lg",
+  ...props
 }: QuoteButtonProps) => {
   return (
     <Button
@@ -31,6 +32,7 @@ const QuoteButton = ({
         className
       )}
       onClick={onClick}
+      {...props}
     >
       {icon && <CalendarCheck className="mr-2 h-5 w-5" />}
       {text}

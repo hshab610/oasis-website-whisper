@@ -6,6 +6,8 @@ import Hero from '@/components/home/Hero';
 import QuickEstimate from '@/components/home/QuickEstimate';
 import CTA from '@/components/home/CTA';
 import ContactForm from '@/components/home/ContactForm';
+import Pricing from '@/components/home/Pricing';
+import Services from '@/components/home/Services';
 
 const Index = () => {
   return (
@@ -24,6 +26,8 @@ const Index = () => {
           <Hero />
           <QuickEstimate />
           <CTA />
+          <Services />
+          <Pricing />
           <ContactForm />
         </main>
         

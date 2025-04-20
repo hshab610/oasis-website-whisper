@@ -14,7 +14,7 @@ const FormHeader = () => {
       <div className="bg-primary/10 rounded-lg p-4">
         <div className="flex flex-col sm:flex-row gap-4 sm:items-center text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
-            <div className="bg-primary/10 p-1.5 rounded-full">
+            <div className="bg-primary/20 p-1.5 rounded-full">
               <CalendarCheck className="h-4 w-4 text-primary" />
             </div>
             <span>Book as early as tomorrow</span>
@@ -23,7 +23,7 @@ const FormHeader = () => {
           <div className="hidden sm:block h-1 w-1 rounded-full bg-muted-foreground"></div>
           
           <div className="flex items-center gap-2">
-            <div className="bg-primary/10 p-1.5 rounded-full">
+            <div className="bg-primary/20 p-1.5 rounded-full">
               <Clock className="h-4 w-4 text-primary" />
             </div>
             <span>Free same-day quotes</span>
@@ -32,7 +32,7 @@ const FormHeader = () => {
           <div className="hidden sm:block h-1 w-1 rounded-full bg-muted-foreground"></div>
           
           <div className="flex items-center gap-2">
-            <div className="bg-primary/10 p-1.5 rounded-full">
+            <div className="bg-primary/20 p-1.5 rounded-full">
               <Shield className="h-4 w-4 text-primary" />
             </div>
             <span>Your data is secure</span>

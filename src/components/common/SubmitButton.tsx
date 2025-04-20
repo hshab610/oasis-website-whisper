@@ -1,40 +1,53 @@
 
-import { Button } from '@/components/ui/button';
-import { Send, Loader2 } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Loader, LockIcon } from "lucide-react";
+import { ButtonProps } from "@radix-ui/react-button";
 import { cn } from "@/lib/utils";
 
-type SubmitButtonProps = {
+interface SubmitButtonProps extends ButtonProps {
   isSubmitting: boolean;
-  className?: string;
   text?: string;
   loadingText?: string;
-};
+  className?: string;
+  showSecurityBadge?: boolean;
+}
 
-const SubmitButton = ({ 
-  isSubmitting, 
-  className = "w-full", 
-  text = "Send Message", 
-  loadingText = "Sending..." 
+const SubmitButton = ({
+  isSubmitting,
+  text = "Submit",
+  loadingText = "Submitting...",
+  className,
+  showSecurityBadge = true,
+  ...props
 }: SubmitButtonProps) => (
-  <Button 
-    type="submit" 
-    className={cn(className, isSubmitting ? "" : "animate-pulse")}
-    disabled={isSubmitting}
-    variant="default"
-    size={className.includes("py-6") ? "xl" : "default"}
-  >
-    {isSubmitting ? (
-      <span className="flex items-center">
-        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-        {loadingText}
-      </span>
-    ) : (
-      <>
-        <Send className="mr-2 h-5 w-5" />
-        {text}
-      </>
+  <div className="space-y-2">
+    <Button 
+      type="submit"
+      disabled={isSubmitting}
+      className={cn(
+        "w-full bg-primary text-primary-foreground hover:bg-primary/90 h-12 text-base font-bold shadow-lg transition-all",
+        className
+      )}
+      {...props}
+    >
+      {isSubmitting ? (
+        <div className="flex items-center justify-center">
+          <Loader className="mr-2 h-5 w-5 animate-spin" />
+          {loadingText}
+        </div>
+      ) : (
+        <div className="flex items-center justify-center">
+          {text}
+        </div>
+      )}
+    </Button>
+    {showSecurityBadge && (
+      <div className="flex justify-center items-center gap-1 text-xs text-muted-foreground">
+        <LockIcon className="h-3 w-3" />
+        <span>Your information is secure. We'll never share your data.</span>
+      </div>
     )}
-  </Button>
+  </div>
 );
 
 export default SubmitButton;
