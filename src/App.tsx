@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import { PromotionProvider } from "./contexts/PromotionContext";
 import AuthGuard from "./components/auth/AuthGuard";
 import Index from "./pages/Index";
 import Services from "./pages/Services";
@@ -21,26 +22,28 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <BrowserRouter>
       <TooltipProvider>
-        <Helmet>
-          <title>Oasis Moving & Storage | Professional Moving Services</title>
-          <meta name="description" content="Professional moving and storage services in Westerville, Ohio. Local and long-distance moving, furniture assembly, and more." />
-        </Helmet>
-        <Toaster />
-        <Sonner />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/testimonials" element={<Testimonials />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/admin" element={
-            <AuthGuard adminOnly={true}>
-              <Admin />
-            </AuthGuard>
-          } />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <PromotionProvider>
+          <Helmet>
+            <title>Oasis Moving & Storage | Professional Moving Services</title>
+            <meta name="description" content="Professional moving and storage services in Westerville, Ohio. Local and long-distance moving, furniture assembly, and more." />
+          </Helmet>
+          <Toaster />
+          <Sonner />
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/testimonials" element={<Testimonials />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/admin" element={
+              <AuthGuard adminOnly={true}>
+                <Admin />
+              </AuthGuard>
+            } />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </PromotionProvider>
       </TooltipProvider>
     </BrowserRouter>
   </QueryClientProvider>

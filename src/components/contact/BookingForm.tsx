@@ -1,19 +1,23 @@
+
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useFormspree } from '@/hooks/use-formspree';
+import { usePromotion } from '@/contexts/PromotionContext';
 import PersonalInfoFields from './booking/PersonalInfoFields';
 import MoveDetailsFields from './booking/MoveDetailsFields';
 import ServiceDetailsFields from './booking/ServiceDetailsFields';
 import SubmitButton from './booking/SubmitButton';
 import DatePickerField from './DatePickerField';
 import TimeSelect from './TimeSelect';
-import QuoteButton from './QuoteButton';
 import SuccessMessage from './booking/SuccessMessage';
 import FormHeader from './booking/FormHeader';
+import PromoApplied from './booking/PromoApplied';
 import { CalendarCheck, Clock } from 'lucide-react';
 
 const BookingForm = () => {
   const { toast } = useToast();
+  const { isPromotionActive, promoCode, discountPercentage } = usePromotion();
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -23,7 +27,9 @@ const BookingForm = () => {
     address: '',
     package_type: '',
     additional_services: '',
-    notes: ''
+    notes: '',
+    promo_code: isPromotionActive ? promoCode : '',
+    discount: isPromotionActive ? discountPercentage : 0
   });
   
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
@@ -142,7 +148,8 @@ const BookingForm = () => {
       ...formData,
       type: 'booking',
       submission_time: new Date().toISOString(),
-      _cc: 'zay@oasismovingandstorage.com'
+      _cc: 'zay@oasismovingandstorage.com',
+      promo_applied: isPromotionActive ? `${discountPercentage}% First Hour Discount` : 'None'
     };
     
     const success = await submitToFormspree(enhancedFormData);
@@ -162,7 +169,9 @@ const BookingForm = () => {
         address: '',
         package_type: '',
         additional_services: '',
-        notes: ''
+        notes: '',
+        promo_code: isPromotionActive ? promoCode : '',
+        discount: isPromotionActive ? discountPercentage : 0
       });
       setSelectedDate(undefined);
       setFormSubmitted(true);
@@ -180,6 +189,8 @@ const BookingForm = () => {
   return (
     <div className="bg-white p-6 md:p-8 rounded-lg shadow-md border border-border">
       <FormHeader />
+      
+      {isPromotionActive && <PromoApplied />}
       
       <form onSubmit={handleSubmit} className="space-y-6">
         <PersonalInfoFields 

@@ -8,6 +8,9 @@ import CTA from '@/components/home/CTA';
 import ContactForm from '@/components/home/ContactForm';
 import Pricing from '@/components/home/Pricing';
 import Services from '@/components/home/Services';
+import PromoBanner from '@/components/promotion/PromoBanner';
+import PromoPopup from '@/components/promotion/PromoPopup';
+import ChatWidget from '@/components/chat/ChatWidget';
 
 const Index = () => {
   return (
@@ -18,6 +21,11 @@ const Index = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
         <meta name="theme-color" content="#DFC9A5" />
       </Helmet>
+      
+      <PromoBanner />
+      <PromoPopup trigger="timer" />
+      <PromoPopup trigger="exit" />
+      <ChatWidget />
       
       <div className="flex flex-col min-h-screen">
         <Navbar />
