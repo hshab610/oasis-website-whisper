@@ -196,6 +196,9 @@
         z-index: 999;
         font-size: 15px;
         transition: transform 0.3s, box-shadow 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
       }
       
       .trigger-button:hover {
@@ -213,11 +216,12 @@
         margin-top: 8px;
         margin-right: 5px;
         font-weight: bold;
-        transition: background 0.2s;
+        transition: background 0.2s, transform 0.2s;
       }
       
       .option-button:hover {
         background: var(--egypt-gold);
+        transform: translateY(-2px);
       }
       
       .hieroglyph {
@@ -238,7 +242,7 @@
       document.addEventListener('DOMContentLoaded', function() {
         // Add the trigger button
         const triggerButton = document.createElement('button');
-        triggerButton.innerHTML = '𓃭 Ask the Pharaoh\'s Advisor';
+        triggerButton.innerHTML = '<span class="hieroglyph">𓃭</span> Ask the Pharaoh\'s Advisor';
         triggerButton.classList.add('trigger-button');
         triggerButton.onclick = toggleEgyptianChatbot;
         document.body.appendChild(triggerButton);
@@ -275,6 +279,7 @@
               type="text" 
               id="chat-input" 
               placeholder="Ask about moving, oh seeker of the Nile..." 
+              aria-label="Chat input"
             >
             <span class="horus-eye">𓂀</span>
           </div>

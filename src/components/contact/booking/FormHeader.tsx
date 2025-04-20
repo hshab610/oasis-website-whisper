@@ -42,7 +42,7 @@ const FormHeader = () => {
       
       <div className="flex justify-between items-center pt-2">
         <div className="flex items-center gap-2">
-          <div className="h-2.5 w-2.5 rounded-full bg-primary"></div>
+          <div className="h-2.5 w-2.5 rounded-full bg-primary animate-pulse"></div>
           <div className="h-2.5 w-2.5 rounded-full bg-primary/30"></div>
           <div className="h-2.5 w-2.5 rounded-full bg-primary/30"></div>
         </div>

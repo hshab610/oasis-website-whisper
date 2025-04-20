@@ -10,7 +10,8 @@ const BookingSubmitButton = ({ isSubmitting }: SubmitButtonProps) => (
   <SubmitButton 
     isSubmitting={isSubmitting} 
     text="Get Free Quote Now"
-    loadingText="Submitting Request..."
+    loadingText="Processing Request..."
+    className="bg-primary hover:bg-primary/90 text-lg py-3"
   />
 );
 
