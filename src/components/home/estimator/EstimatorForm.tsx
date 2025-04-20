@@ -35,55 +35,70 @@ const EstimatorForm = ({
   isCalculating,
   calculationProgress
 }: EstimatorFormProps) => {
+  // Define bedroom options for quick selection
+  const bedroomOptions = [
+    { value: 0, label: "Studio" },
+    { value: 1, label: "1 Bedroom" },
+    { value: 2, label: "2 Bedrooms" },
+    { value: 3, label: "3 Bedrooms" },
+    { value: 4, label: "4 Bedrooms" },
+    { value: 5, label: "5+ Bedrooms" }
+  ];
+
   return (
     <div className="space-y-6">
       <div>
         <Label htmlFor="service-package" className="text-base mb-2 block">
-          Select Service Package
+          Service Package
         </Label>
-        <Select
-          value={packageType}
-          onValueChange={onPackageChange}
-        >
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select package" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all-in-one">
-              All-in-One Package ($249 + $100/hr)
-            </SelectItem>
-            <SelectItem value="local">
-              Local Moving ($120/hr)
-            </SelectItem>
-            <SelectItem value="long-distance">
-              Long Distance Moving (Custom)
-            </SelectItem>
-          </SelectContent>
-        </Select>
+        <div className="grid grid-cols-3 gap-2">
+          <Button
+            type="button"
+            variant={packageType === "all-in-one" ? "default" : "outline"}
+            className={`h-auto py-3 flex flex-col items-center justify-center ${packageType === "all-in-one" ? 'bg-primary text-primary-foreground' : 'border-2 hover:bg-primary/10'}`}
+            onClick={() => onPackageChange("all-in-one")}
+          >
+            <span className="text-xs font-normal">All-in-One</span>
+            <span className="text-xs font-medium mt-1">Premium</span>
+          </Button>
+          <Button
+            type="button"
+            variant={packageType === "local" ? "default" : "outline"}
+            className={`h-auto py-3 flex flex-col items-center justify-center ${packageType === "local" ? 'bg-primary text-primary-foreground' : 'border-2 hover:bg-primary/10'}`}
+            onClick={() => onPackageChange("local")}
+          >
+            <span className="text-xs font-normal">Local Move</span>
+            <span className="text-xs font-medium mt-1">Standard</span>
+          </Button>
+          <Button
+            type="button"
+            variant={packageType === "long-distance" ? "default" : "outline"}
+            className={`h-auto py-3 flex flex-col items-center justify-center ${packageType === "long-distance" ? 'bg-primary text-primary-foreground' : 'border-2 hover:bg-primary/10'}`}
+            onClick={() => onPackageChange("long-distance")}
+          >
+            <span className="text-xs font-normal">Long Distance</span>
+            <span className="text-xs font-medium mt-1">Custom</span>
+          </Button>
+        </div>
       </div>
       
       <div>
         <Label htmlFor="bedrooms" className="text-base mb-2 block">
-          Number of Bedrooms
+          Home Size
         </Label>
-        <div className="flex items-center">
-          <Home className="mr-2 h-4 w-4 text-muted-foreground" />
-          <Select
-            value={bedrooms.toString()}
-            onValueChange={(value) => onBedroomsChange(parseInt(value))}
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select bedrooms" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="0">Studio</SelectItem>
-              <SelectItem value="1">1 Bedroom</SelectItem>
-              <SelectItem value="2">2 Bedrooms</SelectItem>
-              <SelectItem value="3">3 Bedrooms</SelectItem>
-              <SelectItem value="4">4 Bedrooms</SelectItem>
-              <SelectItem value="5">5+ Bedrooms</SelectItem>
-            </SelectContent>
-          </Select>
+        <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
+          {bedroomOptions.map((option) => (
+            <Button
+              key={option.value}
+              type="button"
+              variant={bedrooms === option.value ? "default" : "outline"}
+              className={`h-auto py-2 flex flex-col items-center justify-center ${bedrooms === option.value ? 'bg-primary text-primary-foreground' : 'border-2 hover:bg-primary/10'}`}
+              onClick={() => onBedroomsChange(option.value)}
+            >
+              <Home className="h-3 w-3 mb-1" />
+              <span className="text-xs">{option.label}</span>
+            </Button>
+          ))}
         </div>
       </div>
       
@@ -104,16 +119,16 @@ const EstimatorForm = ({
           />
         </div>
         <p className="text-xs text-muted-foreground mt-1">
-          Local: 1-50 miles, Long Distance: 50+ miles
+          {distance < 50 ? "Local Move" : "Long Distance Move"}
         </p>
       </div>
 
       <Button 
         onClick={onCalculate} 
-        className="w-full bg-primary hover:bg-primary/90"
+        className="w-full bg-primary hover:bg-primary/90 h-12 font-bold text-base"
         disabled={isCalculating}
       >
-        Calculate Estimate
+        Get Instant Estimate
       </Button>
     </div>
   );

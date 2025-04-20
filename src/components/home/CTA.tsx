@@ -10,9 +10,9 @@ const CTA = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
           <div className="p-8 md:p-10 text-center">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">Ready for a Stress-Free Move?</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Ready to Move? It Takes 2 Minutes</h2>
             <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
-              Get your personalized quote today and experience the Oasis difference.
+              Quick booking process • Instant price estimate • No obligation
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-lg mx-auto">
               <Link to="/contact">

@@ -27,14 +27,14 @@ const QuoteButton = ({
       variant={variant}
       size={size}
       className={cn(
-        "font-bold shadow-lg transition-all hover:shadow-xl hover:scale-105 transform-gpu",
+        "font-bold shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 transform-gpu bg-primary text-primary-foreground",
         className
       )}
       onClick={onClick}
     >
       {icon && <CalendarCheck className="mr-2 h-5 w-5" />}
       {text}
-      {arrow && <ArrowRight className="ml-2 h-5 w-5" />}
+      {arrow && <ArrowRight className="ml-2 h-5 w-5 animate-pulse" />}
     </Button>
   );
 };

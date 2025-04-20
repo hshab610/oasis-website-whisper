@@ -10,7 +10,7 @@ const HeroButtons = () => {
         <Button size="xl" className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white font-bold px-8 py-6 rounded-md shadow-xl hover:shadow-2xl transition-all duration-300 text-lg flex items-center justify-center">
           <Truck className="mr-2 h-6 w-6" />
           Book Your Move
-          <ArrowRight className="ml-2 h-6 w-6" />
+          <ArrowRight className="ml-2 h-6 w-6 animate-pulse" />
         </Button>
       </Link>
       <a href="#quick-estimate" className="w-full sm:w-auto">

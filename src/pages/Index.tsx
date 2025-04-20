@@ -5,6 +5,7 @@ import Footer from '@/components/layout/Footer';
 import Hero from '@/components/home/Hero';
 import QuickEstimate from '@/components/home/QuickEstimate';
 import CTA from '@/components/home/CTA';
+import ContactForm from '@/components/home/ContactForm';
 
 const Index = () => {
   return (
@@ -23,6 +24,7 @@ const Index = () => {
           <Hero />
           <QuickEstimate />
           <CTA />
+          <ContactForm />
         </main>
         
         <Footer />

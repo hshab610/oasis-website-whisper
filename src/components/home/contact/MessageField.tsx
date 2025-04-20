@@ -2,6 +2,7 @@
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { useState, useEffect } from 'react';
+import { CircleCheck, MessageSquare } from 'lucide-react';
 
 interface MessageFieldProps {
   value: string;
@@ -45,21 +46,29 @@ const MessageField = ({
     return "text-green-600";
   };
 
-  const getMessageTips = () => {
-    if (charCount < minLength) {
-      return "Include details like: move date, size of home, special items, etc.";
-    }
+  const getInputClass = () => {
+    if (error) return "border-destructive";
+    if (charCount >= minLength) return "border-green-500";
     return "";
+  };
+
+  const getValidStatus = () => {
+    if (charCount === 0) return null;
+    if (charCount < minLength) {
+      return <p className="text-xs text-amber-500">Please add at least {minLength - charCount} more characters</p>;
+    }
+    return <div className="flex items-center text-xs text-green-600"><CircleCheck className="mr-1 h-3 w-3" /> Good description</div>;
   };
   
   return (
     <div className="space-y-2">
       <div className="flex justify-between items-center">
-        <Label htmlFor="message" className={error ? "text-destructive" : ""}>
+        <Label htmlFor="message" className={`flex items-center ${error ? "text-destructive" : ""}`}>
+          <MessageSquare className="mr-2 h-4 w-4 text-muted-foreground" />
           {label} {required && <span className="text-destructive">*</span>}
         </Label>
         <span className={`text-xs ${getCounterClass()}`}>
-          {charCount}/{maxLength} characters {charCount < minLength && !isFocused ? `(minimum ${minLength})` : ''}
+          {charCount}/{maxLength}
         </span>
       </div>
       
@@ -71,16 +80,14 @@ const MessageField = ({
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         placeholder={placeholder}
-        className={`min-h-[120px] resize-y ${error ? "border-destructive" : ""}`}
+        className={`min-h-[120px] resize-y text-base ${getInputClass()}`}
         required
       />
       
-      {error && (
+      {error ? (
         <p className="text-sm text-destructive">{error}</p>
-      )}
-      
-      {!error && charCount < minLength && (
-        <p className="text-xs text-amber-500">{getMessageTips()}</p>
+      ) : (
+        getValidStatus()
       )}
     </div>
   );

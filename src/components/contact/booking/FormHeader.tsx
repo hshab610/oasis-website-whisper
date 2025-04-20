@@ -1,21 +1,17 @@
 
-import { CalendarCheck, Clock, Mail } from 'lucide-react';
+import { CalendarCheck, Clock, Shield, Mail } from 'lucide-react';
 
 const FormHeader = () => {
   return (
     <div className="flex flex-col space-y-4 mb-8">
       <div className="text-center md:text-left">
-        <h3 className="text-2xl font-bold">Book Your Move Now</h3>
+        <h3 className="text-2xl font-bold">Book Your Move in 2 Minutes</h3>
         <p className="text-sm text-muted-foreground mt-1">
-          Easy 3-step process • Takes ~2 minutes
+          Fast booking • No obligation • Instant confirmation
         </p>
       </div>
 
       <div className="bg-primary/10 rounded-lg p-4">
-        <p className="text-sm text-muted-foreground mb-3">
-          Fill out this form to get a free, no-obligation quote. Our team will contact you within 24 hours with detailed pricing.
-        </p>
-        
         <div className="flex flex-col sm:flex-row gap-4 sm:items-center text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
             <div className="bg-primary/10 p-1.5 rounded-full">
@@ -37,9 +33,9 @@ const FormHeader = () => {
           
           <div className="flex items-center gap-2">
             <div className="bg-primary/10 p-1.5 rounded-full">
-              <Mail className="h-4 w-4 text-primary" />
+              <Shield className="h-4 w-4 text-primary" />
             </div>
-            <span>Instant team notification</span>
+            <span>Your data is secure</span>
           </div>
         </div>
       </div>
