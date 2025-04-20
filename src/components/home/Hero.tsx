@@ -1,13 +1,12 @@
 
 import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { ArrowRight, Package, Truck, Star, Shield, DollarSign, CalendarCheck } from 'lucide-react';
+import { Star } from 'lucide-react';
 import HeroButtons from './hero/HeroButtons';
 import HeroFeatures from './hero/HeroFeatures';
 
 const Hero = () => {
   return (
-    <div className="relative overflow-hidden bg-desert-sunset min-h-[80vh] flex items-center">
+    <div className="relative overflow-hidden bg-desert-sunset min-h-[90vh] flex items-center">
       <div className="absolute inset-0 z-0 opacity-20">
         <img 
           src="/lovable-uploads/9afd8ea4-428a-4559-922e-c48973cd49f5.png"
@@ -21,47 +20,33 @@ const Hero = () => {
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-          <div className="space-y-6 animate-fadeIn bg-overlay-fix text-center lg:text-left mx-auto">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-pharaohBlue font-playfair hero-heading text-center">
-              Your <span className="text-primary">Journey</span> To A New Beginning
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="bg-white/80 backdrop-blur-sm p-8 rounded-xl shadow-xl mb-6 inline-block">
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <Star className="text-yellow-500 h-5 w-5 fill-yellow-500" />
+              <Star className="text-yellow-500 h-5 w-5 fill-yellow-500" />
+              <Star className="text-yellow-500 h-5 w-5 fill-yellow-500" />
+              <Star className="text-yellow-500 h-5 w-5 fill-yellow-500" />
+              <Star className="text-yellow-500 h-5 w-5 fill-yellow-500" />
+              <span className="font-medium ml-1">500+ Satisfied Customers</span>
+            </div>
+            
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-pharaohBlue font-playfair mb-4">
+              Professional <span className="text-primary">Moving</span> Made Simple
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed hero-description text-center mx-auto">
-              Professional and reliable moving services in Westerville, Ohio. Let us guide your possessions safely to their new home.
+            
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
+              Get an instant quote or book your move in minutes
             </p>
             
             <HeroButtons />
-            
-            <HeroFeatures />
           </div>
           
-          <div className="relative hidden lg:block mx-auto text-center">
-            <div className="relative bg-white/90 p-8 rounded-lg shadow-xl animate-fadeIn mx-auto" style={{animationDelay: '0.3s'}}>
-              <img 
-                src="/lovable-uploads/295a11a3-e163-4559-922e-c48973cd49f7.png" 
-                alt="Professional movers carefully handling furniture" 
-                className="rounded-lg shadow-sm mb-4 w-full h-auto mx-auto"
-                onError={(e) => {
-                  e.currentTarget.src = "data:image/svg+xml,%3Csvg width='600' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='600' height='400' fill='%23f3f4f6'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='24' fill='%239ca3af'%3EMoving Professionals%3C/text%3E%3C/svg%3E";
-                }}
-              />
-              
-              <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-lg shadow-xl border border-primary/20">
-                <div className="flex items-center justify-center gap-2">
-                  <Star className="text-yellow-500 h-5 w-5 fill-yellow-500" />
-                  <Star className="text-yellow-500 h-5 w-5 fill-yellow-500" />
-                  <Star className="text-yellow-500 h-5 w-5 fill-yellow-500" />
-                  <Star className="text-yellow-500 h-5 w-5 fill-yellow-500" />
-                  <Star className="text-yellow-500 h-5 w-5 fill-yellow-500" />
-                </div>
-                <p className="text-lg font-medium mt-2 text-center">500+ Satisfied Customers</p>
-              </div>
-            </div>
-          </div>
+          <HeroFeatures />
         </div>
       </div>
       
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-background to-transparent"></div>
     </div>
   );
 };

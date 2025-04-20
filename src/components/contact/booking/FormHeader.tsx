@@ -5,16 +5,15 @@ const FormHeader = () => {
   return (
     <div className="flex flex-col space-y-4 mb-8">
       <div className="text-center md:text-left">
-        <h3 className="text-2xl font-semibold">Request a Quote</h3>
+        <h3 className="text-2xl font-bold">Book Your Move Now</h3>
         <p className="text-sm text-muted-foreground mt-1">
           Easy 3-step process • Takes ~2 minutes
         </p>
       </div>
 
-      <div className="bg-muted/50 rounded-lg p-4">
+      <div className="bg-primary/10 rounded-lg p-4">
         <p className="text-sm text-muted-foreground mb-3">
-          Fill out this form to get a free, no-obligation quote for your move.
-          Our team will contact you within 24 hours with detailed pricing.
+          Fill out this form to get a free, no-obligation quote. Our team will contact you within 24 hours with detailed pricing.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 sm:items-center text-sm text-muted-foreground">

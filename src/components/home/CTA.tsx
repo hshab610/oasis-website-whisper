@@ -1,70 +1,38 @@
 
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { CalendarCheck, DollarSign, ArrowRight } from 'lucide-react';
+import { ArrowRight, Calculator } from 'lucide-react';
+import QuoteButton from '../contact/QuoteButton';
 
 const CTA = () => {
   return (
-    <section className="bg-primary/10 py-16">
+    <section className="bg-primary/10 py-12">
       <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
-          <div className="grid grid-cols-1 md:grid-cols-2">
-            <div className="p-8 md:p-10 flex flex-col justify-center">
-              <h2 className="text-2xl md:text-3xl font-bold mb-4">Ready for a Stress-Free Move?</h2>
-              <p className="text-muted-foreground mb-6">
-                Get your personalized quote today and experience the Oasis difference.
-                Our professional team is ready to make your move smooth and easy.
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <Link to="/contact">
-                  <Button className="w-full bg-primary hover:bg-primary/90 text-white">
-                    <CalendarCheck className="mr-2 h-4 w-4" />
-                    Book Your Move
-                  </Button>
-                </Link>
-                <a href="#quick-estimate">
-                  <Button variant="outline" className="w-full border-primary text-primary">
-                    <DollarSign className="mr-2 h-4 w-4" />
-                    Calculate Cost
-                  </Button>
-                </a>
-              </div>
-            </div>
-            
-            <div className="bg-primary/20 p-8 md:p-10 flex flex-col justify-center">
-              <h3 className="text-xl font-semibold mb-4">Why Choose Oasis Moving?</h3>
-              <ul className="space-y-3 mb-6">
-                <li className="flex items-start gap-2">
-                  <span className="bg-primary/20 p-1 rounded-full flex items-center justify-center mt-1">
-                    <ArrowRight className="h-3 w-3 text-primary" />
-                  </span>
-                  <span>Transparent, upfront pricing</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="bg-primary/20 p-1 rounded-full flex items-center justify-center mt-1">
-                    <ArrowRight className="h-3 w-3 text-primary" />
-                  </span>
-                  <span>Professional, experienced movers</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="bg-primary/20 p-1 rounded-full flex items-center justify-center mt-1">
-                    <ArrowRight className="h-3 w-3 text-primary" />
-                  </span>
-                  <span>Fully insured and licensed</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="bg-primary/20 p-1 rounded-full flex items-center justify-center mt-1">
-                    <ArrowRight className="h-3 w-3 text-primary" />
-                  </span>
-                  <span>500+ satisfied customers</span>
-                </li>
-              </ul>
-              <div className="mt-2">
-                <Link to="/pricing" className="text-primary inline-flex items-center hover:underline">
-                  See our detailed pricing
-                  <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
-              </div>
+        <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
+          <div className="p-8 md:p-10 text-center">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Ready for a Stress-Free Move?</h2>
+            <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
+              Get your personalized quote today and experience the Oasis difference.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-lg mx-auto">
+              <Link to="/contact">
+                <QuoteButton 
+                  text="Book Your Move" 
+                  className="w-full" 
+                  size="xl"
+                />
+              </Link>
+              <a href="#quick-estimate">
+                <Button 
+                  variant="outline" 
+                  size="xl"
+                  className="w-full border-2 border-primary text-primary font-bold hover:bg-primary/10"
+                >
+                  <Calculator className="mr-2 h-5 w-5" />
+                  Calculate Cost
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </a>
             </div>
           </div>
         </div>

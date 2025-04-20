@@ -10,6 +10,7 @@ interface QuoteButtonProps {
   icon?: boolean;
   arrow?: boolean;
   variant?: "default" | "outline" | "secondary" | "ghost" | "link" | "destructive" | "quote";
+  size?: "default" | "sm" | "lg" | "xl";
 }
 
 const QuoteButton = ({
@@ -18,14 +19,15 @@ const QuoteButton = ({
   onClick,
   icon = true,
   arrow = true,
-  variant = "quote"
+  variant = "quote",
+  size = "lg"
 }: QuoteButtonProps) => {
   return (
     <Button
       variant={variant}
-      size="lg"
+      size={size}
       className={cn(
-        "font-semibold shadow-md transition-all hover:shadow-lg",
+        "font-bold shadow-lg transition-all hover:shadow-xl hover:scale-105 transform-gpu",
         className
       )}
       onClick={onClick}
