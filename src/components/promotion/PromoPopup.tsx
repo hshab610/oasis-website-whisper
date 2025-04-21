@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Button } from '@/components/ui/button';
 import CountdownTimer from './CountdownTimer';
 import { Link } from 'react-router-dom';
-import { Zap, X } from 'lucide-react';
+import { Zap, X, Clock, Users, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface PromoPopupProps {
@@ -19,6 +19,9 @@ const PromoPopup: React.FC<PromoPopupProps> = ({ trigger = 'timer' }) => {
     // Generate a random number between 8 and 16 to show as social proof
     return Math.floor(Math.random() * 9) + 8;
   });
+
+  // Determine urgency level based on time remaining
+  const isUrgent = timeRemaining < 300;
 
   useEffect(() => {
     if (!isPromotionActive) return;
@@ -64,23 +67,46 @@ const PromoPopup: React.FC<PromoPopupProps> = ({ trigger = 'timer' }) => {
           <X className="h-5 w-5" />
         </button>
         
-        <div className="bg-primary text-primary-foreground p-4 flex items-center gap-2">
-          <Zap className="h-5 w-5 text-yellow-300 animate-pulse" />
-          <h3 className="font-bold">Limited Time Offer</h3>
+        <div className={cn(
+          "p-4 flex items-center gap-2",
+          isUrgent ? "bg-amber-500 text-white" : "bg-primary text-primary-foreground"
+        )}>
+          <Zap className={cn(
+            "h-5 w-5", 
+            isUrgent ? "text-white animate-pulse" : "text-yellow-300 animate-pulse"
+          )} />
+          <h3 className="font-bold">
+            {isUrgent ? "Limited Time Remaining!" : "Limited Time Offer"}
+          </h3>
         </div>
         
         <div className="p-6">
           <DialogHeader>
-            <DialogTitle className="text-xl sm:text-2xl text-center mb-4">
-              {discountPercentage}% OFF Your First Move!
+            <DialogTitle className="text-xl sm:text-2xl text-center mb-4 flex items-center justify-center gap-2">
+              <Sparkles className="h-5 w-5 text-primary" />
+              <span>{discountPercentage}% OFF Your First Move!</span>
+              <Sparkles className="h-5 w-5 text-primary" />
             </DialogTitle>
           </DialogHeader>
           
           <div className="space-y-4">
-            <p className="text-center">Book within the next hour to lock in your exclusive discount!</p>
+            <p className="text-center">
+              {isUrgent 
+                ? "Hurry! Your exclusive discount is about to expire!" 
+                : "Book within the next hour to lock in your exclusive discount!"}
+            </p>
             
-            <div className="bg-muted rounded-md p-4 text-center">
-              <p className="text-sm text-muted-foreground mb-2">Time remaining:</p>
+            <div className={cn(
+              "rounded-md p-4 text-center",
+              isUrgent ? "bg-red-50 border border-red-100" : "bg-muted"
+            )}>
+              <p className="text-sm text-muted-foreground mb-2 flex items-center justify-center">
+                <Clock className={cn(
+                  "h-4 w-4 mr-1",
+                  isUrgent && "text-red-500"
+                )} />
+                Time remaining:
+              </p>
               <CountdownTimer 
                 timeRemaining={timeRemaining} 
                 className="justify-center text-lg" 
@@ -88,15 +114,20 @@ const PromoPopup: React.FC<PromoPopupProps> = ({ trigger = 'timer' }) => {
               />
             </div>
             
-            <div className="text-center">
-              <p className="text-sm text-muted-foreground mb-1">
-                <span className="font-semibold text-red-500">{peopleBooking} people</span> booked in the last hour
+            <div className="text-center bg-primary/5 rounded-md p-3">
+              <p className="text-sm flex items-center justify-center gap-1">
+                <Users className="h-4 w-4 text-primary" />
+                <span className="font-semibold text-red-500">{peopleBooking} people</span> 
+                <span>booked in the last hour</span>
               </p>
             </div>
             
             <Link to="/contact" onClick={() => setOpen(false)}>
-              <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 mt-4 group">
-                Book Now & Save {discountPercentage}%
+              <Button className={cn(
+                "w-full text-primary-foreground mt-4 group shadow-md hover:shadow-lg transition-all",
+                isUrgent ? "bg-red-500 hover:bg-red-600" : "bg-primary hover:bg-primary/90"
+              )}>
+                {isUrgent ? "Book Now Before Offer Expires!" : "Book Now & Save 10%"}
                 <Zap className="ml-2 group-hover:animate-pulse" />
               </Button>
             </Link>

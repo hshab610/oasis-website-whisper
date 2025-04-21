@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Clock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -8,30 +8,44 @@ interface CountdownTimerProps {
   className?: string;
   compact?: boolean;
   showIcon?: boolean;
+  urgencyThreshold?: {
+    warning: number; // seconds when to start showing warning state
+    critical: number; // seconds when to start showing critical state
+  };
 }
 
 const CountdownTimer: React.FC<CountdownTimerProps> = ({ 
   timeRemaining, 
   className = "", 
   compact = false,
-  showIcon = true
+  showIcon = true,
+  urgencyThreshold = { warning: 300, critical: 60 }
 }) => {
   // Convert seconds to hours, minutes, seconds
-  const hours = Math.floor(timeRemaining / 3600);
-  const minutes = Math.floor((timeRemaining % 3600) / 60);
-  const seconds = timeRemaining % 60;
-
-  // Format time with leading zeros
-  const formatTime = (time: number) => time.toString().padStart(2, '0');
+  const formattedTime = useMemo(() => {
+    const hours = Math.floor(timeRemaining / 3600);
+    const minutes = Math.floor((timeRemaining % 3600) / 60);
+    const seconds = timeRemaining % 60;
+    
+    // Format time with leading zeros
+    return {
+      hours: hours.toString().padStart(2, '0'),
+      minutes: minutes.toString().padStart(2, '0'),
+      seconds: seconds.toString().padStart(2, '0')
+    };
+  }, [timeRemaining]);
   
   // Determine urgency levels for visual cues
-  const isUrgent = timeRemaining < 300; // Less than 5 minutes remaining
-  const isVeryUrgent = timeRemaining < 60; // Less than 1 minute remaining
+  const isUrgent = timeRemaining < urgencyThreshold.warning;
+  const isVeryUrgent = timeRemaining < urgencyThreshold.critical;
   
   return (
     <div className={cn("flex items-center", className)}>
       {showIcon && !compact && (
-        <Clock className="mr-2 h-4 w-4 text-primary animate-pulse" />
+        <Clock className={cn(
+          "mr-2 h-4 w-4 text-primary",
+          isVeryUrgent ? "animate-pulse text-red-500" : "animate-pulse"
+        )} />
       )}
       <div 
         className={cn(
@@ -40,11 +54,11 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({
           isUrgent ? "text-amber-600" : ""
         )}
       >
-        {formatTime(hours)}:{formatTime(minutes)}:
+        {formattedTime.hours}:{formattedTime.minutes}:
         <span className={cn(
           isUrgent && "inline-block animate-pulse"
         )}>
-          {formatTime(seconds)}
+          {formattedTime.seconds}
         </span>
       </div>
     </div>

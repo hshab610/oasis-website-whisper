@@ -10,9 +10,18 @@ const PromoApplied = () => {
   
   if (!isPromotionActive) return null;
   
+  // Determine if we're in the urgent timing zone
+  const isUrgent = timeRemaining < 300;
+  
   return (
-    <Alert className="mb-6 bg-primary/10 border-primary flex items-start">
-      <div className="bg-primary text-primary-foreground rounded-full p-1 mr-2 mt-0.5">
+    <Alert className={cn(
+      "mb-6 border-primary flex items-start transition-all duration-300", 
+      isUrgent ? "bg-primary/15" : "bg-primary/10"
+    )}>
+      <div className={cn(
+        "bg-primary text-primary-foreground rounded-full p-1 mr-2 mt-0.5",
+        isUrgent && "animate-pulse"
+      )}>
         <Check className="h-4 w-4" />
       </div>
       <div className="flex-1">
@@ -25,11 +34,13 @@ const PromoApplied = () => {
         </AlertTitle>
         <AlertDescription className="text-sm flex items-center gap-1">
           <Clock className="h-3.5 w-3.5 text-muted-foreground" />
-          <span>Discount locked in! Time remaining: </span>
+          <span className={isUrgent ? "font-medium" : ""}>
+            {isUrgent ? "Hurry! Discount expiring soon:" : "Discount locked in! Time remaining:"}
+          </span>
           <CountdownTimer 
             timeRemaining={timeRemaining} 
             compact={true} 
-            className="text-primary font-semibold"
+            className={cn("text-primary font-semibold", isUrgent && "text-red-500")}
             showIcon={false}
           />
         </AlertDescription>

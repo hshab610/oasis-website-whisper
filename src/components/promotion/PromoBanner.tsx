@@ -13,6 +13,10 @@ const PromoBanner: React.FC<PromoBannerProps> = ({ className = "" }) => {
   const { isPromotionActive, timeRemaining, discountPercentage } = usePromotion();
   const [isVisible, setIsVisible] = useState(true);
   const [isPulsing, setIsPulsing] = useState(false);
+  
+  // Calculate urgency level based on time remaining
+  const isUrgent = timeRemaining < 300;
+  const isVeryUrgent = timeRemaining < 60;
 
   // Add pulsing effect every 30 seconds to draw attention
   useEffect(() => {
@@ -54,8 +58,11 @@ const PromoBanner: React.FC<PromoBannerProps> = ({ className = "" }) => {
   return (
     <div 
       className={cn(
-        "bg-primary text-primary-foreground py-2 px-4 flex items-center justify-between sticky top-0 z-50 shadow-md transition-all duration-300", 
-        isPulsing && "bg-primary-900 scale-[1.02]",
+        "py-2 px-4 flex items-center justify-between sticky top-0 z-50 shadow-md transition-all duration-300",
+        isVeryUrgent ? "bg-red-500 text-white" :
+        isUrgent ? "bg-amber-500 text-white" :
+        "bg-primary text-primary-foreground",
+        isPulsing && "scale-[1.02]",
         className
       )}
     >
@@ -63,20 +70,29 @@ const PromoBanner: React.FC<PromoBannerProps> = ({ className = "" }) => {
       
       <div className="flex items-center justify-center gap-2 text-sm sm:text-base flex-grow">
         <Zap className={cn(
-          "h-5 w-5 text-yellow-300",
-          isPulsing ? "animate-bounce" : "animate-pulse"
+          "h-5 w-5",
+          isVeryUrgent ? "text-white animate-bounce" : 
+          isUrgent ? "text-white animate-pulse" : 
+          "text-yellow-300 animate-pulse"
         )} />
-        <span className="font-semibold">
+        <span className={cn(
+          "font-semibold",
+          isPulsing && "scale-105 transition-transform"
+        )}>
           Book within <CountdownTimer 
             timeRemaining={timeRemaining} 
             compact={true} 
             showIcon={false}
+            className="inline-flex"
           /> & get {discountPercentage}% OFF your first move!
         </span>
       </div>
       
       <button 
-        className="text-primary-foreground hover:text-white transition-colors"
+        className={cn(
+          "transition-colors",
+          isUrgent ? "text-white hover:text-gray-200" : "text-primary-foreground hover:text-white"
+        )}
         onClick={handleClose}
         aria-label="Close promotion banner"
       >
