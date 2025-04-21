@@ -21,11 +21,18 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({
   // Format time with leading zeros
   const formatTime = (time: number) => time.toString().padStart(2, '0');
   
+  // Determine if seconds are low for urgency animation
+  const isUrgent = timeRemaining < 300; // Less than 5 minutes remaining
+  const isVeryUrgent = timeRemaining < 60; // Less than 1 minute remaining
+  
   return (
     <div className={`flex items-center ${className}`}>
       {!compact && <Clock className="mr-2 h-4 w-4 text-primary animate-pulse" />}
-      <div className="font-mono font-bold">
-        {formatTime(hours)}:{formatTime(minutes)}:{formatTime(seconds)}
+      <div className={`font-mono font-bold ${isVeryUrgent ? 'text-red-500 animate-pulse' : isUrgent ? 'text-amber-600' : ''}`}>
+        {formatTime(hours)}:{formatTime(minutes)}:
+        <span className={isUrgent ? 'inline-block animate-pulse' : ''}>
+          {formatTime(seconds)}
+        </span>
       </div>
     </div>
   );

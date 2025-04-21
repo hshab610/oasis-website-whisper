@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { usePromotion } from '@/contexts/PromotionContext';
 import { Button } from '@/components/ui/button';
 import { X, MessageSquare, Send } from 'lucide-react';
@@ -10,6 +10,43 @@ type Message = {
   text: string;
   isUser: boolean;
   timestamp: Date;
+};
+
+// Website knowledge base - extracted content from pages
+const knowledgeBase = {
+  services: [
+    "Local Moving Services in Ohio",
+    "Long-Distance Moving across state lines",
+    "Office & Commercial Relocation",
+    "Furniture Assembly & Disassembly",
+    "Packing & Unpacking Services",
+    "Loading & Unloading",
+    "Storage Solutions (climate-controlled)",
+    "Special Item Handling (pianos, antiques, artwork)"
+  ],
+  pricing: [
+    "Local Moves: Starting at $90/hour for a 2-person crew",
+    "Long-Distance Moves: Custom quotes based on distance and volume",
+    "Packing Services: Starting at $40/hour",
+    "Storage: Starting at $95/month for standard unit",
+    "Special Items: Additional fees vary by item",
+    "Discount: New customers get 10% OFF when booking within the limited-time offer"
+  ],
+  faqs: [
+    "How far in advance should I book? We recommend 2-4 weeks, but can accommodate last-minute moves when possible.",
+    "Is my deposit refundable? Yes, with 72-hour notice of cancellation.",
+    "Do you provide packing materials? Yes, we offer boxes, tape, bubble wrap, and other supplies.",
+    "Are you insured? Yes, we are fully licensed and insured for your protection.",
+    "Do you move pianos? Yes, we have specialized equipment and training for piano moving.",
+    "What areas do you service? We primarily serve Westerville and the greater Ohio area, with long-distance options available."
+  ],
+  company: [
+    "Founded in 2015 in Westerville, Ohio",
+    "Fully licensed and insured moving company",
+    "Over 500 satisfied customers with 5-star ratings",
+    "Professionally trained moving crews",
+    "Locally owned and operated"
+  ]
 };
 
 const initialBotMessages = [
@@ -23,6 +60,7 @@ const ChatWidget = () => {
   const [input, setInput] = useState('');
   const [hasInteracted, setHasInteracted] = useState(false);
   const { isPromotionActive, timeRemaining, discountPercentage } = usePromotion();
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   
   // Initialize chat with bot introduction
   useEffect(() => {
@@ -50,9 +88,114 @@ const ChatWidget = () => {
       }
     }
   }, [isPromotionActive]);
+
+  // Auto-scroll to bottom when messages change
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
   
   const toggleWidget = () => {
     setIsOpen(!isOpen);
+  };
+
+  // Enhanced response generation using the knowledge base
+  const generateResponse = (userQuery: string): string => {
+    const lowercaseQuery = userQuery.toLowerCase();
+    
+    // Service-related queries
+    if (lowercaseQuery.includes('service') || 
+        lowercaseQuery.includes('offer') || 
+        lowercaseQuery.includes('what do you do') ||
+        lowercaseQuery.includes('moving service')) {
+      return `We offer the following services at Oasis Moving & Storage:\n\n• ${knowledgeBase.services.join('\n• ')}\n\nWould you like more information about a specific service?`;
+    }
+    
+    // Pricing-related queries
+    if (lowercaseQuery.includes('price') || 
+        lowercaseQuery.includes('cost') || 
+        lowercaseQuery.includes('how much') || 
+        lowercaseQuery.includes('rate') ||
+        lowercaseQuery.includes('fee')) {
+      return `Here's our pricing information:\n\n• ${knowledgeBase.pricing.join('\n• ')}\n\nFor a personalized quote, I can help you book a consultation or get started with our online quote form.`;
+    }
+    
+    // Discount or promotion queries
+    if (lowercaseQuery.includes('discount') || 
+        lowercaseQuery.includes('promo') || 
+        lowercaseQuery.includes('offer') || 
+        lowercaseQuery.includes('coupon') ||
+        lowercaseQuery.includes('off') ||
+        lowercaseQuery.includes('save')) {
+      if (isPromotionActive) {
+        return `Yes! We're currently offering a ${discountPercentage}% discount for new customers who book within the next hour. You have ${Math.floor(timeRemaining / 60)} minutes and ${timeRemaining % 60} seconds remaining to claim this offer. Would you like to book now to secure this discount?`;
+      } else {
+        return "We occasionally run special promotions. While we don't have an active discount at the moment, I'd be happy to help you get a personalized quote for your move.";
+      }
+    }
+    
+    // Booking-related queries
+    if (lowercaseQuery.includes('book') || 
+        lowercaseQuery.includes('schedule') || 
+        lowercaseQuery.includes('reservation') || 
+        lowercaseQuery.includes('appointment')) {
+      return "You can book your move online through our simple form. We'll need details about your current and new locations, preferred moving date, and the size of your move. Would you like me to guide you through the booking process?";
+    }
+    
+    // FAQ queries
+    if (lowercaseQuery.includes('question') || 
+        lowercaseQuery.includes('faq') || 
+        lowercaseQuery.includes('ask') || 
+        lowercaseQuery.includes('how do')) {
+      return `Here are some frequently asked questions:\n\n• ${knowledgeBase.faqs.join('\n• ')}\n\nDo you have a specific question I can answer?`;
+    }
+    
+    // Company info queries
+    if (lowercaseQuery.includes('company') || 
+        lowercaseQuery.includes('about') || 
+        lowercaseQuery.includes('who are you') || 
+        lowercaseQuery.includes('business')) {
+      return `About Oasis Moving & Storage:\n\n• ${knowledgeBase.company.join('\n• ')}\n\nWe pride ourselves on providing exceptional service with attention to detail.`;
+    }
+    
+    // Storage-specific queries
+    if (lowercaseQuery.includes('storage') || 
+        lowercaseQuery.includes('store') || 
+        lowercaseQuery.includes('keep')) {
+      return "We offer secure, climate-controlled storage solutions for both short and long-term needs. Our storage facilities are monitored 24/7 and start at $95/month for a standard unit. Would you like more information about our storage services?";
+    }
+    
+    // Location/area queries
+    if (lowercaseQuery.includes('where') || 
+        lowercaseQuery.includes('location') || 
+        lowercaseQuery.includes('area') ||
+        lowercaseQuery.includes('serve')) {
+      return "We're based in Westerville, Ohio and primarily serve the greater Ohio area. We also offer long-distance moving services across state lines. Is there a specific location you're moving to or from?";
+    }
+    
+    // Packing queries
+    if (lowercaseQuery.includes('pack') || 
+        lowercaseQuery.includes('box') || 
+        lowercaseQuery.includes('material')) {
+      return "We offer comprehensive packing and unpacking services, starting at $40/hour. Our professional packers are trained to handle items with care, using quality materials. We can also provide packing supplies if you prefer to pack yourself. Would you like to add packing services to your move?";
+    }
+    
+    // Greeting responses
+    if (lowercaseQuery.includes('hello') || 
+        lowercaseQuery.includes('hi') || 
+        lowercaseQuery.includes('hey') ||
+        lowercaseQuery.includes('greetings')) {
+      return "Hello! I'm the Oasis Moving Assistant. How can I help with your moving needs today?";
+    }
+    
+    // Thank you responses
+    if (lowercaseQuery.includes('thank') || 
+        lowercaseQuery.includes('thanks') || 
+        lowercaseQuery.includes('appreciate')) {
+      return "You're welcome! I'm happy to help. Is there anything else you'd like to know about our moving services?";
+    }
+    
+    // Default response for other queries
+    return "I'd be happy to help with that. For more detailed information about our moving services, pricing, or to get a personalized quote, would you like me to connect you with our booking form?";
   };
 
   const handleSendMessage = () => {
@@ -69,26 +212,9 @@ const ChatWidget = () => {
     setInput('');
     setHasInteracted(true);
     
-    // Simple response logic
+    // Generate response based on knowledge base
     setTimeout(() => {
-      let botResponse = "";
-      const lowercaseInput = input.toLowerCase();
-      
-      if (lowercaseInput.includes('discount') || lowercaseInput.includes('promo') || lowercaseInput.includes('offer') || lowercaseInput.includes('10%')) {
-        botResponse = `Yes! We're currently offering a ${discountPercentage}% discount for new customers who book within the next hour. You have ${Math.floor(timeRemaining / 60)} minutes remaining to claim this offer.`;
-      } 
-      else if (lowercaseInput.includes('price') || lowercaseInput.includes('cost') || lowercaseInput.includes('how much')) {
-        botResponse = "Our pricing depends on your specific moving needs. I'd be happy to help you get a personalized quote. Would you like to fill out our quick booking form to get started?";
-      }
-      else if (lowercaseInput.includes('book') || lowercaseInput.includes('schedule') || lowercaseInput.includes('appointment')) {
-        botResponse = "Great! You can book your move by clicking the 'Book Now' button below. Don't forget to take advantage of our limited-time discount!";
-      }
-      else if (lowercaseInput.includes('hello') || lowercaseInput.includes('hi') || lowercaseInput.includes('hey')) {
-        botResponse = "Hello! How can I help with your moving needs today?";
-      }
-      else {
-        botResponse = "I'd be happy to help with that. For more detailed information, would you like to book a consultation with our moving experts?";
-      }
+      const botResponse = generateResponse(input);
       
       const botMessage: Message = {
         text: botResponse,
@@ -153,12 +279,13 @@ const ChatWidget = () => {
                   : 'bg-muted text-foreground mr-auto'
               }`}
             >
-              <p className="text-sm">{message.text}</p>
+              <p className="text-sm whitespace-pre-line">{message.text}</p>
               <p className="text-xs text-muted-foreground mt-1">
                 {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </p>
             </div>
           ))}
+          <div ref={messagesEndRef} /> {/* Empty div for scrolling to bottom */}
         </div>
         
         {/* Promotion Timer (if active) */}

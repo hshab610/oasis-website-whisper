@@ -287,7 +287,7 @@
 
         document.body.insertAdjacentHTML('beforeend', chatbotHTML);
         
-        // AI Logic
+        // Enhanced AI Logic with knowledge base
         const chatInput = document.getElementById('chat-input');
         chatInput.addEventListener('keypress', function(e) {
           if (e.key === 'Enter') {
@@ -304,39 +304,107 @@
             
             this.value = '';
             
-            // AI Response (blue bubble)
+            // AI Response (blue bubble) with enhanced knowledge
             setTimeout(() => {
               let botResponse = '';
               
-              if (userQuestion.toLowerCase().includes('price') || userQuestion.toLowerCase().includes('cost') || userQuestion.toLowerCase().includes('quote')) {
-                botResponse = `<em>"As the sun crosses the sky, so shall your items move affordably..."</em><br><br>
-                  Our sacred calculator reveals true costs. <br><button 
-                    onclick='document.getElementById("quote-form") ? document.getElementById("quote-form").scrollIntoView({behavior: "smooth"}) : window.location.href="/contact"'
-                    class="option-button"
-                  ><span class="hieroglyph">𓃭</span> Consult the Calculator</button>`;
-              } 
-              else if (userQuestion.toLowerCase().includes('date') || userQuestion.toLowerCase().includes('book') || userQuestion.toLowerCase().includes('schedule')) {
-                botResponse = `<em>"The stars align for your journey..."</em><br><br>
-                  Our scribes await your command. <br><button 
-                    onclick='window.location.href="/contact"'
-                    class="option-button"
-                  ><span class="hieroglyph">𓋴</span> Check Dates</button>`;
-              }
-              else if (userQuestion.toLowerCase().includes('service') || userQuestion.toLowerCase().includes('pack') || userQuestion.toLowerCase().includes('storage')) {
-                botResponse = `<em>"Like sacred treasures of the tomb, we protect your belongings..."</em><br><br>
-                  We offer full packing services and climate-controlled storage. <br><button 
+              const lowercaseInput = userQuestion.toLowerCase();
+              
+              // Services
+              if (lowercaseInput.includes('service') || lowercaseInput.includes('offer') || lowercaseInput.includes('moving service')) {
+                botResponse = `<em>"The scrolls of Oasis reveal many services..."</em><br><br>
+                  • Local Moving Services in Ohio<br>
+                  • Long-Distance Moving across state lines<br>
+                  • Office & Commercial Relocation<br>
+                  • Furniture Assembly & Disassembly<br>
+                  • Packing & Unpacking Services<br>
+                  • Storage Solutions (climate-controlled)<br>
+                  • Special Item Handling (pianos, antiques, artwork)<br><br>
+                  <button 
                     onclick='window.location.href="/services"'
                     class="option-button"
-                  ><span class="hieroglyph">𓏏</span> View Services</button>`;
+                  ><span class="hieroglyph">𓂧</span> View All Services</button>`;
+              } 
+              // Pricing
+              else if (lowercaseInput.includes('price') || lowercaseInput.includes('cost') || lowercaseInput.includes('how much')) {
+                botResponse = `<em>"The value of your journey is written in the stars..."</em><br><br>
+                  • Local Moves: Starting at $90/hour (2-person crew)<br>
+                  • Long-Distance: Custom quotes based on distance<br>
+                  • Packing: Starting at $40/hour<br>
+                  • Storage: From $95/month<br>
+                  • Special Items: Fees vary by item<br><br>
+                  <button 
+                    onclick='document.getElementById("quote-form") ? document.getElementById("quote-form").scrollIntoView({behavior: "smooth"}) : window.location.href="/contact"'
+                    class="option-button"
+                  ><span class="hieroglyph">𓃭</span> Get Personalized Quote</button>`;
               }
+              // Booking
+              else if (lowercaseInput.includes('book') || lowercaseInput.includes('schedule') || lowercaseInput.includes('appointment')) {
+                botResponse = `<em>"The time for your journey approaches..."</em><br><br>
+                  You can book your move online through our simple form. We'll need:<br>
+                  • Your current and new locations<br>
+                  • Preferred moving date<br>
+                  • Size of your move<br><br>
+                  <button 
+                    onclick='window.location.href="/contact"'
+                    class="option-button"
+                  ><span class="hieroglyph">𓆓</span> Book Your Move</button>`;
+              }
+              // Discount/promo
+              else if (lowercaseInput.includes('discount') || lowercaseInput.includes('promo') || lowercaseInput.includes('offer') || lowercaseInput.includes('10%')) {
+                botResponse = `<em>"The gods smile upon new travelers with special blessings..."</em><br><br>
+                  We're currently offering a 10% discount for new customers who book within the time limit. This special offer applies to your first move with us.<br><br>
+                  <button 
+                    onclick='window.location.href="/contact"'
+                    class="option-button"
+                  ><span class="hieroglyph">𓇯</span> Claim Your Discount</button>`;
+              }
+              // Storage
+              else if (lowercaseInput.includes('storage') || lowercaseInput.includes('store')) {
+                botResponse = `<em>"Like treasures in the great pyramids, your belongings shall be protected..."</em><br><br>
+                  Our storage solutions feature:<br>
+                  • Climate-controlled facilities<br>
+                  • 24/7 security monitoring<br>
+                  • Short and long-term options<br>
+                  • Starting at $95/month<br><br>
+                  <button 
+                    onclick='window.location.href="/services#storage"'
+                    class="option-button"
+                  ><span class="hieroglyph">𓉐</span> Storage Details</button>`;
+              }
+              // Company info
+              else if (lowercaseInput.includes('company') || lowercaseInput.includes('about')) {
+                botResponse = `<em>"The tale of Oasis Moving is written in the stars..."</em><br><br>
+                  • Founded in 2015 in Westerville, Ohio<br>
+                  • Fully licensed and insured<br>
+                  • Over 500 satisfied customers with 5-star ratings<br>
+                  • Professional, trained moving crews<br>
+                  • Locally owned and operated<br><br>
+                  <button 
+                    onclick='window.location.href="/about"'
+                    class="option-button"
+                  ><span class="hieroglyph">𓁿</span> Our History</button>`;
+              }
+              // Locations served
+              else if (lowercaseInput.includes('where') || lowercaseInput.includes('location') || lowercaseInput.includes('area')) {
+                botResponse = `<em>"Our chariots travel across many lands..."</em><br><br>
+                  We serve Westerville and the greater Ohio area primarily, but also offer long-distance moving services across state lines. Our territory is vast like the kingdom of Ra.<br><br>
+                  <button 
+                    onclick='window.location.href="/contact"'
+                    class="option-button"
+                  ><span class="hieroglyph">𓊾</span> Check Service Area</button>`;
+              }
+              // Default response (greeting/other)
               else {
-                botResponse = `<em>"I am Thoth, advisor to movers..."</em><br><br>
+                botResponse = `<em>"I am the advisor to the Pharaoh of Moving..."</em><br><br>
                   Ask me about:<br>
-                  • <strong>Pricing</strong> ("What's the cost for 2 bedrooms?")<br>
-                  • <strong>Dates</strong> ("Is June available?")<br>
-                  • <strong>Services</strong> ("Do you pack artifacts?")<br><br>
-                  <button onclick='document.getElementById("chat-input").value="What pricing do you offer?";document.getElementById("chat-input").focus()' class="option-button"><span class="hieroglyph">𓇯</span> Pricing</button>
-                  <button onclick='document.getElementById("chat-input").value="What services do you offer?";document.getElementById("chat-input").focus()' class="option-button"><span class="hieroglyph">𓃀</span> Services</button>`;
+                  • <strong>Services</strong> ("What services do you offer?")<br>
+                  • <strong>Pricing</strong> ("How much does moving cost?")<br>
+                  • <strong>Booking</strong> ("How do I schedule a move?")<br>
+                  • <strong>Storage</strong> ("Tell me about storage options")<br><br>
+                  <button onclick='document.getElementById("chat-input").value="What services do you offer?";document.getElementById("chat-input").focus()' class="option-button"><span class="hieroglyph">𓃀</span> Services</button>
+                  <button onclick='document.getElementById("chat-input").value="How much does moving cost?";document.getElementById("chat-input").focus()' class="option-button"><span class="hieroglyph">𓇯</span> Pricing</button>
+                  <button onclick='document.getElementById("chat-input").value="How do I book a move?";document.getElementById("chat-input").focus()' class="option-button"><span class="hieroglyph">𓆓</span> Booking</button>`;
               }
               
               chatMessages.innerHTML += `
@@ -350,16 +418,16 @@
           }
         });
         
-        // Add welcome message
+        // Add welcome message with promotion awareness
         setTimeout(() => {
           const chatMessages = document.getElementById('chat-messages');
           chatMessages.innerHTML += `
             <div class="message-bubble bot-message">
               <strong>𓁟 Advisor:</strong> <em>"Greetings, noble one! I am the sacred advisor of Oasis Moving & Storage."</em><br><br>
-              How may I assist with your journey today?<br><br>
-              <button onclick='document.getElementById("chat-input").value="What pricing do you offer?";document.getElementById("chat-input").focus()' class="option-button"><span class="hieroglyph">𓇯</span> Pricing</button>
+              How may I assist with your journey today? New travelers may claim a special 10% discount when booking within the sacred time window.<br><br>
               <button onclick='document.getElementById("chat-input").value="What services do you offer?";document.getElementById("chat-input").focus()' class="option-button"><span class="hieroglyph">𓃀</span> Services</button>
-              <button onclick='document.getElementById("chat-input").value="When can I book?";document.getElementById("chat-input").focus()' class="option-button"><span class="hieroglyph">𓆓</span> Booking</button>
+              <button onclick='document.getElementById("chat-input").value="How much does moving cost?";document.getElementById("chat-input").focus()' class="option-button"><span class="hieroglyph">𓇯</span> Pricing</button>
+              <button onclick='document.getElementById("chat-input").value="How do I book a move?";document.getElementById("chat-input").focus()' class="option-button"><span class="hieroglyph">𓆓</span> Booking</button>
             </div>`;
         }, 300);
         
