@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Button } from '@/components/ui/button';
 import CountdownTimer from './CountdownTimer';
 import { Link } from 'react-router-dom';
-import { Fire, X } from 'lucide-react';
+import { Zap, X } from 'lucide-react';
 
 interface PromoPopupProps {
   trigger?: 'timer' | 'exit';
@@ -59,7 +59,7 @@ const PromoPopup: React.FC<PromoPopupProps> = ({ trigger = 'timer' }) => {
         </button>
         
         <div className="bg-primary text-primary-foreground p-4 flex items-center gap-2">
-          <Fire className="h-5 w-5 text-yellow-300 animate-pulse" />
+          <Zap className="h-5 w-5 text-yellow-300 animate-pulse" />
           <h3 className="font-bold">Limited Time Offer</h3>
         </div>
         

@@ -2,7 +2,7 @@
 import React from 'react';
 import { usePromotion } from '@/contexts/PromotionContext';
 import CountdownTimer from './CountdownTimer';
-import { Fire, X } from 'lucide-react';
+import { Zap, X } from 'lucide-react';
 import { useState } from 'react';
 
 interface PromoBannerProps {
@@ -26,7 +26,7 @@ const PromoBanner: React.FC<PromoBannerProps> = ({ className = "" }) => {
       <div className="w-6"></div> {/* Spacer for centering */}
       
       <div className="flex items-center justify-center gap-2 text-sm sm:text-base flex-grow">
-        <Fire className="h-5 w-5 text-yellow-300 animate-pulse" />
+        <Zap className="h-5 w-5 text-yellow-300 animate-pulse" />
         <span className="font-semibold">
           Book within <CountdownTimer timeRemaining={timeRemaining} compact={true} /> & get {discountPercentage}% OFF your first move!
         </span>
