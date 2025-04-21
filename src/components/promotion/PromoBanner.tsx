@@ -1,9 +1,9 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { usePromotion } from '@/contexts/PromotionContext';
 import CountdownTimer from './CountdownTimer';
 import { Zap, X } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { cn } from '@/lib/utils';
 
 interface PromoBannerProps {
   className?: string;
@@ -53,16 +53,25 @@ const PromoBanner: React.FC<PromoBannerProps> = ({ className = "" }) => {
 
   return (
     <div 
-      className={`bg-primary text-primary-foreground py-2 px-4 flex items-center justify-between sticky top-0 z-50 shadow-md transition-all ${
-        isPulsing ? 'bg-primary-900 scale-[1.02]' : ''
-      } ${className}`}
+      className={cn(
+        "bg-primary text-primary-foreground py-2 px-4 flex items-center justify-between sticky top-0 z-50 shadow-md transition-all duration-300", 
+        isPulsing && "bg-primary-900 scale-[1.02]",
+        className
+      )}
     >
       <div className="w-6"></div> {/* Spacer for centering */}
       
       <div className="flex items-center justify-center gap-2 text-sm sm:text-base flex-grow">
-        <Zap className={`h-5 w-5 text-yellow-300 ${isPulsing ? 'animate-bounce' : 'animate-pulse'}`} />
+        <Zap className={cn(
+          "h-5 w-5 text-yellow-300",
+          isPulsing ? "animate-bounce" : "animate-pulse"
+        )} />
         <span className="font-semibold">
-          Book within <CountdownTimer timeRemaining={timeRemaining} compact={true} /> & get {discountPercentage}% OFF your first move!
+          Book within <CountdownTimer 
+            timeRemaining={timeRemaining} 
+            compact={true} 
+            showIcon={false}
+          /> & get {discountPercentage}% OFF your first move!
         </span>
       </div>
       

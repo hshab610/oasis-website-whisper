@@ -1,3 +1,4 @@
+
 import { Helmet } from 'react-helmet';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -10,7 +11,9 @@ const Contact = () => {
     <>
       <Helmet>
         <title>Contact Us | Oasis Moving & Storage</title>
-        <meta name="description" content="Contact Oasis Moving & Storage for professional moving services. Get a free quote and book your move today!" />
+        <meta name="description" content="Contact Oasis Moving & Storage for professional moving services. Get a free quote and book your move today with 10% off for new customers!" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <meta name="theme-color" content="#DFC9A5" />
       </Helmet>
       
       <PromoBanner />

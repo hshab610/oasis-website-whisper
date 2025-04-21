@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import CountdownTimer from './CountdownTimer';
 import { Link } from 'react-router-dom';
 import { Zap, X } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface PromoPopupProps {
   trigger?: 'timer' | 'exit';
@@ -14,6 +15,10 @@ interface PromoPopupProps {
 const PromoPopup: React.FC<PromoPopupProps> = ({ trigger = 'timer' }) => {
   const { isPromotionActive, timeRemaining, discountPercentage } = usePromotion();
   const [open, setOpen] = useState(false);
+  const [peopleBooking] = useState(() => {
+    // Generate a random number between 8 and 16 to show as social proof
+    return Math.floor(Math.random() * 9) + 8;
+  });
 
   useEffect(() => {
     if (!isPromotionActive) return;
@@ -54,6 +59,7 @@ const PromoPopup: React.FC<PromoPopupProps> = ({ trigger = 'timer' }) => {
         <button 
           className="absolute right-4 top-4 text-muted-foreground hover:text-foreground transition-colors z-10"
           onClick={() => setOpen(false)}
+          aria-label="Close promotion popup"
         >
           <X className="h-5 w-5" />
         </button>
@@ -71,22 +77,27 @@ const PromoPopup: React.FC<PromoPopupProps> = ({ trigger = 'timer' }) => {
           </DialogHeader>
           
           <div className="space-y-4">
-            <p>Book within the next hour to lock in your exclusive discount!</p>
+            <p className="text-center">Book within the next hour to lock in your exclusive discount!</p>
             
             <div className="bg-muted rounded-md p-4 text-center">
               <p className="text-sm text-muted-foreground mb-2">Time remaining:</p>
-              <CountdownTimer timeRemaining={timeRemaining} className="justify-center text-lg" />
+              <CountdownTimer 
+                timeRemaining={timeRemaining} 
+                className="justify-center text-lg" 
+                showIcon={false}
+              />
             </div>
             
             <div className="text-center">
               <p className="text-sm text-muted-foreground mb-1">
-                <span className="font-semibold text-red-500">12 people</span> booked in the last hour
+                <span className="font-semibold text-red-500">{peopleBooking} people</span> booked in the last hour
               </p>
             </div>
             
             <Link to="/contact" onClick={() => setOpen(false)}>
-              <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 mt-4">
+              <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 mt-4 group">
                 Book Now & Save {discountPercentage}%
+                <Zap className="ml-2 group-hover:animate-pulse" />
               </Button>
             </Link>
           </div>
