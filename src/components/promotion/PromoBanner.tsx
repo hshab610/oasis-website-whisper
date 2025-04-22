@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { usePromotion } from '@/contexts/PromotionContext';
 import CountdownTimer from './CountdownTimer';
-import { Zap, X } from 'lucide-react';
+import { Zap, X, BadgePercent } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface PromoBannerProps {
@@ -10,35 +10,47 @@ interface PromoBannerProps {
 }
 
 const PromoBanner: React.FC<PromoBannerProps> = ({ className = "" }) => {
-  const { isPromotionActive, timeRemaining, discountPercentage } = usePromotion();
+  const {
+    isPromotionActive,
+    timeRemaining,
+    discountPercentage,
+    promoCode,
+    activatePromotion,
+    promoApplied,
+    applyPromoCode,
+  } = usePromotion();
   const [isVisible, setIsVisible] = useState(true);
   const [isPulsing, setIsPulsing] = useState(false);
-  
-  // Calculate urgency level based on time remaining
-  const isUrgent = timeRemaining < 300;
-  const isVeryUrgent = timeRemaining < 60;
 
-  // Add pulsing effect every 30 seconds to draw attention
+  // Responsive: Track width for sticky footer on mobile
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth < 640 : false
+  );
+  useEffect(() => {
+    const onResize = () =>
+      setIsMobile(window.innerWidth < 640);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  // Urgency styling
+  const isUrgent = timeRemaining < 3600;
+  const isVeryUrgent = timeRemaining < 300;
+
+  // Pulse attention
   useEffect(() => {
     if (!isPromotionActive) return;
-    
-    // Initial pulse
     setIsPulsing(true);
     const initialTimeout = setTimeout(() => setIsPulsing(false), 2000);
-    
-    // Set up interval for pulsing
     const pulseInterval = setInterval(() => {
       setIsPulsing(true);
       setTimeout(() => setIsPulsing(false), 2000);
     }, 30000);
-    
     return () => {
       clearTimeout(initialTimeout);
       clearInterval(pulseInterval);
     };
   }, [isPromotionActive]);
-
-  // Pulse again when approaching the end of the timer
   useEffect(() => {
     if (timeRemaining <= 300 && timeRemaining % 60 === 0) {
       setIsPulsing(true);
@@ -47,51 +59,65 @@ const PromoBanner: React.FC<PromoBannerProps> = ({ className = "" }) => {
     }
   }, [timeRemaining]);
 
-  if (!isPromotionActive || !isVisible) {
-    return null;
-  }
+  if (!isPromotionActive || !isVisible) return null;
 
-  const handleClose = () => {
-    setIsVisible(false);
+  // Toggle banner close
+  const handleClose = () => setIsVisible(false);
+
+  // Apply promo code (autolock on click)
+  const handleApply = () => {
+    applyPromoCode();
+    activatePromotion();
   };
 
   return (
-    <div 
+    <div
       className={cn(
-        "py-2 px-4 flex items-center justify-between sticky top-0 z-50 shadow-md transition-all duration-300",
+        "flex items-center justify-between z-50 shadow-md transition-all duration-300",
+        isMobile
+          ? "fixed bottom-0 left-0 right-0 py-2 px-3 bg-primary text-primary-foreground rounded-t-lg border-t border-sandGold/40"
+          : "sticky top-0 py-2 px-4 bg-primary text-primary-foreground",
         isVeryUrgent ? "bg-red-500 text-white" :
-        isUrgent ? "bg-amber-500 text-white" :
-        "bg-primary text-primary-foreground",
+        isUrgent ? "bg-amber-500 text-white" : "",
         isPulsing && "scale-[1.02]",
         className
       )}
+      style={{ minHeight: "44px" }}
     >
-      <div className="w-6"></div> {/* Spacer for centering */}
-      
-      <div className="flex items-center justify-center gap-2 text-sm sm:text-base flex-grow">
-        <Zap className={cn(
-          "h-5 w-5",
-          isVeryUrgent ? "text-white animate-bounce" : 
-          isUrgent ? "text-white animate-pulse" : 
-          "text-yellow-300 animate-pulse"
-        )} />
-        <span className={cn(
-          "font-semibold",
-          isPulsing && "scale-105 transition-transform"
-        )}>
-          Book within <CountdownTimer 
-            timeRemaining={timeRemaining} 
-            compact={true} 
-            showIcon={false}
-            className="inline-flex"
-          /> & get {discountPercentage}% OFF your first move!
-        </span>
-      </div>
-      
-      <button 
+      <div className={isMobile ? "w-4" : "w-6"}></div> {/* Spacer */}
+
+      <button
+        type="button"
+        aria-label={
+          promoApplied
+            ? "10% Discount Applied"
+            : "Activate 10% Promo Discount"
+        }
+        tabIndex={0}
+        onClick={handleApply}
         className={cn(
-          "transition-colors",
-          isUrgent ? "text-white hover:text-gray-200" : "text-primary-foreground hover:text-white"
+          "flex items-center gap-2 font-semibold transition-transform cursor-pointer",
+          "hover:scale-105",
+          promoApplied ? "pointer-events-none opacity-80" : "shadow-sm",
+        )}
+      >
+        <BadgePercent className="h-5 w-5" />
+        <span>
+          <span className="font-bold">10% OFF</span> for 24 hours &ndash; Use code{" "}
+          <span className="bg-sunsetOrange/90 text-white rounded px-2 py-0.5 mx-1 font-mono tracking-wide">{promoCode}</span>
+        </span>
+        <CountdownTimer
+          timeRemaining={timeRemaining}
+          compact={true}
+          showIcon={false}
+          className="ml-2"
+        />
+      </button>
+
+      <button
+        className={cn(
+          "transition-colors ml-3",
+          isUrgent ? "text-white hover:text-gray-200" : "text-primary-foreground hover:text-sunsetOrange"
         )}
         onClick={handleClose}
         aria-label="Close promotion banner"
