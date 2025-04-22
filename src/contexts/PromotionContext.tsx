@@ -34,29 +34,39 @@ export const usePromotion = () => {
 };
 
 export const PromotionProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  // Force promotion to be active for all users initially
   const [isPromotionActive, setIsPromotionActive] = useState(true);
   const [timeRemaining, setTimeRemaining] = useState(PROMO_DURATION_SECONDS);
   const [promoCode] = useState(PROMO_CODE);
   const [discountPercentage] = useState(DISCOUNT_PERCENTAGE);
-  const [promoApplied, setPromoApplied] = useState(false);
+  const [promoApplied, setPromoApplied] = useState(true); // Auto-apply for all users
 
   useEffect(() => {
+    // Always activate the promotion for new users
+    if (!localStorage.getItem('promotionTimeRemaining')) {
+      localStorage.setItem('promotionTimeRemaining', PROMO_DURATION_SECONDS.toString());
+      localStorage.setItem('promotionStartTime', Date.now().toString());
+    }
+    
     const savedTime = localStorage.getItem('promotionTimeRemaining');
     const startTime = localStorage.getItem('promotionStartTime');
+    
     if (savedTime && startTime) {
       const elapsedTime = Math.floor((Date.now() - parseInt(startTime)) / 1000);
       const remainingTime = Math.max(0, parseInt(savedTime) - elapsedTime);
+      
       if (remainingTime > 0) {
         setTimeRemaining(remainingTime);
         setIsPromotionActive(true);
       } else {
-        setIsPromotionActive(false);
-        setTimeRemaining(0);
+        // Reset promotion for testing purposes in development
+        localStorage.setItem('promotionTimeRemaining', PROMO_DURATION_SECONDS.toString());
+        localStorage.setItem('promotionStartTime', Date.now().toString());
+        setTimeRemaining(PROMO_DURATION_SECONDS);
+        setIsPromotionActive(true);
       }
-    } else {
-      localStorage.setItem('promotionTimeRemaining', PROMO_DURATION_SECONDS.toString());
-      localStorage.setItem('promotionStartTime', Date.now().toString());
     }
+    
     const timer = setInterval(() => {
       setTimeRemaining((prevTime) => {
         const newTime = Math.max(0, prevTime - 1);
@@ -68,6 +78,7 @@ export const PromotionProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         return newTime;
       });
     }, 1000);
+    
     return () => clearInterval(timer);
   }, []);
 

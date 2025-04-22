@@ -1,21 +1,34 @@
 
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Calculator, Truck } from 'lucide-react';
+import { ArrowRight, Calculator, Truck, BadgePercent } from 'lucide-react';
 import QuoteButton from '@/components/contact/QuoteButton';
+import { usePromotion } from '@/contexts/PromotionContext';
 
 const HeroButtons = () => {
+  const { isPromotionActive, discountPercentage } = usePromotion();
+  
   return (
     <div className="flex flex-col sm:flex-row gap-4 pt-6 mx-auto">
       <Link to="/contact" className="w-full sm:w-auto">
         <QuoteButton 
           text="Book Your Move"
           icon={false}
-          className="w-full sm:w-auto px-8 py-6 text-lg h-auto"
+          className="w-full sm:w-auto px-8 py-6 text-lg h-auto group relative"
           size="xl"
         >
           <Truck className="mr-2 h-6 w-6" />
-          Book Your Move
+          {isPromotionActive ? (
+            <span className="flex items-center">
+              Book Now 
+              <span className="bg-white text-primary rounded-full px-2 py-0.5 ml-2 font-bold text-sm flex items-center group-hover:scale-110 transition-transform">
+                <BadgePercent className="h-4 w-4 mr-1 animate-pulse" />
+                {discountPercentage}% OFF
+              </span>
+            </span>
+          ) : (
+            "Book Your Move"
+          )}
           <ArrowRight className="ml-2 h-6 w-6 animate-pulse" />
         </QuoteButton>
       </Link>

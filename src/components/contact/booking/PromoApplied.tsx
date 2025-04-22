@@ -6,7 +6,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { cn } from '@/lib/utils';
 
 const PromoApplied = () => {
-  const { isPromotionActive, timeRemaining, discountPercentage } = usePromotion();
+  const { isPromotionActive, timeRemaining, discountPercentage, promoCode } = usePromotion();
   
   if (!isPromotionActive) return null;
   
@@ -16,7 +16,7 @@ const PromoApplied = () => {
   return (
     <Alert className={cn(
       "mb-6 border-primary flex items-start transition-all duration-300", 
-      isUrgent ? "bg-primary/15" : "bg-primary/10"
+      isUrgent ? "bg-primary/15 animate-pulse" : "bg-primary/10"
     )}>
       <div className={cn(
         "bg-primary text-primary-foreground rounded-full p-1 mr-2 mt-0.5",
@@ -32,17 +32,22 @@ const PromoApplied = () => {
             timeRemaining < 300 ? "animate-pulse" : ""
           )}>🎉</span>
         </AlertTitle>
-        <AlertDescription className="text-sm flex items-center gap-1">
-          <Clock className="h-3.5 w-3.5 text-muted-foreground" />
-          <span className={isUrgent ? "font-medium" : ""}>
-            {isUrgent ? "Hurry! Discount expiring soon:" : "Discount locked in! Time remaining:"}
-          </span>
-          <CountdownTimer 
-            timeRemaining={timeRemaining} 
-            compact={true} 
-            className={cn("text-primary font-semibold", isUrgent && "text-red-500")}
-            showIcon={false}
-          />
+        <AlertDescription className="text-sm flex flex-col gap-1">
+          <div className="flex items-center gap-1">
+            <Clock className="h-3.5 w-3.5 text-muted-foreground" />
+            <span className={isUrgent ? "font-medium" : ""}>
+              {isUrgent ? "Hurry! Discount expiring soon:" : "Discount locked in! Time remaining:"}
+            </span>
+            <CountdownTimer 
+              timeRemaining={timeRemaining} 
+              compact={true} 
+              className={cn("text-primary font-semibold", isUrgent && "text-red-500")}
+              showIcon={false}
+            />
+          </div>
+          <div className="text-xs text-muted-foreground mt-1">
+            Promo code <span className="font-mono bg-muted px-1 py-0.5 rounded">{promoCode}</span> automatically applied for new customers
+          </div>
         </AlertDescription>
       </div>
     </Alert>

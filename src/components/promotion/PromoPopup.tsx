@@ -26,33 +26,44 @@ const PromoPopup: React.FC<PromoPopupProps> = ({ trigger = 'timer' }) => {
   useEffect(() => {
     if (!isPromotionActive) return;
 
-    // For timer trigger - show after 5 seconds on page
+    // For timer trigger - show after a short delay
     if (trigger === 'timer') {
       const timer = setTimeout(() => {
-        // Only show if user hasn't seen it before in this session
-        if (!sessionStorage.getItem('promoPopupShown')) {
-          setOpen(true);
-          sessionStorage.setItem('promoPopupShown', 'true');
-        }
-      }, 5000);
+        // Remove session storage check to ensure popup shows on preview
+        setOpen(true);
+        // Set session storage after showing
+        sessionStorage.setItem('promoPopupShown', 'true');
+      }, 3000); // Shorter delay for testing
       
       return () => clearTimeout(timer);
     }
     
-    // For exit trigger
+    // For exit trigger - make it more sensitive
     if (trigger === 'exit') {
       const handleExit = (e: MouseEvent) => {
-        // Only trigger if mouse leaves to the top of the page
-        if (e.clientY <= 0 && !sessionStorage.getItem('exitPopupShown')) {
+        // Trigger when mouse moves near the top of the page
+        if (e.clientY <= 50) {
           setOpen(true);
           sessionStorage.setItem('exitPopupShown', 'true');
         }
       };
       
-      document.addEventListener('mouseleave', handleExit);
-      return () => document.removeEventListener('mouseleave', handleExit);
+      document.addEventListener('mousemove', handleExit);
+      return () => document.removeEventListener('mousemove', handleExit);
     }
   }, [isPromotionActive, trigger]);
+
+  // Force popup to show on first visit
+  useEffect(() => {
+    if (trigger === 'timer' && !sessionStorage.getItem('forcedPopupShown')) {
+      const timer = setTimeout(() => {
+        setOpen(true);
+        sessionStorage.setItem('forcedPopupShown', 'true');
+      }, 2000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [trigger]);
 
   if (!isPromotionActive) return null;
 

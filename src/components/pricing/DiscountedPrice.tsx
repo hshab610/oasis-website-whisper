@@ -15,12 +15,15 @@ interface DiscountedPriceProps {
   discounted: number;
   className?: string;
   currency?: string;
+  animatePulse?: boolean;
 }
+
 const DiscountedPrice: React.FC<DiscountedPriceProps> = ({
   original,
   discounted,
   className = "",
   currency = "$",
+  animatePulse = true,
 }) => (
   <div className={cn("flex items-baseline gap-2", className)}>
     <span
@@ -32,10 +35,17 @@ const DiscountedPrice: React.FC<DiscountedPriceProps> = ({
       {original.toFixed(2)}
     </span>
     <span className={cn(
-      "font-bold text-sunsetOrange text-lg md:text-2xl"
+      "font-bold text-sunsetOrange text-lg md:text-2xl",
+      animatePulse && "relative"
     )}>
       {currency}
       {discounted.toFixed(2)}
+      {animatePulse && (
+        <span className="absolute -right-1.5 -top-1.5 flex h-3 w-3">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sunsetOrange opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-3 w-3 bg-sunsetOrange"></span>
+        </span>
+      )}
     </span>
   </div>
 );

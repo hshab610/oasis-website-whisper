@@ -19,7 +19,7 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({
   className = "", 
   compact = false,
   showIcon = true,
-  urgencyThreshold = { warning: 300, critical: 60 }
+  urgencyThreshold = { warning: 3600, critical: 300 } // Increased thresholds
 }) => {
   // Convert seconds to hours, minutes, seconds
   const formattedTime = useMemo(() => {
@@ -43,20 +43,22 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({
     <div className={cn("flex items-center", className)}>
       {showIcon && !compact && (
         <Clock className={cn(
-          "mr-2 h-4 w-4 text-primary",
-          isVeryUrgent ? "animate-pulse text-red-500" : "animate-pulse"
+          "mr-2 h-4 w-4",
+          isVeryUrgent ? "animate-pulse text-red-500" : 
+          isUrgent ? "animate-pulse text-amber-500" : "text-primary animate-pulse"
         )} />
       )}
       <div 
         className={cn(
           "font-mono font-bold",
-          isVeryUrgent ? "text-red-500 animate-pulse" : 
+          isVeryUrgent ? "text-red-500" : 
           isUrgent ? "text-amber-600" : ""
         )}
       >
         {formattedTime.hours}:{formattedTime.minutes}:
         <span className={cn(
-          isUrgent && "inline-block animate-pulse"
+          "inline-block",
+          isUrgent && "animate-pulse"
         )}>
           {formattedTime.seconds}
         </span>

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { usePromotion } from '@/contexts/PromotionContext';
 import CountdownTimer from './CountdownTimer';
-import { Zap, X, BadgePercent } from 'lucide-react';
+import { BadgePercent, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface PromoBannerProps {
@@ -20,7 +20,7 @@ const PromoBanner: React.FC<PromoBannerProps> = ({ className = "" }) => {
     applyPromoCode,
   } = usePromotion();
   const [isVisible, setIsVisible] = useState(true);
-  const [isPulsing, setIsPulsing] = useState(false);
+  const [isPulsing, setIsPulsing] = useState(true); // Start with pulsing for visibility
 
   // Responsive: Track width for sticky footer on mobile
   const [isMobile, setIsMobile] = useState(() =>
@@ -40,17 +40,23 @@ const PromoBanner: React.FC<PromoBannerProps> = ({ className = "" }) => {
   // Pulse attention
   useEffect(() => {
     if (!isPromotionActive) return;
+    
+    // Initial pulse for visibility
     setIsPulsing(true);
-    const initialTimeout = setTimeout(() => setIsPulsing(false), 2000);
+    const initialTimeout = setTimeout(() => setIsPulsing(false), 3000);
+    
+    // Periodic pulsing
     const pulseInterval = setInterval(() => {
       setIsPulsing(true);
       setTimeout(() => setIsPulsing(false), 2000);
-    }, 30000);
+    }, 20000); // Every 20 seconds to draw attention
+    
     return () => {
       clearTimeout(initialTimeout);
       clearInterval(pulseInterval);
     };
   }, [isPromotionActive]);
+  
   useEffect(() => {
     if (timeRemaining <= 300 && timeRemaining % 60 === 0) {
       setIsPulsing(true);
@@ -58,6 +64,15 @@ const PromoBanner: React.FC<PromoBannerProps> = ({ className = "" }) => {
       return () => clearTimeout(urgencyTimeout);
     }
   }, [timeRemaining]);
+
+  // Force visibility for the first day
+  useEffect(() => {
+    const hasSeen = localStorage.getItem('hasSeenPromoBanner');
+    if (!hasSeen) {
+      setIsVisible(true);
+      localStorage.setItem('hasSeenPromoBanner', 'true');
+    }
+  }, []);
 
   if (!isPromotionActive || !isVisible) return null;
 
@@ -79,7 +94,7 @@ const PromoBanner: React.FC<PromoBannerProps> = ({ className = "" }) => {
           : "sticky top-0 py-2 px-4 bg-primary text-primary-foreground",
         isVeryUrgent ? "bg-red-500 text-white" :
         isUrgent ? "bg-amber-500 text-white" : "",
-        isPulsing && "scale-[1.02]",
+        isPulsing ? "scale-[1.02] animate-pulse" : "",
         className
       )}
       style={{ minHeight: "44px" }}
@@ -98,7 +113,7 @@ const PromoBanner: React.FC<PromoBannerProps> = ({ className = "" }) => {
         className={cn(
           "flex items-center gap-2 font-semibold transition-transform cursor-pointer",
           "hover:scale-105",
-          promoApplied ? "pointer-events-none opacity-80" : "shadow-sm",
+          promoApplied ? "opacity-90" : "shadow-sm",
         )}
       >
         <BadgePercent className="h-5 w-5" />
