@@ -4,6 +4,22 @@ import { useToast } from '@/hooks/use-toast';
 import { useFormspree } from '@/hooks/use-formspree';
 import { usePromotion } from '@/contexts/PromotionContext';
 
+// Define the gtag property on the Window interface
+declare global {
+  interface Window {
+    gtag?: (
+      command: string,
+      action: string,
+      params?: {
+        event_category?: string;
+        event_label?: string;
+        value?: number;
+        [key: string]: any;
+      }
+    ) => void;
+  }
+}
+
 export interface BookingFormData {
   name: string;
   email: string;
@@ -172,7 +188,7 @@ export const useBookingForm = () => {
       // Track conversion for analytics (if implemented)
       if (typeof window !== 'undefined' && window.gtag) {
         try {
-          (window as any).gtag('event', 'booking_submitted', {
+          window.gtag('event', 'booking_submitted', {
             event_category: 'form',
             event_label: formData.package_type,
             value: 1
