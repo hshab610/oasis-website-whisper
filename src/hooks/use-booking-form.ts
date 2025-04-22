@@ -54,36 +54,59 @@ export const useBookingForm = () => {
   const validateForm = () => {
     const newErrors: BookingFormErrors = {};
     
+    // Enhanced name validation
     if (!formData.name.trim()) {
       newErrors.name = 'Name is required';
     } else if (formData.name.trim().length < 2) {
       newErrors.name = 'Name must be at least 2 characters';
+    } else if (formData.name.trim().length > 100) {
+      newErrors.name = 'Name must be less than 100 characters';
     }
     
+    // Enhanced email validation
     if (!formData.email.trim()) {
       newErrors.email = 'Email is required';
     } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
       newErrors.email = 'Please enter a valid email address';
+    } else if (formData.email.length > 100) {
+      newErrors.email = 'Email must be less than 100 characters';
     }
     
+    // Enhanced phone validation
     if (!formData.phone.trim()) {
       newErrors.phone = 'Phone number is required for booking requests';
     } else if (!/^[\d\+\-\(\) ]{10,15}$/.test(formData.phone.replace(/\s/g, ''))) {
       newErrors.phone = 'Please enter a valid phone number';
     }
     
+    // Move date validation
     if (!formData.move_date) {
       newErrors.move_date = 'Move date is required';
+    } else {
+      // Validate date is in the future
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const selectedDate = new Date(formData.move_date);
+      if (selectedDate <= today) {
+        newErrors.move_date = 'Move date must be in the future';
+      }
     }
     
+    // Time validation
     if (!formData.move_time) {
       newErrors.move_time = 'Move time is required';
     }
     
+    // Address validation
     if (!formData.address.trim()) {
       newErrors.address = 'Address is required';
+    } else if (formData.address.length < 5) {
+      newErrors.address = 'Please enter a complete address';
+    } else if (formData.address.length > 200) {
+      newErrors.address = 'Address must be less than 200 characters';
     }
     
+    // Package type validation
     if (!formData.package_type) {
       newErrors.package_type = 'Please select a package type';
     }
@@ -103,6 +126,14 @@ export const useBookingForm = () => {
         description: "Please check the form for errors and try again.",
         variant: "destructive",
       });
+      
+      // Scroll to the first error
+      const firstErrorField = Object.keys(errors)[0];
+      if (firstErrorField) {
+        const element = document.querySelector(`[name="${firstErrorField}"]`);
+        element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      
       return;
     }
     
@@ -137,6 +168,19 @@ export const useBookingForm = () => {
       });
       setSelectedDate(undefined);
       setFormSubmitted(true);
+      
+      // Track conversion for analytics (if implemented)
+      if (typeof window !== 'undefined' && window.gtag) {
+        try {
+          (window as any).gtag('event', 'booking_submitted', {
+            event_category: 'form',
+            event_label: formData.package_type,
+            value: 1
+          });
+        } catch (e) {
+          console.error('Analytics tracking error:', e);
+        }
+      }
     }
   };
 
@@ -172,6 +216,25 @@ export const useBookingForm = () => {
     }
   };
 
+  const resetForm = () => {
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      move_date: '',
+      move_time: '',
+      address: '',
+      package_type: '',
+      additional_services: '',
+      notes: '',
+      promo_code: isPromotionActive ? promoCode : '',
+      discount: isPromotionActive ? discountPercentage : 0
+    });
+    setSelectedDate(undefined);
+    setErrors({});
+    setFormSubmitted(false);
+  };
+
   return {
     formData,
     selectedDate,
@@ -182,5 +245,6 @@ export const useBookingForm = () => {
     handleSelectChange,
     handleDateChange,
     handleSubmit,
+    resetForm
   };
 };

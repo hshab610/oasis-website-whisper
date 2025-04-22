@@ -10,6 +10,8 @@ import SuccessMessage from './booking/SuccessMessage';
 import FormHeader from './booking/FormHeader';
 import PromoApplied from './booking/PromoApplied';
 import { useBookingForm } from '@/hooks/use-booking-form';
+import { Loader } from 'lucide-react';
+import { useEffect } from 'react';
 
 const BookingForm = () => {
   const { isPromotionActive } = usePromotion();
@@ -23,12 +25,20 @@ const BookingForm = () => {
     handleSelectChange,
     handleDateChange,
     handleSubmit,
+    resetForm
   } = useBookingForm();
+
+  // Auto-scroll to top when form is submitted
+  useEffect(() => {
+    if (formSubmitted) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [formSubmitted]);
 
   if (formSubmitted) {
     return (
       <div className="bg-white p-6 md:p-8 rounded-lg shadow-md border border-border">
-        <SuccessMessage onRequestAnother={() => window.location.reload()} />
+        <SuccessMessage onRequestAnother={resetForm} />
       </div>
     );
   }
@@ -38,6 +48,16 @@ const BookingForm = () => {
       <FormHeader />
       
       {isPromotionActive && <PromoApplied />}
+      
+      {isSubmitting && (
+        <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-xl flex flex-col items-center">
+            <Loader className="h-8 w-8 text-primary animate-spin mb-4" />
+            <p className="text-lg font-medium">Submitting your request...</p>
+            <p className="text-sm text-muted-foreground mt-1">Please wait, this may take a moment.</p>
+          </div>
+        </div>
+      )}
       
       <form onSubmit={handleSubmit} className="space-y-6">
         <PersonalInfoFields 

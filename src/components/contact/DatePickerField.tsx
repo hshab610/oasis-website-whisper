@@ -1,7 +1,7 @@
 
 import * as React from "react";
-import { format } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
+import { format, addDays, isBefore, isWeekend } from "date-fns";
+import { Calendar as CalendarIcon, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -11,6 +11,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
 
 interface DatePickerFieldProps {
   date: Date | undefined;
@@ -33,14 +34,18 @@ const DatePickerField = ({
   disablePastDates = true,
   disabledDates = []
 }: DatePickerFieldProps) => {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const [open, setOpen] = React.useState(false);
+  
+  const today = React.useMemo(() => {
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+    return now;
+  }, []);
   
   // Calculate dates that should be highlighted (next 3 available dates)
-  const getNextThreeAvailableDates = () => {
+  const suggestedDates = React.useMemo(() => {
     const dates: Date[] = [];
-    let current = new Date(today);
-    current.setDate(current.getDate() + 1); // Start with tomorrow
+    let current = addDays(today, 1); // Start with tomorrow
     
     while (dates.length < 3) {
       const isDisabled = disabledDates.some(
@@ -51,20 +56,23 @@ const DatePickerField = ({
       );
       
       // Skip weekends (0 is Sunday, 6 is Saturday)
-      const isWeekend = current.getDay() === 0 || current.getDay() === 6;
+      const isWeekendDay = isWeekend(current);
       
-      if (!isDisabled && !isWeekend) {
+      if (!isDisabled && !isWeekendDay) {
         dates.push(new Date(current));
       }
       
-      current.setDate(current.getDate() + 1);
+      current = addDays(current, 1);
     }
     
     return dates;
+  }, [today, disabledDates]);
+  
+  const handleSelect = (newDate: Date | undefined) => {
+    onDateChange(newDate);
+    setOpen(false);
   };
-  
-  const suggestedDates = getNextThreeAvailableDates();
-  
+
   return (
     <div className="space-y-2">
       <div className="flex justify-between">
@@ -76,29 +84,43 @@ const DatePickerField = ({
         )}
       </div>
       
-      <Popover>
+      <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
             id="date"
             variant="outline"
             className={cn(
-              "w-full justify-start text-left font-normal",
+              "w-full justify-start text-left font-normal h-12",
               !date && "text-muted-foreground",
-              error && "border-destructive"
+              error ? "border-destructive" : date && "border-green-500"
             )}
+            aria-invalid={error ? "true" : "false"}
+            aria-describedby={error ? "date-error" : undefined}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
-            {date ? format(date, "PPP") : <span>Select a date</span>}
+            {date ? (
+              <span className="flex items-center">
+                {format(date, "EEE, MMM d, yyyy")}
+                {date && !error && <Check className="ml-2 h-4 w-4 text-green-500" />}
+              </span>
+            ) : (
+              <span>Select a date</span>
+            )}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">
           <Calendar
             mode="single"
             selected={date}
-            onSelect={onDateChange}
+            onSelect={handleSelect}
             disabled={(date) => {
               // Disable past dates
-              if (disablePastDates && date < today) {
+              if (disablePastDates && isBefore(date, today)) {
+                return true;
+              }
+              
+              // Optionally disable weekends
+              if (isWeekend(date)) {
                 return true;
               }
               
@@ -118,20 +140,26 @@ const DatePickerField = ({
             }}
             initialFocus
             className={cn("p-3 pointer-events-auto")}
+            fromMonth={today}
+            toMonth={addDays(today, 90)}
           />
           
           <div className="p-3 border-t">
-            <p className="text-sm font-medium mb-2">Available dates:</p>
+            <p className="text-sm font-medium mb-2">Recommended dates:</p>
             <div className="flex flex-wrap gap-2">
               {suggestedDates.map((suggestedDate, index) => (
                 <Button
                   key={index}
                   variant="outline"
                   size="sm"
-                  className="text-xs"
-                  onClick={() => onDateChange(suggestedDate)}
+                  className={cn(
+                    "text-xs",
+                    date && suggestedDate.getTime() === date.getTime() ? "bg-primary text-primary-foreground" : ""
+                  )}
+                  onClick={() => handleSelect(suggestedDate)}
                 >
                   {format(suggestedDate, "EEE, MMM d")}
+                  {index === 0 && <Badge variant="outline" className="ml-1 text-[9px]">Best</Badge>}
                 </Button>
               ))}
             </div>
@@ -140,7 +168,7 @@ const DatePickerField = ({
       </Popover>
       
       {error && (
-        <p className="text-sm text-destructive">{error}</p>
+        <p id="date-error" className="text-sm text-destructive">{error}</p>
       )}
     </div>
   );
