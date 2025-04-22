@@ -4,6 +4,7 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import ContactSection from '@/components/contact/ContactSection';
 import PromoBanner from '@/components/promotion/PromoBanner';
+import PromoPopup from '@/components/promotion/PromoPopup';
 import ChatWidget from '@/components/chat/ChatWidget';
 
 const Contact = () => {
@@ -17,6 +18,7 @@ const Contact = () => {
       </Helmet>
       
       <PromoBanner />
+      <PromoPopup trigger="timer" />
       <ChatWidget />
       
       <div className="flex flex-col min-h-screen">
@@ -29,6 +31,12 @@ const Contact = () => {
               <p className="text-lg text-muted-foreground">
                 We'd love to hear from you! Fill out the form below to book your move or ask any questions.
               </p>
+              <div className="mt-2 inline-block bg-sunsetOrange/10 py-1 px-3 rounded-full">
+                <p className="text-sm font-medium text-primary flex items-center">
+                  <BadgePercent className="h-4 w-4 mr-1.5 text-sunsetOrange" />
+                  New customers get 10% off their first booking!
+                </p>
+              </div>
             </div>
             
             <ContactSection />

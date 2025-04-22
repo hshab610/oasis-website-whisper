@@ -19,7 +19,7 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({
   className = "", 
   compact = false,
   showIcon = true,
-  urgencyThreshold = { warning: 3600, critical: 300 } // Increased thresholds
+  urgencyThreshold = { warning: 3600, critical: 600 } // Increased urgency thresholds
 }) => {
   // Convert seconds to hours, minutes, seconds
   const formattedTime = useMemo(() => {

@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 /**
@@ -34,7 +33,7 @@ export const usePromotion = () => {
 };
 
 export const PromotionProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Force promotion to be active for all users initially
+  // Always activate promotion for all users
   const [isPromotionActive, setIsPromotionActive] = useState(true);
   const [timeRemaining, setTimeRemaining] = useState(PROMO_DURATION_SECONDS);
   const [promoCode] = useState(PROMO_CODE);
@@ -42,38 +41,43 @@ export const PromotionProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const [promoApplied, setPromoApplied] = useState(true); // Auto-apply for all users
 
   useEffect(() => {
-    // Always activate the promotion for new users
-    if (!localStorage.getItem('promotionTimeRemaining')) {
+    // Force activation for all visitors and reset timer to full duration
+    const resetTimer = () => {
       localStorage.setItem('promotionTimeRemaining', PROMO_DURATION_SECONDS.toString());
       localStorage.setItem('promotionStartTime', Date.now().toString());
-    }
+      setTimeRemaining(PROMO_DURATION_SECONDS);
+      setIsPromotionActive(true);
+      setPromoApplied(true);
+    };
     
+    // Check if we need to initialize or reset the timer
     const savedTime = localStorage.getItem('promotionTimeRemaining');
     const startTime = localStorage.getItem('promotionStartTime');
     
-    if (savedTime && startTime) {
+    if (!savedTime || !startTime) {
+      resetTimer();
+    } else {
       const elapsedTime = Math.floor((Date.now() - parseInt(startTime)) / 1000);
       const remainingTime = Math.max(0, parseInt(savedTime) - elapsedTime);
       
-      if (remainingTime > 0) {
+      if (remainingTime <= 0) {
+        // Reset on expiration for demo purposes
+        resetTimer();
+      } else {
         setTimeRemaining(remainingTime);
         setIsPromotionActive(true);
-      } else {
-        // Reset promotion for testing purposes in development
-        localStorage.setItem('promotionTimeRemaining', PROMO_DURATION_SECONDS.toString());
-        localStorage.setItem('promotionStartTime', Date.now().toString());
-        setTimeRemaining(PROMO_DURATION_SECONDS);
-        setIsPromotionActive(true);
+        setPromoApplied(true);
       }
     }
     
+    // Start countdown timer
     const timer = setInterval(() => {
       setTimeRemaining((prevTime) => {
         const newTime = Math.max(0, prevTime - 1);
         localStorage.setItem('promotionTimeRemaining', newTime.toString());
         if (newTime === 0) {
-          setIsPromotionActive(false);
-          clearInterval(timer);
+          // Instead of expiring, we'll reset for demo purposes
+          resetTimer();
         }
         return newTime;
       });
@@ -91,11 +95,8 @@ export const PromotionProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   };
 
   const resetPromotion = () => {
-    setIsPromotionActive(false);
-    setTimeRemaining(0);
-    localStorage.removeItem('promotionTimeRemaining');
-    localStorage.removeItem('promotionStartTime');
-    setPromoApplied(false);
+    // For demo purposes, we're keeping it always active
+    activatePromotion();
   };
 
   const applyPromoCode = () => {

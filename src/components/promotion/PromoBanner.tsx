@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { usePromotion } from '@/contexts/PromotionContext';
 import CountdownTimer from './CountdownTimer';

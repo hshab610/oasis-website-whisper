@@ -16,6 +16,7 @@ interface DiscountedPriceProps {
   className?: string;
   currency?: string;
   animatePulse?: boolean;
+  showBadge?: boolean;
 }
 
 const DiscountedPrice: React.FC<DiscountedPriceProps> = ({
@@ -24,6 +25,7 @@ const DiscountedPrice: React.FC<DiscountedPriceProps> = ({
   className = "",
   currency = "$",
   animatePulse = true,
+  showBadge = false,
 }) => (
   <div className={cn("flex items-baseline gap-2", className)}>
     <span
@@ -44,6 +46,11 @@ const DiscountedPrice: React.FC<DiscountedPriceProps> = ({
         <span className="absolute -right-1.5 -top-1.5 flex h-3 w-3">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sunsetOrange opacity-75"></span>
           <span className="relative inline-flex rounded-full h-3 w-3 bg-sunsetOrange"></span>
+        </span>
+      )}
+      {showBadge && (
+        <span className="ml-2 bg-sunsetOrange text-white text-xs px-1.5 py-0.5 rounded-full align-middle inline-block -translate-y-1">
+          SAVE10
         </span>
       )}
     </span>

@@ -10,11 +10,11 @@ import SuccessMessage from './booking/SuccessMessage';
 import FormHeader from './booking/FormHeader';
 import PromoApplied from './booking/PromoApplied';
 import { useBookingForm } from '@/hooks/use-booking-form';
-import { Loader } from 'lucide-react';
+import { Loader, BadgePercent } from 'lucide-react';
 import { useEffect } from 'react';
 
 const BookingForm = () => {
-  const { isPromotionActive } = usePromotion();
+  const { isPromotionActive, discountPercentage } = usePromotion();
   const {
     formData,
     selectedDate,
@@ -45,6 +45,13 @@ const BookingForm = () => {
 
   return (
     <div className="bg-white p-6 md:p-8 rounded-lg shadow-md border border-border">
+      {isPromotionActive && (
+        <div className="mb-6 -mt-2 bg-sunsetOrange/10 py-2 px-4 rounded-md flex items-center justify-center text-sm font-medium text-primary">
+          <BadgePercent className="h-4 w-4 mr-2 animate-pulse" />
+          New customer booking discount: <span className="font-bold ml-1">{discountPercentage}% OFF</span>
+        </div>
+      )}
+      
       <FormHeader />
       
       {isPromotionActive && <PromoApplied />}
