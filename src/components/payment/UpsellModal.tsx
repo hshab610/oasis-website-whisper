@@ -23,26 +23,26 @@ const UpsellModal: React.FC<UpsellModalProps> = ({
 
   return (
     <Dialog open>
-      <DialogContent className="sm:max-w-md">
-        <DialogTitle className="flex items-center text-xl font-semibold text-primary">
+      <DialogContent className="sm:max-w-md w-[90%] max-w-[400px] mx-auto">
+        <DialogTitle className="flex items-center text-xl font-semibold text-primary tracking-tight">
           <BadgePercent className="mr-2 h-5 w-5" />
           Special Offer Available
         </DialogTitle>
         
-        <div className="mt-2 space-y-5">
-          <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
-            <div className="flex flex-col gap-1">
-              <p className="text-foreground font-medium">
+        <div className="mt-4 space-y-6">
+          <div className="bg-primary/5 border border-primary/20 rounded-md p-4">
+            <div className="flex flex-col gap-2">
+              <p className="text-foreground font-medium leading-tight">
                 Pay your balance today and receive a {discount}% discount
               </p>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-muted-foreground leading-normal">
                 Complete your payment now to receive this exclusive offer
               </p>
             </div>
           </div>
           
-          <div className="rounded-lg border bg-background p-4">
-            <div className="space-y-3">
+          <div className="rounded-md border bg-background p-4">
+            <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <span className="text-sm font-medium">Original Balance:</span>
                 <span>${(balanceDue / 100).toFixed(2)}</span>
@@ -67,27 +67,27 @@ const UpsellModal: React.FC<UpsellModalProps> = ({
             </div>
           </div>
           
-          <div className="space-y-2">
-            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+          <div className="space-y-4">
+            <div className="flex flex-col gap-3">
               <Button 
                 onClick={onAccept} 
-                className="w-full bg-green-600 hover:bg-green-700 flex items-center justify-center"
+                className="w-full bg-green-600 hover:bg-green-700 flex items-center justify-center h-12 min-h-[48px]"
               >
-                <Check className="mr-2 h-4 w-4" />
+                <Check className="mr-2 h-5 w-5" />
                 Save ${(saving / 100).toFixed(2)} Now
               </Button>
               <Button 
                 variant="outline" 
                 onClick={onDecline}
-                className="w-full"
+                className="w-full h-12 min-h-[48px]"
               >
                 Pay Later
               </Button>
             </div>
             
-            <div className="flex items-center justify-center text-xs text-muted-foreground mt-2 gap-1">
-              <ShieldCheck className="h-3 w-3" />
-              <span>Secure payment • Bank-level encryption</span>
+            <div className="flex items-center justify-center text-xs text-muted-foreground gap-1 pt-2">
+              <ShieldCheck className="h-4 w-4" />
+              <span className="leading-relaxed">Secure payment • Bank-level encryption</span>
             </div>
           </div>
         </div>

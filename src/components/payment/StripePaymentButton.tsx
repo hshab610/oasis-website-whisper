@@ -83,7 +83,7 @@ const StripePaymentButton: React.FC<StripePaymentButtonProps> = ({
   return (
     <div className={`w-full flex flex-col items-center ${className}`}>
       <Button
-        className="w-full bg-green-600 hover:bg-green-700 text-lg py-3 h-auto"
+        className="w-full bg-green-600 hover:bg-green-700 text-lg py-3 h-auto min-h-[48px] transform active:scale-[0.98] transition-transform"
         disabled={loading}
         onClick={handlePay}
       >
@@ -101,14 +101,14 @@ const StripePaymentButton: React.FC<StripePaymentButtonProps> = ({
       </Button>
       
       {error && (
-        <div className="text-red-600 mt-2 text-sm p-2 bg-red-50 rounded-md w-full">
+        <div className="text-red-600 mt-4 text-sm p-3 bg-red-50 rounded-md w-full">
           {error}
         </div>
       )}
       
-      <div className="flex items-center mt-2 text-xs text-muted-foreground">
+      <div className="flex items-center mt-3 text-xs text-muted-foreground">
         <LockIcon className="h-3 w-3 mr-1" />
-        <span>Secure checkout powered by Stripe</span>
+        <span className="leading-relaxed">Secure checkout powered by Stripe</span>
       </div>
     </div>
   );

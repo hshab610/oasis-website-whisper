@@ -1,0 +1,124 @@
+
+/* Mobile Optimizations - Following 8px baseline grid */
+
+/* Container width enforcement */
+@media (max-width: 640px) {
+  .container {
+    width: 90% !important;
+    max-width: 90% !important;
+  }
+  
+  /* Fix horizontal overflow issues */
+  body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+  
+  /* Vertical spacing for sections - 64px (8px × 8) */
+  section {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+  
+  /* Prevent margin collapse */
+  .prevent-margin-collapse {
+    padding: 0.1px 0;
+  }
+  
+  /* Touch-friendly elements for mobile */
+  button, 
+  a, 
+  .interactive, 
+  [role="button"],
+  input[type="submit"],
+  input[type="button"],
+  input[type="checkbox"],
+  input[type="radio"],
+  select,
+  label[for] {
+    min-height: 48px;
+    min-width: 48px;
+  }
+  
+  /* Proper input sizing on mobile */
+  input, 
+  select, 
+  textarea {
+    font-size: 16px !important; /* Prevents iOS zoom */
+    min-height: 48px;
+  }
+  
+  /* Proper spacing for stacked elements */
+  .mobile-stack > * + * {
+    margin-top: 16px; /* 8px × 2 */
+  }
+  
+  /* Micro-interactions */
+  .tap-highlight {
+    transform: scale(0.98);
+  }
+  
+  /* Typography enhancements */
+  .text-all-caps {
+    letter-spacing: 0.5px;
+  }
+  
+  body {
+    line-height: 1.6;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    line-height: 1.3;
+  }
+  
+  /* Fix for semi-transparent elements */
+  .backdrop-blur {
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+  
+  /* Container queries for responsive layouts */
+  @container (max-width: 400px) {
+    .container-adaptive {
+      font-size: 0.9em;
+    }
+  }
+  
+  /* Fix for touch events */
+  * {
+    touch-action: manipulation;
+  }
+  
+  /* Improve scroll performance */
+  .scroll-container {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+  
+  /* Content containment optimization */
+  section, 
+  aside, 
+  article, 
+  .contain-content {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 500px;
+  }
+}
+
+/* Prevent horizontal scroll */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Better focus states for accessibility */
+a:focus, button:focus, input:focus, select:focus, textarea:focus, [tabindex]:focus {
+  outline: 3px solid rgba(232, 148, 92, 0.5); /* sunsetOrange with 0.5 opacity */
+  outline-offset: 2px;
+}
+
+/* Ensure proper z-index layering */
+.z-toast { z-index: 9000; }
+.z-modal { z-index: 8000; }
+.z-dropdown { z-index: 7000; }
+.z-nav { z-index: 6000; }

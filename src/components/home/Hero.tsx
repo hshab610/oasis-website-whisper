@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom';
 import { Star } from 'lucide-react';
 import HeroButtons from './hero/HeroButtons';
 import HeroFeatures from './hero/HeroFeatures';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const Hero = () => {
+  const isMobile = useIsMobile();
+  
   return (
     <div className="relative overflow-hidden bg-desert-sunset min-h-[90vh] flex items-center">
       <div className="absolute inset-0 z-0 opacity-20">
@@ -19,23 +22,21 @@ const Hero = () => {
         />
       </div>
       
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 relative z-10 w-[90%] sm:w-full">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="bg-white/80 backdrop-blur-sm p-8 rounded-xl shadow-xl mb-6 inline-block">
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <Star className="text-yellow-500 h-5 w-5 fill-yellow-500" />
-              <Star className="text-yellow-500 h-5 w-5 fill-yellow-500" />
-              <Star className="text-yellow-500 h-5 w-5 fill-yellow-500" />
-              <Star className="text-yellow-500 h-5 w-5 fill-yellow-500" />
-              <Star className="text-yellow-500 h-5 w-5 fill-yellow-500" />
-              <span className="font-medium ml-1">500+ Satisfied Customers</span>
+          <div className="bg-white/80 backdrop-blur-sm p-6 md:p-8 rounded-xl shadow-xl mb-6 inline-block w-full">
+            <div className="flex items-center justify-center gap-1 mb-4">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="text-yellow-500 h-4 w-4 fill-yellow-500" />
+              ))}
+              <span className="font-medium ml-1 text-sm md:text-base">500+ Satisfied Customers</span>
             </div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-pharaohBlue font-playfair mb-4">
+            <h1 className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-5xl lg:text-6xl'} font-bold leading-tight text-pharaohBlue font-playfair mb-4 tracking-tight`}>
               Professional <span className="text-primary">Moving</span> Made Simple
             </h1>
             
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
+            <p className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto mb-6 leading-relaxed">
               Get an instant quote or book your move in minutes
             </p>
             

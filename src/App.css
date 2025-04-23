@@ -4,6 +4,7 @@
 @import './styles/layout.css';
 @import './styles/patterns.css';
 @import './styles/utilities.css';
+@import './styles/mobile-optimizations.css';
 
 #root {
   width: 100%;
