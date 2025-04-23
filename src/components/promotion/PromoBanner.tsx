@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { usePromotion } from '@/contexts/PromotionContext';
 import CountdownTimer from './CountdownTimer';
@@ -19,7 +20,7 @@ const PromoBanner: React.FC<PromoBannerProps> = ({ className = "" }) => {
     applyPromoCode,
   } = usePromotion();
   const [isVisible, setIsVisible] = useState(true);
-  const [isPulsing, setIsPulsing] = useState(true); // Start with pulsing for visibility
+  const [isPulsing, setIsPulsing] = useState(false);
 
   // Responsive: Track width for sticky footer on mobile
   const [isMobile, setIsMobile] = useState(() =>
@@ -36,19 +37,19 @@ const PromoBanner: React.FC<PromoBannerProps> = ({ className = "" }) => {
   const isUrgent = timeRemaining < 3600;
   const isVeryUrgent = timeRemaining < 300;
 
-  // Pulse attention
+  // Pulse attention - more subtle approach
   useEffect(() => {
     if (!isPromotionActive) return;
     
     // Initial pulse for visibility
     setIsPulsing(true);
-    const initialTimeout = setTimeout(() => setIsPulsing(false), 3000);
+    const initialTimeout = setTimeout(() => setIsPulsing(false), 2000);
     
-    // Periodic pulsing
+    // Periodic pulsing but less frequent and less intrusive
     const pulseInterval = setInterval(() => {
       setIsPulsing(true);
-      setTimeout(() => setIsPulsing(false), 2000);
-    }, 20000); // Every 20 seconds to draw attention
+      setTimeout(() => setIsPulsing(false), 1500);
+    }, 45000); // Every 45 seconds to be less annoying
     
     return () => {
       clearTimeout(initialTimeout);
@@ -56,10 +57,11 @@ const PromoBanner: React.FC<PromoBannerProps> = ({ className = "" }) => {
     };
   }, [isPromotionActive]);
   
+  // Only pulse on urgency milestones
   useEffect(() => {
     if (timeRemaining <= 300 && timeRemaining % 60 === 0) {
       setIsPulsing(true);
-      const urgencyTimeout = setTimeout(() => setIsPulsing(false), 3000);
+      const urgencyTimeout = setTimeout(() => setIsPulsing(false), 2000);
       return () => clearTimeout(urgencyTimeout);
     }
   }, [timeRemaining]);
@@ -87,13 +89,12 @@ const PromoBanner: React.FC<PromoBannerProps> = ({ className = "" }) => {
   return (
     <div
       className={cn(
-        "flex items-center justify-between z-50 shadow-md transition-all duration-300",
+        "flex items-center justify-between z-50 shadow-sm transition-all duration-300",
         isMobile
-          ? "fixed bottom-0 left-0 right-0 py-2 px-3 bg-primary text-primary-foreground rounded-t-lg border-t border-sandGold/40"
-          : "sticky top-0 py-2 px-4 bg-primary text-primary-foreground",
-        isVeryUrgent ? "bg-red-500 text-white" :
-        isUrgent ? "bg-amber-500 text-white" : "",
-        isPulsing ? "scale-[1.02] animate-pulse" : "",
+          ? "fixed bottom-0 left-0 right-0 py-2 px-3 bg-white text-primary border-t border-primary/10 rounded-t-lg"
+          : "sticky top-0 py-2 px-4 bg-white border-b border-primary/10 text-primary",
+        isVeryUrgent ? "bg-amber-50 border-amber-200/30" : "",
+        isPulsing ? "scale-[1.01]" : "",
         className
       )}
       style={{ minHeight: "44px" }}
@@ -110,15 +111,18 @@ const PromoBanner: React.FC<PromoBannerProps> = ({ className = "" }) => {
         tabIndex={0}
         onClick={handleApply}
         className={cn(
-          "flex items-center gap-2 font-semibold transition-transform cursor-pointer",
-          "hover:scale-105",
-          promoApplied ? "opacity-90" : "shadow-sm",
+          "flex items-center gap-2 font-medium transition-transform cursor-pointer",
+          "hover:scale-102",
+          promoApplied ? "opacity-95" : "",
         )}
       >
-        <BadgePercent className="h-5 w-5" />
+        <BadgePercent className={cn(
+          "h-5 w-5 text-primary",
+          isPulsing && "animate-pulse"
+        )} />
         <span>
-          <span className="font-bold">10% OFF</span> for 24 hours &ndash; Use code{" "}
-          <span className="bg-sunsetOrange/90 text-white rounded px-2 py-0.5 mx-1 font-mono tracking-wide">{promoCode}</span>
+          <span className="font-semibold">10% OFF</span> your first booking &ndash; Use code{" "}
+          <span className="bg-primary/10 text-primary rounded px-2 py-0.5 mx-1 font-mono tracking-wide">{promoCode}</span>
         </span>
         <CountdownTimer
           timeRemaining={timeRemaining}
@@ -130,13 +134,13 @@ const PromoBanner: React.FC<PromoBannerProps> = ({ className = "" }) => {
 
       <button
         className={cn(
-          "transition-colors ml-3",
-          isUrgent ? "text-white hover:text-gray-200" : "text-primary-foreground hover:text-sunsetOrange"
+          "transition-colors ml-3 opacity-70 hover:opacity-100",
+          isUrgent ? "text-amber-600" : "text-primary"
         )}
         onClick={handleClose}
         aria-label="Close promotion banner"
       >
-        <X className="h-5 w-5" />
+        <X className="h-4 w-4" />
       </button>
     </div>
   );

@@ -21,15 +21,15 @@ const HeroButtons = () => {
           {isPromotionActive ? (
             <span className="flex items-center">
               Book Now 
-              <span className="bg-white text-primary rounded-full px-2 py-0.5 ml-2 font-bold text-sm flex items-center group-hover:scale-110 transition-transform">
-                <BadgePercent className="h-4 w-4 mr-1 animate-pulse" />
+              <span className="bg-white/20 text-white rounded-full px-2 py-0.5 ml-2 font-bold text-sm flex items-center">
+                <BadgePercent className="h-4 w-4 mr-1" />
                 {discountPercentage}% OFF
               </span>
             </span>
           ) : (
             "Book Your Move"
           )}
-          <ArrowRight className="ml-2 h-6 w-6 animate-pulse" />
+          <ArrowRight className="ml-2 h-6 w-6" />
         </QuoteButton>
       </Link>
       <a href="#quick-estimate" className="w-full sm:w-auto">

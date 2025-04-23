@@ -16,38 +16,35 @@ const PromoApplied = () => {
   
   return (
     <Alert className={cn(
-      "mb-6 border-primary flex items-start transition-all duration-300", 
-      isUrgent ? "bg-primary/15 animate-pulse" : "bg-primary/10"
+      "mb-6 border-primary/30 bg-primary/5 flex items-start transition-all duration-300", 
+      isUrgent ? "border-amber-500/30 bg-amber-50" : ""
     )}>
       <div className={cn(
-        "bg-primary text-primary-foreground rounded-full p-1 mr-2 mt-0.5",
-        isUrgent && "animate-pulse"
+        "bg-primary/10 text-primary rounded-full p-1 mr-2 mt-0.5",
+        isUrgent && "bg-amber-500/10 text-amber-600"
       )}>
         <BadgePercent className="h-4 w-4" />
       </div>
       <div className="flex-1">
         <AlertTitle className="text-primary font-medium mb-1 flex items-center">
-          {discountPercentage}% Special Discount Applied!
-          <span className={cn(
-            "ml-2 inline-block",
-            timeRemaining < 300 ? "animate-pulse" : ""
-          )}>🎉</span>
+          {discountPercentage}% Discount Applied
+          <Check className="h-4 w-4 ml-1.5 text-green-500" />
         </AlertTitle>
         <AlertDescription className="text-sm flex flex-col gap-1">
           <div className="flex items-center gap-1">
             <Clock className="h-3.5 w-3.5 text-muted-foreground" />
-            <span className={isUrgent ? "font-medium" : ""}>
-              {isUrgent ? "Hurry! Discount expiring soon:" : "Discount locked in for new customers! Time remaining:"}
+            <span>
+              {isUrgent ? "Limited time offer:" : "Offer valid for:"}
             </span>
             <CountdownTimer 
               timeRemaining={timeRemaining} 
               compact={true} 
-              className={cn("text-primary font-semibold", isUrgent && "text-red-500")}
+              className="text-primary font-semibold"
               showIcon={false}
             />
           </div>
           <div className="text-xs text-muted-foreground mt-1">
-            Promo code <span className="font-mono bg-muted px-1 py-0.5 rounded">{promoCode}</span> automatically applied at checkout for new customers
+            Code <span className="font-mono bg-muted px-1 py-0.5 rounded">{promoCode}</span> automatically applied at checkout. No hidden fees.
           </div>
         </AlertDescription>
       </div>

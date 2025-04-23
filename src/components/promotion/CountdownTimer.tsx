@@ -44,21 +44,21 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({
       {showIcon && !compact && (
         <Clock className={cn(
           "mr-2 h-4 w-4",
-          isVeryUrgent ? "animate-pulse text-red-500" : 
-          isUrgent ? "animate-pulse text-amber-500" : "text-primary animate-pulse"
+          isVeryUrgent ? "text-amber-500" : 
+          isUrgent ? "text-amber-400" : "text-primary/70"
         )} />
       )}
       <div 
         className={cn(
-          "font-mono font-bold",
-          isVeryUrgent ? "text-red-500" : 
-          isUrgent ? "text-amber-600" : ""
+          "font-mono font-medium",
+          isVeryUrgent ? "text-amber-600" : 
+          isUrgent ? "text-amber-500" : "text-primary/90"
         )}
       >
         {formattedTime.hours}:{formattedTime.minutes}:
         <span className={cn(
           "inline-block",
-          isUrgent && "animate-pulse"
+          isVeryUrgent && "animate-pulse"
         )}>
           {formattedTime.seconds}
         </span>

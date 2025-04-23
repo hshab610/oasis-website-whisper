@@ -1,11 +1,11 @@
 
 import { useState, useEffect } from 'react';
 import { usePromotion } from '@/contexts/PromotionContext';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import CountdownTimer from './CountdownTimer';
 import { Link } from 'react-router-dom';
-import { Zap, X, Clock, Users, Sparkles } from 'lucide-react';
+import { BadgePercent, X, Clock, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface PromoPopupProps {
@@ -13,57 +13,50 @@ interface PromoPopupProps {
 }
 
 const PromoPopup: React.FC<PromoPopupProps> = ({ trigger = 'timer' }) => {
-  const { isPromotionActive, timeRemaining, discountPercentage } = usePromotion();
+  const { isPromotionActive, timeRemaining, discountPercentage, promoCode } = usePromotion();
   const [open, setOpen] = useState(false);
-  const [peopleBooking] = useState(() => {
-    // Generate a random number between 8 and 16 to show as social proof
-    return Math.floor(Math.random() * 9) + 8;
-  });
 
   // Determine urgency level based on time remaining
-  const isUrgent = timeRemaining < 300;
+  const isUrgent = timeRemaining < 600;
 
   useEffect(() => {
     if (!isPromotionActive) return;
 
-    // For timer trigger - show after a short delay
+    // For timer trigger - show after a delay
     if (trigger === 'timer') {
-      const timer = setTimeout(() => {
-        // Remove session storage check to ensure popup shows on preview
-        setOpen(true);
-        // Set session storage after showing
-        sessionStorage.setItem('promoPopupShown', 'true');
-      }, 3000); // Shorter delay for testing
+      // Check if user has dismissed this popup before
+      const hasSeenPromo = sessionStorage.getItem('promoPopupShown');
       
-      return () => clearTimeout(timer);
+      if (!hasSeenPromo) {
+        const timer = setTimeout(() => {
+          setOpen(true);
+          sessionStorage.setItem('promoPopupShown', 'true');
+        }, 8000); // Longer delay to be less intrusive
+        
+        return () => clearTimeout(timer);
+      }
     }
     
-    // For exit trigger - make it more sensitive
+    // For exit trigger - less sensitive detection
     if (trigger === 'exit') {
-      const handleExit = (e: MouseEvent) => {
-        // Trigger when mouse moves near the top of the page
-        if (e.clientY <= 50) {
-          setOpen(true);
-          sessionStorage.setItem('exitPopupShown', 'true');
-        }
-      };
+      const hasSeenExitPopup = sessionStorage.getItem('exitPopupShown');
       
-      document.addEventListener('mousemove', handleExit);
-      return () => document.removeEventListener('mousemove', handleExit);
+      if (!hasSeenExitPopup) {
+        const handleExit = (e: MouseEvent) => {
+          // Only trigger when mouse is very close to the top edge and moving up
+          if (e.clientY <= 5 && e.movementY < 0) {
+            setOpen(true);
+            sessionStorage.setItem('exitPopupShown', 'true');
+            // Remove listener after showing once
+            document.removeEventListener('mousemove', handleExit);
+          }
+        };
+        
+        document.addEventListener('mousemove', handleExit);
+        return () => document.removeEventListener('mousemove', handleExit);
+      }
     }
   }, [isPromotionActive, trigger]);
-
-  // Force popup to show on first visit
-  useEffect(() => {
-    if (trigger === 'timer' && !sessionStorage.getItem('forcedPopupShown')) {
-      const timer = setTimeout(() => {
-        setOpen(true);
-        sessionStorage.setItem('forcedPopupShown', 'true');
-      }, 2000);
-      
-      return () => clearTimeout(timer);
-    }
-  }, [trigger]);
 
   if (!isPromotionActive) return null;
 
@@ -79,44 +72,30 @@ const PromoPopup: React.FC<PromoPopupProps> = ({ trigger = 'timer' }) => {
         </button>
         
         <div className={cn(
-          "p-4 flex items-center gap-2",
-          isUrgent ? "bg-amber-500 text-white" : "bg-primary text-primary-foreground"
+          "p-4 flex items-center gap-2 bg-primary/5 border-b border-primary/10",
+          isUrgent && "bg-amber-50 border-amber-100"
         )}>
-          <Zap className={cn(
-            "h-5 w-5", 
-            isUrgent ? "text-white animate-pulse" : "text-yellow-300 animate-pulse"
-          )} />
-          <h3 className="font-bold">
-            {isUrgent ? "Limited Time Remaining!" : "Limited Time Offer"}
+          <BadgePercent className="h-5 w-5 text-primary" />
+          <h3 className="font-medium">
+            Special Offer for New Customers
           </h3>
         </div>
         
         <div className="p-6">
           <DialogHeader>
-            <DialogTitle className="text-xl sm:text-2xl text-center mb-4 flex items-center justify-center gap-2">
-              <Sparkles className="h-5 w-5 text-primary" />
-              <span>{discountPercentage}% OFF Your First Move!</span>
-              <Sparkles className="h-5 w-5 text-primary" />
+            <DialogTitle className="text-xl text-center mb-2">
+              {discountPercentage}% OFF Your First Booking
             </DialogTitle>
+            <DialogDescription className="text-center">
+              Professional moving services at a special new-customer rate
+            </DialogDescription>
           </DialogHeader>
           
-          <div className="space-y-4">
-            <p className="text-center">
-              {isUrgent 
-                ? "Hurry! Your exclusive discount is about to expire!" 
-                : "Book within the next hour to lock in your exclusive discount!"}
-            </p>
-            
-            <div className={cn(
-              "rounded-md p-4 text-center",
-              isUrgent ? "bg-red-50 border border-red-100" : "bg-muted"
-            )}>
-              <p className="text-sm text-muted-foreground mb-2 flex items-center justify-center">
-                <Clock className={cn(
-                  "h-4 w-4 mr-1",
-                  isUrgent && "text-red-500"
-                )} />
-                Time remaining:
+          <div className="space-y-4 mt-4">
+            <div className="rounded-md p-3 text-center bg-primary/5 border border-primary/10">
+              <p className="text-sm text-muted-foreground mb-1 flex items-center justify-center">
+                <Clock className="h-4 w-4 mr-1 text-primary/70" />
+                Limited time offer:
               </p>
               <CountdownTimer 
                 timeRemaining={timeRemaining} 
@@ -125,21 +104,19 @@ const PromoPopup: React.FC<PromoPopupProps> = ({ trigger = 'timer' }) => {
               />
             </div>
             
-            <div className="text-center bg-primary/5 rounded-md p-3">
-              <p className="text-sm flex items-center justify-center gap-1">
-                <Users className="h-4 w-4 text-primary" />
-                <span className="font-semibold text-red-500">{peopleBooking} people</span> 
-                <span>booked in the last hour</span>
+            <div className="text-center p-3 border border-primary/10 rounded-md">
+              <p className="text-sm">
+                Use code <span className="font-mono font-medium bg-muted px-2 py-0.5 rounded">{promoCode}</span> at checkout
+              </p>
+              <p className="text-xs text-muted-foreground mt-1">
+                No hidden fees. Automatically applied for new customers.
               </p>
             </div>
             
             <Link to="/contact" onClick={() => setOpen(false)}>
-              <Button className={cn(
-                "w-full text-primary-foreground mt-4 group shadow-md hover:shadow-lg transition-all",
-                isUrgent ? "bg-red-500 hover:bg-red-600" : "bg-primary hover:bg-primary/90"
-              )}>
-                {isUrgent ? "Book Now Before Offer Expires!" : "Book Now & Save 10%"}
-                <Zap className="ml-2 group-hover:animate-pulse" />
+              <Button className="w-full bg-primary hover:bg-primary/90 mt-2 group shadow-sm hover:shadow transition-all">
+                Book Now & Save 10%
+                <Sparkles className="ml-2 h-4 w-4" />
               </Button>
             </Link>
           </div>

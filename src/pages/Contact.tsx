@@ -6,6 +6,7 @@ import ContactSection from '@/components/contact/ContactSection';
 import PromoBanner from '@/components/promotion/PromoBanner';
 import PromoPopup from '@/components/promotion/PromoPopup';
 import ChatWidget from '@/components/chat/ChatWidget';
+import { BadgePercent } from 'lucide-react';
 
 const Contact = () => {
   return (
