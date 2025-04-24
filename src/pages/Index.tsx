@@ -59,7 +59,7 @@ const Index = () => {
       
       {/* Only show one kind of popup - either timer or exit, not both */}
       <PromoPopup trigger="exit" />
-    </div>
+    </>
   );
 };
 
