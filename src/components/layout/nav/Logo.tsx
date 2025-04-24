@@ -13,7 +13,7 @@ export const Logo = () => {
           alt="Oasis Moving & Storage" 
           className="h-full w-auto"
           loading="eager"
-          fetchpriority="high"
+          fetchPriority="high"
         />
       </div>
       <div className="flex flex-col items-start">
