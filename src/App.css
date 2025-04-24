@@ -11,4 +11,7 @@
   margin: 0 auto;
   text-align: center;
   overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }

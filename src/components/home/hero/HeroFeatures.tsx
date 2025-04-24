@@ -8,9 +8,12 @@ const HeroFeatures = () => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-6 max-w-3xl mx-auto w-[90%] sm:w-full">
       {features.map((feature, index) => (
-        <div key={index} className="flex flex-col items-center gap-2 bg-white/80 p-3 rounded-lg shadow-sm min-h-[48px]">
+        <div 
+          key={index} 
+          className="flex flex-col items-center gap-2 bg-white/80 p-3 rounded-lg shadow-sm min-h-[48px] hover:shadow-md transition-shadow"
+        >
           <div className="bg-primary/10 p-2 rounded-full flex items-center justify-center">
-            <feature.icon size={isMobile ? 16 : 20} className="text-primary" />
+            <feature.icon size={isMobile ? 16 : 20} className="text-primary" aria-hidden="true" />
           </div>
           <span className="font-medium text-center text-sm sm:text-base leading-tight">{feature.label}</span>
         </div>

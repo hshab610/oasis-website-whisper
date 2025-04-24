@@ -6,16 +6,18 @@ export const Logo = () => {
   const isMobile = useIsMobile();
   
   return (
-    <Link to="/" className="flex items-center gap-2">
-      <div className={`${isMobile ? 'h-10 w-10' : 'h-12 w-12'}`}>
+    <Link to="/" className="flex items-center gap-2 focus-ring rounded-md">
+      <div className={`${isMobile ? 'h-10 w-10' : 'h-12 w-12'} flex-shrink-0`}>
         <img 
           src="/lovable-uploads/f19c55da-68b3-48d5-a1b2-9944693d66bf.png" 
           alt="Oasis Moving & Storage" 
           className="h-full w-auto"
+          loading="eager"
+          fetchpriority="high"
         />
       </div>
       <div className="flex flex-col items-start">
-        <div className={`${isMobile ? 'text-lg' : 'text-xl'} font-bold text-sunsetOrange`}>
+        <div className={`${isMobile ? 'text-lg' : 'text-xl'} font-bold text-sunsetOrange leading-tight`}>
           Oasis Moving & Storage
         </div>
         <span className="text-xs text-muted-foreground leading-tight">Trusted, Timely, Tough</span>

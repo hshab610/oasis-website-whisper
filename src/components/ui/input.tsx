@@ -13,7 +13,11 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
           className
         )}
         ref={ref}
-        style={{ fontSize: '16px', minHeight: '48px' }}
+        style={{ 
+          fontSize: '16px', 
+          minHeight: '48px',
+          touchAction: 'manipulation'
+        }}
         {...props}
       />
     )
