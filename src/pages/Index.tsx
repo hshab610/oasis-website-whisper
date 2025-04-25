@@ -1,4 +1,3 @@
-
 import { Helmet } from 'react-helmet';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -17,8 +16,11 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>Oasis Moving & Storage | Professional Moving Services in Westerville, Ohio</title>
-        <meta name="description" content="Experience stress-free moving with our dedicated coordination team. Get personalized planning and white-glove service for your relocation needs in Westerville, Ohio." />
+        <title>Oasis Moving & Storage | Owner-Supervised Moving Services in Westerville, Ohio</title>
+        <meta 
+          name="description" 
+          content="Work directly with Zay, who personally oversees your move from start to finish. We combine hands-on management with certified hauling partners for a premium moving experience in Westerville, Ohio." 
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
         <meta name="theme-color" content="#DFC9A5" />
       </Helmet>
