@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
@@ -50,49 +49,40 @@ const PaymentPortal = () => {
     fetchBookingDetails();
   }, [bookingId]);
 
-  // Calculate tip amount when tip option changes
-  useEffect(() => {
-    if (tipOption === "custom") {
-      setTipAmount(customTipAmount);
-    } else {
-      // Calculate percentage of move total
-      const percentage = parseInt(tipOption.replace("%", "")) / 100;
-      setTipAmount(Math.round(moveTotal * percentage));
-    }
-  }, [tipOption, customTipAmount, moveTotal]);
-
   const fetchBookingDetails = async () => {
     try {
       setLoading(true);
       
       // Fetch booking data
-      const { data: bookingData, error } = await supabase
+      const { data: bookingData, error: bookingError } = await supabase
         .from('bookings')
         .select('*')
         .eq('id', bookingId)
         .single();
       
-      if (error) throw error;
+      if (bookingError) throw bookingError;
       if (!bookingData) throw new Error("Booking not found");
       
       setBooking(bookingData);
       
       // For demo purposes, set a default move total
-      // In production, you would fetch this from your database
       const basePriceInCents = 49900; // $499.00
       setMoveTotal(basePriceInCents);
       
       // Check if deposit was paid
-      const { data: depositData } = await supabase
+      const { data: depositData, error: depositError } = await supabase
         .from('booking_deposits')
         .select('amount, status')
         .eq('booking_id', bookingId)
         .eq('status', 'paid')
-        .single();
+        .maybeSingle();
+      
+      if (depositError) throw depositError;
       
       // Calculate remaining balance (total - deposit)
-      const depositAmount = depositData ? depositData.amount : 0;
+      const depositAmount = depositData?.amount ?? 0;
       setBalanceAmount(basePriceInCents - depositAmount);
+      
     } catch (error: any) {
       console.error("Error fetching booking:", error);
       toast({
@@ -107,7 +97,6 @@ const PaymentPortal = () => {
   };
 
   const handleCustomTipChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Convert dollar amount to cents
     const amountInCents = Math.round(parseFloat(e.target.value || "0") * 100);
     setCustomTipAmount(amountInCents);
   };
@@ -162,10 +151,8 @@ const PaymentPortal = () => {
     }
   };
 
-  // Calculate tip per crew member
   const tipPerCrewMember = crew.length > 0 ? Math.floor(tipAmount / crew.length) : 0;
 
-  // Format cents to dollars
   const formatMoney = (cents: number) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',

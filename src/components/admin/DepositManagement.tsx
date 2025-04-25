@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { format, parseISO, isAfter } from 'date-fns';
 import { supabase } from '@/integrations/supabase/client';
@@ -21,13 +20,15 @@ import {
 } from '@/components/ui/card';
 import {
   Badge,
+} from '@/components/ui/badge';
+import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui';
+} from '@/components/ui/dialog';
 import { Clock, AlertTriangle, RefreshCw, Check, X } from 'lucide-react';
 import { Deposit } from '@/types/deposit';
 
@@ -40,7 +41,6 @@ const DepositManagement = () => {
   const [selectedDeposit, setSelectedDeposit] = useState<Deposit | null>(null);
   const [refundReason, setRefundReason] = useState('');
 
-  // Fetch deposits on component mount
   useEffect(() => {
     fetchDeposits();
   }, []);
@@ -54,7 +54,7 @@ const DepositManagement = () => {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setDeposits(data as Deposit[]);
+      setDeposits(data as unknown as Deposit[]);
     } catch (error: any) {
       console.error('Error fetching deposits:', error.message);
       toast({
@@ -67,13 +67,11 @@ const DepositManagement = () => {
     }
   };
 
-  // Format dates for display
   const formatDate = (dateString: string | null) => {
     if (!dateString) return 'N/A';
     return format(parseISO(dateString), 'PPP p');
   };
 
-  // Check if refund deadline has passed
   const isRefundable = (deposit: Deposit) => {
     if (deposit.status !== 'paid') return false;
     const now = new Date();
@@ -81,7 +79,6 @@ const DepositManagement = () => {
     return isAfter(deadline, now);
   };
 
-  // Process refund
   const processRefund = async (depositId: string, adminOverride = false) => {
     setProcessingId(depositId);
     try {
@@ -109,7 +106,6 @@ const DepositManagement = () => {
         description: 'Refund processed successfully',
       });
       
-      // Refresh deposits list
       fetchDeposits();
     } catch (error: any) {
       console.error('Error processing refund:', error);
@@ -126,7 +122,6 @@ const DepositManagement = () => {
     }
   };
 
-  // Helper to determine status badge styling
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'paid':
@@ -142,7 +137,6 @@ const DepositManagement = () => {
     }
   };
 
-  // Open refund dialog
   const handleRefundClick = (deposit: Deposit) => {
     setSelectedDeposit(deposit);
     setShowRefundDialog(true);
@@ -253,7 +247,6 @@ const DepositManagement = () => {
         </CardContent>
       </Card>
 
-      {/* Refund Confirmation Dialog */}
       <Dialog open={showRefundDialog} onOpenChange={setShowRefundDialog}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
