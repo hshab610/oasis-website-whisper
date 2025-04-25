@@ -1,9 +1,11 @@
+
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { supabase } from "@/integrations/supabase/client";
+import { queryBookingDeposits } from '@/utils/supabaseHelper';
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, CreditCard, Split, DollarSign, Users, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -49,6 +51,19 @@ const PaymentPortal = () => {
     fetchBookingDetails();
   }, [bookingId]);
 
+  useEffect(() => {
+    // Calculate tip amount whenever tipOption or moveTotal changes
+    if (tipOption === "15%") {
+      setTipAmount(Math.round(moveTotal * 0.15));
+    } else if (tipOption === "20%") {
+      setTipAmount(Math.round(moveTotal * 0.20));
+    } else if (tipOption === "25%") {
+      setTipAmount(Math.round(moveTotal * 0.25));
+    } else {
+      setTipAmount(customTipAmount);
+    }
+  }, [tipOption, moveTotal, customTipAmount]);
+
   const fetchBookingDetails = async () => {
     try {
       setLoading(true);
@@ -70,8 +85,7 @@ const PaymentPortal = () => {
       setMoveTotal(basePriceInCents);
       
       // Check if deposit was paid
-      const { data: depositData, error: depositError } = await supabase
-        .from('booking_deposits')
+      const { data: depositData, error: depositError } = await queryBookingDeposits()
         .select('amount, status')
         .eq('booking_id', bookingId)
         .eq('status', 'paid')

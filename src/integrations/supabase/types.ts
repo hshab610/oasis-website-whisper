@@ -9,6 +9,86 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      booking_deposits: {
+        Row: {
+          address: string | null
+          admin_override: boolean | null
+          amount: number
+          booking_id: string | null
+          cancel_date: string | null
+          created_at: string
+          customer_email: string
+          customer_name: string
+          customer_phone: string | null
+          failure_reason: string | null
+          id: string
+          move_date: string
+          payment_date: string | null
+          payment_method: string | null
+          payment_status: string | null
+          refund_date: string | null
+          refund_deadline: string
+          refund_id: string | null
+          status: string
+          stripe_payment_id: string | null
+          stripe_session_id: string | null
+        }
+        Insert: {
+          address?: string | null
+          admin_override?: boolean | null
+          amount: number
+          booking_id?: string | null
+          cancel_date?: string | null
+          created_at?: string
+          customer_email: string
+          customer_name: string
+          customer_phone?: string | null
+          failure_reason?: string | null
+          id?: string
+          move_date: string
+          payment_date?: string | null
+          payment_method?: string | null
+          payment_status?: string | null
+          refund_date?: string | null
+          refund_deadline: string
+          refund_id?: string | null
+          status?: string
+          stripe_payment_id?: string | null
+          stripe_session_id?: string | null
+        }
+        Update: {
+          address?: string | null
+          admin_override?: boolean | null
+          amount?: number
+          booking_id?: string | null
+          cancel_date?: string | null
+          created_at?: string
+          customer_email?: string
+          customer_name?: string
+          customer_phone?: string | null
+          failure_reason?: string | null
+          id?: string
+          move_date?: string
+          payment_date?: string | null
+          payment_method?: string | null
+          payment_status?: string | null
+          refund_date?: string | null
+          refund_deadline?: string
+          refund_id?: string | null
+          status?: string
+          stripe_payment_id?: string | null
+          stripe_session_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "booking_deposits_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       bookings: {
         Row: {
           additional_services: string | null

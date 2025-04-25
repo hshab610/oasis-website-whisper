@@ -1,6 +1,8 @@
+
 import { useState, useEffect } from 'react';
 import { format, parseISO, isAfter } from 'date-fns';
 import { supabase } from '@/integrations/supabase/client';
+import { queryBookingDeposits } from '@/utils/supabaseHelper';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import {
@@ -48,8 +50,7 @@ const DepositManagement = () => {
   const fetchDeposits = async () => {
     setLoading(true);
     try {
-      const { data, error } = await supabase
-        .from('booking_deposits')
+      const { data, error } = await queryBookingDeposits()
         .select('*')
         .order('created_at', { ascending: false });
 
