@@ -121,7 +121,21 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-border mt-8 pt-8 text-center text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} Oasis Moving & Storage LLC. All rights reserved.</p>
+          <p className="mb-2">
+            © {new Date().getFullYear()} Oasis Moving & Storage LLC •{' '}
+            <a href="tel:6147400275" className="hover:text-primary transition-colors">
+              (614) 740-0275
+            </a> •{' '}
+            <a 
+              href="mailto:zay@oasismovingandstorage.com" 
+              className="hover:text-primary transition-colors"
+            >
+              Email Us
+            </a>
+          </p>
+          <p className="text-sm text-muted-foreground/80">
+            *Moving services provided by insured partners
+          </p>
         </div>
       </div>
     </footer>
