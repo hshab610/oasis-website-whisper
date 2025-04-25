@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useFormspree } from '@/hooks/use-formspree';
 import { usePromotion } from '@/contexts/PromotionContext';
+import { supabase } from '@/integrations/supabase/client';
 
 // Define the gtag property on the Window interface
 declare global {
@@ -49,6 +50,7 @@ export const useBookingForm = () => {
   const { isPromotionActive, promoCode, discountPercentage } = usePromotion();
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [bookingId, setBookingId] = useState<string | null>(null);
   
   const [formData, setFormData] = useState<BookingFormData>({
     name: '',
@@ -164,25 +166,39 @@ export const useBookingForm = () => {
     const success = await submitToFormspree(enhancedFormData);
     
     if (success) {
+      // Create booking record in Supabase
+      try {
+        const { data, error } = await supabase
+          .from('bookings')
+          .insert({
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            move_date: formData.move_date,
+            move_time: formData.move_time,
+            address: formData.address,
+            package_type: formData.package_type,
+            additional_services: formData.additional_services || null,
+            notes: formData.notes || null,
+            status: 'new'
+          })
+          .select('id')
+          .single();
+          
+        if (error) {
+          console.error("Error creating booking record:", error);
+        } else if (data) {
+          setBookingId(data.id);
+        }
+      } catch (error) {
+        console.error("Exception creating booking record:", error);
+      }
+      
       toast({
         title: "Booking request sent successfully!",
         description: "We'll get back to you as soon as possible to confirm your booking.",
       });
       
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        move_date: '',
-        move_time: '',
-        address: '',
-        package_type: '',
-        additional_services: '',
-        notes: '',
-        promo_code: isPromotionActive ? promoCode : '',
-        discount: isPromotionActive ? discountPercentage : 0
-      });
-      setSelectedDate(undefined);
       setFormSubmitted(true);
       
       // Track conversion for analytics (if implemented)
@@ -249,6 +265,7 @@ export const useBookingForm = () => {
     setSelectedDate(undefined);
     setErrors({});
     setFormSubmitted(false);
+    setBookingId(null);
   };
 
   return {
@@ -257,6 +274,7 @@ export const useBookingForm = () => {
     errors,
     isSubmitting,
     formSubmitted,
+    bookingId,
     handleChange,
     handleSelectChange,
     handleDateChange,

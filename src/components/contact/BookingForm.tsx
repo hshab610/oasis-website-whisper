@@ -11,7 +11,9 @@ import FormHeader from './booking/FormHeader';
 import PromoApplied from './booking/PromoApplied';
 import { useBookingForm } from '@/hooks/use-booking-form';
 import { Loader, BadgePercent } from 'lucide-react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import DepositButton from '@/components/payment/DepositButton';
+import DepositStatus from '@/components/payment/DepositStatus';
 
 const BookingForm = () => {
   const { isPromotionActive, discountPercentage } = usePromotion();
@@ -21,6 +23,7 @@ const BookingForm = () => {
     errors,
     isSubmitting,
     formSubmitted,
+    bookingId, // Now we're exposing bookingId from the hook
     handleChange,
     handleSelectChange,
     handleDateChange,
@@ -28,17 +31,43 @@ const BookingForm = () => {
     resetForm
   } = useBookingForm();
 
+  const [showDepositPayment, setShowDepositPayment] = useState(false);
+
   // Auto-scroll to top when form is submitted
   useEffect(() => {
     if (formSubmitted) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Show deposit payment option after booking is submitted
+      setShowDepositPayment(true);
     }
   }, [formSubmitted]);
 
   if (formSubmitted) {
     return (
-      <div className="bg-white p-6 md:p-8 rounded-lg shadow-md border border-border">
+      <div className="bg-white p-6 md:p-8 rounded-lg shadow-md border border-border space-y-6">
         <SuccessMessage onRequestAnother={resetForm} />
+        
+        {/* Deposit Payment Section */}
+        {showDepositPayment && bookingId && (
+          <div className="mt-8 border-t pt-8">
+            <div className="text-center mb-6">
+              <h3 className="text-xl font-bold text-primary">Secure Your Move Date</h3>
+              <p className="text-muted-foreground mt-1">
+                Pay a $100 fully-refundable deposit to lock in your moving date and crew
+              </p>
+            </div>
+            
+            <DepositButton
+              email={formData.email}
+              name={formData.name}
+              bookingId={bookingId}
+              moveDate={formData.move_date}
+              phone={formData.phone}
+              address={formData.address}
+              className="max-w-md mx-auto"
+            />
+          </div>
+        )}
       </div>
     );
   }
