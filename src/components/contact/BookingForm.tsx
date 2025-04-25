@@ -1,4 +1,5 @@
 
+import React, { useEffect, useState } from 'react';
 import { usePromotion } from '@/contexts/PromotionContext';
 import PersonalInfoFields from './booking/PersonalInfoFields';
 import MoveDetailsFields from './booking/MoveDetailsFields';
@@ -11,8 +12,8 @@ import FormHeader from './booking/FormHeader';
 import PromoApplied from './booking/PromoApplied';
 import { useBookingForm } from '@/hooks/use-booking-form';
 import { Loader, BadgePercent } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import DepositButton from '@/components/payment/DepositButton';
+// Updated import path for DepositButton
+import DepositButton from '@/components/payment/deposit/DepositButton';
 import DepositStatus from '@/components/payment/DepositStatus';
 
 const BookingForm = () => {
