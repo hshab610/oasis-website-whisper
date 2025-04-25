@@ -64,10 +64,21 @@ const DepositButton: React.FC<DepositButtonProps> = ({
     setError("");
     
     try {
+      // Use the correct API endpoint with the fully qualified URL
+      const endpoint = import.meta.env.VITE_SUPABASE_URL 
+        ? `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/deposit-payment` 
+        : "/functions/v1/deposit-payment";
+      
       // Create the deposit payment
-      const resp = await fetch("/functions/v1/deposit-payment", {
+      const resp = await fetch(endpoint, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          // Add Authorization header if using authenticated endpoint
+          ...(import.meta.env.VITE_SUPABASE_ANON_KEY && {
+            "Authorization": `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
+          })
+        },
         body: JSON.stringify({
           email,
           name,
@@ -78,6 +89,12 @@ const DepositButton: React.FC<DepositButtonProps> = ({
         }),
       });
       
+      // Check for non-JSON responses
+      const contentType = resp.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error("Invalid response from server. Please try again later.");
+      }
+      
       const data = await resp.json();
       
       if (!resp.ok) {
@@ -85,6 +102,9 @@ const DepositButton: React.FC<DepositButtonProps> = ({
       }
       
       if (data?.url) {
+        // Log success before redirect
+        console.log("Payment session created successfully", { sessionId: data.sessionId });
+        
         // Redirect to Stripe Checkout
         window.location.href = data.url;
         if (onSuccess) onSuccess();
