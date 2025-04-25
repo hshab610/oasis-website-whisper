@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import Navbar from '@/components/layout/Navbar';
@@ -11,6 +12,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import BookingDetailsDialog from '@/components/admin/BookingDetailsDialog';
+import StaffTrainingHelp from '@/components/admin/StaffTrainingHelp';
 import type { Booking } from '@/types/booking';
 
 const BookingAdmin = () => {
@@ -95,10 +97,13 @@ const BookingAdmin = () => {
               <TabsList className="mb-6">
                 <TabsTrigger value="deposits">Deposits & Refunds</TabsTrigger>
                 <TabsTrigger value="bookings">All Bookings</TabsTrigger>
+                <TabsTrigger value="training">Staff Resources</TabsTrigger>
               </TabsList>
+              
               <TabsContent value="deposits">
                 <DepositManagement />
               </TabsContent>
+              
               <TabsContent value="bookings">
                 <Card>
                   <CardHeader>
@@ -124,7 +129,17 @@ const BookingAdmin = () => {
                   </CardContent>
                 </Card>
               </TabsContent>
+              
+              <TabsContent value="training">
+                <StaffTrainingHelp />
+              </TabsContent>
             </Tabs>
+            
+            <div className="flex justify-end mt-8">
+              <Button variant="outline" onClick={handleLogout}>
+                Logout
+              </Button>
+            </div>
           </div>
         </main>
         

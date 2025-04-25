@@ -13,10 +13,12 @@ import About from "./pages/About";
 import Testimonials from "./pages/Testimonials";
 import Contact from "./pages/Contact";
 import Admin from "./pages/Admin";
+import BookingAdmin from "./pages/BookingAdmin";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentCanceled from "./pages/PaymentCanceled";
+import PaymentPortal from "./pages/PaymentPortal";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -51,9 +53,15 @@ const App = () => (
               <Route path="/auth" element={<Auth />} />
               <Route path="/payment-success" element={<PaymentSuccess />} />
               <Route path="/payment-canceled" element={<PaymentCanceled />} />
+              <Route path="/pay/:bookingId" element={<PaymentPortal />} />
               <Route path="/admin" element={
                 <AuthGuard adminOnly={true}>
                   <Admin />
+                </AuthGuard>
+              } />
+              <Route path="/admin/bookings" element={
+                <AuthGuard adminOnly={true}>
+                  <BookingAdmin />
                 </AuthGuard>
               } />
               <Route path="*" element={<NotFound />} />
