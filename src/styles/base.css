@@ -28,15 +28,24 @@
     --input: 35 20% 80%;
     --ring: 30 65% 56%;
     --radius: 0.5rem;
+  }
 
-    /* Nile theme overrides can be enabled by adding a .nile-theme class to the body */
-    .nile-theme {
-      --primary: 190 100% 28%; /* Nile Deep */
-      --secondary: 43 61% 53%; /* Desert Gold */
-      --background: 39 56% 88%; /* Papyrus Light */
-      --card: 39 30% 95%;
-      --accent: 39 35% 85%;
-    }
+  /* Nile theme is the default now */
+  :root {
+    --primary: 190 100% 28%; /* Nile Deep */
+    --secondary: 43 61% 53%; /* Desert Gold */
+    --background: 39 56% 88%; /* Papyrus Light */
+    --card: 39 30% 95%;
+    --accent: 39 35% 85%;
+  }
+
+  /* Original theme overrides can be enabled by removing the .nile-theme class */
+  body:not(.nile-theme) {
+    --primary: 30 65% 56%;
+    --secondary: 185 18% 56%;
+    --background: 42 38% 95%;
+    --card: 38 30% 97%;
+    --accent: 35 35% 85%;
   }
 
   * {
@@ -70,10 +79,20 @@
     animation: nileFlow 15s infinite ease-in-out;
     background-size: 200% 100%;
   }
+  
+  /* Nile theme enhanced elements */
+  .nile-border {
+    border: 2px solid #D4A937;
+    box-shadow: 0 0 15px rgba(212, 169, 55, 0.3);
+  }
+  
+  .nile-glow {
+    filter: drop-shadow(0 0 8px rgba(0, 119, 145, 0.4));
+  }
 }
 
 @layer components {
-  /* Nile theme components */
+  /* Nile theme components - always active now */
   .btn-nile {
     @apply bg-nileDeep text-white hover:bg-nileDeep/90 transition-colors;
   }
@@ -85,5 +104,22 @@
   .text-nile-gradient {
     @apply bg-gradient-to-r from-nileDeep to-nileTeal bg-clip-text text-transparent;
   }
+  
+  /* Enhanced Nile components */
+  .nile-card {
+    @apply bg-gradient-to-b from-white/80 to-papyrusLight/90 backdrop-blur-sm 
+           border border-desertGold/30 shadow-lg rounded-lg
+           hover:border-desertGold/50 transition-all duration-300;
+  }
+  
+  .nile-button {
+    @apply bg-nileDeep text-white hover:bg-nileDeep/90 
+           transition-colors rounded-md px-4 py-2
+           border-b-4 border-nileDeep/70 active:border-b-2 active:mt-0.5;
+  }
+  
+  .nile-input {
+    @apply bg-papyrusLight/50 border-nileTeal/30 focus:border-desertGold
+           focus:ring-desertGold/30 rounded-md transition-all duration-200;
+  }
 }
-
