@@ -1,6 +1,6 @@
 
 import { LucideIcon } from 'lucide-react';
-import { CheckCircle, DollarSign, Info, Star, Shield, Clock } from 'lucide-react';
+import { ArrowRight, CheckCircle, DollarSign, Info, Star, Shield, Clock } from 'lucide-react';
 
 interface ServiceCardProps {
   icon: LucideIcon;
@@ -73,3 +73,4 @@ const ServiceCard = ({ icon: Icon, title, description, price, details }: Service
 };
 
 export default ServiceCard;
+
