@@ -18,7 +18,7 @@ export function NileDivider({
       variant === "subtle" && "opacity-50",
       variant === "accent" && "before:bg-gradient-to-r before:from-transparent before:via-desertGold/30 before:to-transparent",
       variant === "prominent" && "before:bg-gradient-to-r before:from-transparent before:via-desertGold before:to-transparent before:h-3 my-12",
-      !animated && "before:!animation-none",
+      animated === false && "before:!animation-none",
       className
     )}>
       {variant === "prominent" && (

@@ -30,7 +30,7 @@
     --radius: 0.5rem;
   }
 
-  /* Nile theme is the default now */
+  /* Nile theme values */
   :root {
     --primary: 190 100% 28%; /* Nile Deep */
     --secondary: 43 61% 53%; /* Desert Gold */
@@ -78,6 +78,12 @@
     background: linear-gradient(90deg, transparent, rgba(115, 166, 173, 0.3), transparent);
     animation: nileFlow 15s infinite ease-in-out;
     background-size: 200% 100%;
+  }
+  
+  @keyframes nileFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
   
   /* Nile theme enhanced elements */
