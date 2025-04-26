@@ -1,5 +1,6 @@
+
 import { LucideIcon } from 'lucide-react';
-import { CheckCircle, DollarSign, Info } from 'lucide-react';
+import { CheckCircle, DollarSign, Info, Star, Shield } from 'lucide-react';
 
 interface ServiceCardProps {
   icon: LucideIcon;
@@ -11,12 +12,19 @@ interface ServiceCardProps {
 
 const ServiceCard = ({ icon: Icon, title, description, price, details }: ServiceCardProps) => {
   return (
-    <div className="card-papyrus rounded-lg shadow-sm overflow-hidden border-desertGold/20 hover:border-desertGold/40 transition-all duration-300">
+    <div className="card-papyrus rounded-lg shadow-sm overflow-hidden border-desertGold/20 hover:border-desertGold/40 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-0">
         <div className="p-4 sm:p-5 lg:p-6 lg:border-r border-desertGold/20 flex flex-col relative overflow-hidden">
-          <div className="text-desertGold mb-3">
-            <Icon size={28} className="w-6 h-6 sm:w-7 sm:h-7" />
+          <div className="flex justify-between items-center mb-3">
+            <div className="text-desertGold">
+              <Icon size={28} className="w-6 h-6 sm:w-7 sm:h-7" />
+            </div>
+            <div className="flex items-center">
+              <Star className="h-3 w-3 text-yellow-500 fill-yellow-500" />
+              <span className="text-xs font-medium ml-1">4.8</span>
+            </div>
           </div>
+          
           <h3 className="text-lg sm:text-xl font-semibold mb-2">{title}</h3>
           <p className="text-muted-foreground text-sm mb-4 flex-grow">{description}</p>
           <div className="bg-nileDeep/5 p-3 rounded-md border border-desertGold/10">
@@ -28,7 +36,7 @@ const ServiceCard = ({ icon: Icon, title, description, price, details }: Service
           </div>
         </div>
         
-        <div className="col-span-1 lg:col-span-2 p-4 sm:p-5 lg:p-6 bg-white/40">
+        <div className="col-span-1 lg:col-span-2 p-4 sm:p-5 lg:p-6 bg-white/60">
           <h4 className="flex items-center text-base font-medium mb-3">
             <Info size={16} className="text-desertGold mr-2" />
             Service Details
@@ -41,6 +49,13 @@ const ServiceCard = ({ icon: Icon, title, description, price, details }: Service
                 <span className="text-xs sm:text-sm">{detail}</span>
               </div>
             ))}
+          </div>
+          
+          <div className="mt-4 pt-3 border-t border-desertGold/10 flex items-center justify-end">
+            <div className="flex items-center text-xs text-muted-foreground">
+              <Shield className="h-3 w-3 mr-1" />
+              <span>Licensed & Insured</span>
+            </div>
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { Star } from 'lucide-react';
+import { Star, CheckCircle, Shield, Clock } from 'lucide-react';
 import HeroButtons from './hero/HeroButtons';
 import HeroFeatures from './hero/HeroFeatures';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -9,13 +9,13 @@ const Hero = () => {
   const isMobile = useIsMobile();
   
   return (
-    <div className="relative overflow-hidden min-h-[90vh] flex items-center" style={{ background: 'transparent' }}>
+    <div className="relative overflow-hidden min-h-[90vh] flex items-center">
       <div className="absolute inset-0 z-0">
-        {/* Background elements - use lower opacity to let the main background show through */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-nileTeal/5 to-transparent"></div>
+        {/* Background gradient overlay to improve image visibility */}
+        <div className="absolute inset-0 bg-gradient-to-b from-pharaohBlue/10 via-transparent to-nileTeal/10"></div>
         <div className="absolute inset-0 bg-ancient-pattern opacity-10"></div>
         
-        {/* Cairo skyline overlay with reduced opacity */}
+        {/* Cairo skyline overlay with enhanced visibility */}
         <div 
           className="absolute bottom-0 left-0 right-0 h-[30vh]" 
           style={{ 
@@ -23,24 +23,34 @@ const Hero = () => {
             backgroundPosition: "bottom center",
             backgroundRepeat: "repeat-x",
             backgroundSize: "100% 100%",
-            opacity: 0.2, // Reduced opacity
+            opacity: 0.25, // Slightly increased opacity
           }}
         />
         
-        {/* Nile flowing animation with reduced opacity */}
-        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-r from-nileTeal/15 via-nileTeal/25 to-nileTeal/15 animate-wave opacity-20"></div>
-        <div className="absolute bottom-16 left-0 right-0 h-8 bg-gradient-to-r from-nileTeal/5 via-nileTeal/15 to-nileTeal/5 animate-wave opacity-15" style={{ animationDelay: '0.5s', animationDuration: '20s' }}></div>
-        <div className="absolute bottom-24 left-0 right-0 h-4 bg-gradient-to-r from-nileTeal/3 via-nileTeal/10 to-nileTeal/3 animate-wave opacity-10" style={{ animationDelay: '1s', animationDuration: '25s' }}></div>
+        {/* Nile flowing animation with subtle animation */}
+        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-r from-nileTeal/15 via-nileTeal/25 to-nileTeal/15 animate-wave opacity-25"></div>
+        <div className="absolute bottom-16 left-0 right-0 h-8 bg-gradient-to-r from-nileTeal/5 via-nileTeal/15 to-nileTeal/5 animate-wave opacity-20" style={{ animationDelay: '0.5s', animationDuration: '20s' }}></div>
+        <div className="absolute bottom-24 left-0 right-0 h-4 bg-gradient-to-r from-nileTeal/3 via-nileTeal/10 to-nileTeal/3 animate-wave opacity-15" style={{ animationDelay: '1s', animationDuration: '25s' }}></div>
       </div>
       
       <div className="container mx-auto px-4 relative z-10 w-[90%] sm:w-full">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="bg-white/80 backdrop-blur-sm p-6 md:p-8 rounded-xl shadow-xl mb-6 inline-block w-full">
+          {/* Industry standard: Trust badges near top */}
+          <div className="mb-6 flex flex-col items-center">
+            <div className="bg-white/95 backdrop-blur-sm px-4 py-1 rounded-full mb-3 shadow-sm inline-flex items-center">
+              <Shield className="text-primary h-4 w-4 mr-1.5" />
+              <span className="text-xs font-medium">Licensed & Insured LLC</span>
+              <span className="mx-2 text-gray-300">|</span>
+              <span className="font-medium text-xs">Call: (614) 740-0275</span>
+            </div>
+          </div>
+          
+          <div className="bg-white/95 backdrop-blur-sm p-6 md:p-8 rounded-xl shadow-xl mb-6 inline-block w-full">
             <div className="flex items-center justify-center gap-1 mb-4">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className="text-yellow-500 h-4 w-4 fill-yellow-500" />
+                <Star key={i} className={`${i === 4 ? 'text-yellow-400' : 'text-yellow-500'} h-4 w-4 ${i < 4 ? 'fill-yellow-500' : 'fill-yellow-400/50'}`} />
               ))}
-              <span className="font-medium ml-1 text-sm md:text-base">500+ Satisfied Customers</span>
+              <span className="font-medium ml-1 text-sm md:text-base">4.8★ Rated in Ohio</span>
             </div>
             
             <h1 className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-5xl lg:text-6xl'} font-bold leading-tight text-pharaohBlue font-playfair mb-4 tracking-tight`}>
@@ -50,6 +60,21 @@ const Hero = () => {
             <p className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto mb-6 leading-relaxed">
               Get an instant quote or book your move in minutes
             </p>
+            
+            <div className="flex flex-wrap items-center justify-center gap-3 mb-5">
+              <div className="flex items-center text-sm text-muted-foreground">
+                <CheckCircle className="h-4 w-4 text-primary mr-1.5" />
+                <span>Owner-Supervised</span>
+              </div>
+              <div className="flex items-center text-sm text-muted-foreground">
+                <CheckCircle className="h-4 w-4 text-primary mr-1.5" />
+                <span>Fully Insured</span>
+              </div>
+              <div className="flex items-center text-sm text-muted-foreground">
+                <Clock className="h-4 w-4 text-primary mr-1.5" />
+                <span>On-Time Service</span>
+              </div>
+            </div>
             
             <HeroButtons />
           </div>
