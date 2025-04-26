@@ -70,9 +70,10 @@ const App = () => {
       
       // Remove any potential background color blockers
       document.querySelectorAll('main, div').forEach(el => {
-        if (window.getComputedStyle(el).backgroundColor !== 'transparent' &&
-            window.getComputedStyle(el).backgroundColor !== 'rgba(0, 0, 0, 0)') {
-          el.style.backgroundColor = 'transparent';
+        const element = el as HTMLElement; // Cast to HTMLElement which has style property
+        if (window.getComputedStyle(element).backgroundColor !== 'transparent' &&
+            window.getComputedStyle(element).backgroundColor !== 'rgba(0, 0, 0, 0)') {
+          element.style.backgroundColor = 'transparent';
         }
       });
     };
