@@ -13,7 +13,6 @@ import PromoApplied from './booking/PromoApplied';
 import { useBookingForm } from '@/hooks/use-booking-form';
 import { Loader, BadgePercent, Shield, Clock } from 'lucide-react';
 import DepositButton from '@/components/payment/deposit/DepositButton';
-import DepositStatus from '@/components/payment/DepositStatus';
 
 const BookingForm = () => {
   const { isPromotionActive, discountPercentage } = usePromotion();
@@ -44,7 +43,7 @@ const BookingForm = () => {
 
   if (formSubmitted) {
     return (
-      <div className="bg-white p-6 md:p-8 rounded-lg shadow-md border border-border space-y-6">
+      <div className="content-card p-6 md:p-8 rounded-lg animate-fadeIn space-y-6">
         <SuccessMessage onRequestAnother={resetForm} />
         
         {/* Enhanced Deposit Payment Section */}
@@ -58,12 +57,12 @@ const BookingForm = () => {
               
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-4 mb-6 text-xs text-muted-foreground">
                 <div className="flex items-center">
-                  <Shield className="h-3 w-3 mr-1 text-primary" />
+                  <Shield className="h-3 w-3 mr-1.5 text-primary" />
                   <span>48hr Deposit Protection</span>
                 </div>
                 <div className="hidden sm:block">•</div>
                 <div className="flex items-center">
-                  <Clock className="h-3 w-3 mr-1 text-primary" />
+                  <Clock className="h-3 w-3 mr-1.5 text-primary" />
                   <span>Westerville Slots Filling Fast</span>
                 </div>
               </div>
@@ -76,7 +75,7 @@ const BookingForm = () => {
               moveDate={formData.move_date}
               phone={formData.phone}
               address={formData.address}
-              className="max-w-md mx-auto"
+              className="max-w-md mx-auto hover-lift"
             />
           </div>
         )}
@@ -85,11 +84,11 @@ const BookingForm = () => {
   }
 
   return (
-    <div className="bg-white p-6 md:p-8 rounded-lg shadow-md border border-border">
+    <div className="content-card p-6 md:p-8 rounded-lg">
       {isPromotionActive && (
-        <div className="mb-6 -mt-2 bg-sunsetOrange/10 py-2 px-4 rounded-md flex items-center justify-center text-sm font-medium text-primary">
-          <BadgePercent className="h-4 w-4 mr-2 animate-pulse" />
-          New customer booking discount: <span className="font-bold ml-1">{discountPercentage}% OFF</span>
+        <div className="mb-6 -mt-2 bg-sunsetOrange/10 py-2.5 px-4 rounded-md flex items-center justify-center text-sm font-medium text-primary border border-desertGold/20">
+          <BadgePercent className="h-5 w-5 mr-2 animate-pulse" />
+          New customer booking discount: <span className="font-bold ml-1.5">{discountPercentage}% OFF</span>
         </div>
       )}
       
@@ -98,11 +97,11 @@ const BookingForm = () => {
       {isPromotionActive && <PromoApplied />}
       
       {isSubmitting && (
-        <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-xl flex flex-col items-center">
-            <Loader className="h-8 w-8 text-primary animate-spin mb-4" />
-            <p className="text-lg font-medium">Submitting your request...</p>
-            <p className="text-sm text-muted-foreground mt-1">Please wait, this may take a moment.</p>
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-white p-8 rounded-xl shadow-2xl flex flex-col items-center max-w-md w-full mx-4">
+            <Loader className="h-10 w-10 text-primary animate-spin mb-4" />
+            <p className="text-xl font-medium">Submitting your request...</p>
+            <p className="text-sm text-muted-foreground mt-2">Please wait, this may take a moment.</p>
           </div>
         </div>
       )}

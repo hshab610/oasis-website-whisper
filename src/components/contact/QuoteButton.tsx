@@ -28,17 +28,20 @@ const QuoteButton = ({
       variant={variant}
       size={size}
       className={cn(
-        "font-bold shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 transform-gpu bg-primary text-primary-foreground",
+        "font-bold shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 transform-gpu bg-gradient-to-r from-primary to-primary/90 text-white relative overflow-hidden group",
         className
       )}
       {...props}
     >
+      {/* Animated background highlight */}
+      <span className="absolute top-0 left-0 w-full h-full bg-white/10 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500"></span>
+      
       {children || (
-        <>
+        <span className="relative z-10 flex items-center justify-center">
           {icon && <CalendarCheck className="mr-2 h-5 w-5" />}
           {text}
-          {arrow && <ArrowRight className="ml-2 h-5 w-5 animate-pulse" />}
-        </>
+          {arrow && <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />}
+        </span>
       )}
     </Button>
   );
