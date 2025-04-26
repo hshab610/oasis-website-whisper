@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { Star } from 'lucide-react';
 import HeroButtons from './hero/HeroButtons';
@@ -10,16 +9,9 @@ const Hero = () => {
   
   return (
     <div className="relative overflow-hidden bg-desert-sunset min-h-[90vh] flex items-center">
-      <div className="absolute inset-0 z-0 opacity-20">
-        <img 
-          src="/lovable-uploads/9afd8ea4-428a-4559-922e-c48973cd49f5.png"
-          alt="" 
-          aria-hidden="true"
-          className="w-full h-full object-cover"
-          onError={(e) => {
-            e.currentTarget.src = "data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='200' height='200' fill='%23EDE6D6' fill-opacity='0.3'/%3E%3Cg fill='%23C2AF83' fill-opacity='0.2'%3E%3Cpath d='M20 20h10v10H20z'/%3E%3Cpath d='M50 20h10v10H50z'/%3E%3Cpath d='M80 20h10v10H80'/%3E%3Cpath d='M110 20h10v10H110z'/%3E%3Cpath d='M140 20h10v10H140z'/%3E%3Cpath d='M35 40h10v10H35z'/%3E%3Cpath d='M65 40h10v10H65z'/%3E%3Cpath d='M95 40h10v10H95z'/%3E%3Cpath d='M125 40h10v10H125z'/%3E%3C/g%3E%3C/svg%3E";
-          }}
-        />
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-nileTeal/10 to-transparent animate-float"></div>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"100\" height=\"20\" viewBox=\"0 0 100 20\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M21.184 20c.357-.13.72-.264.888-.14 1.652-1.1 2.782-2.752 3.112-4.83.33-2.077-.014-4.335-.902-6.164C23.507 7.327 22.602 6 21.5 6a2.5 2.5 0 0 0-2.5 2.5c0 1.276.958 2.33 2.197 2.487-.43.13-.888.264-1.378.14-1.65-1.1-2.782-2.752-3.112-4.83-.33-2.077.014-4.335.902-6.164C18.493.673 19.398 0 20.5 0c1.923 0 3.33 2.234 3.43 5m1.5 0c.357-.13.72-.264.888-.14 1.652-1.1 2.782-2.752 3.112-4.83.33-2.077-.014-4.335-.902-6.164C28.323 7.327 27.402 6 26.3 6c-1.923 0-3.33 2.234-3.43 5m12.523 0c.6.113.92.275 1.015.49.028-.036.057-.073.087-.11.276-.322.47-.705.477-1.14.01-.438-.155-.856-.44-1.163-.57-.607-1.398-.868-2.16-.936-.762-.07-1.523.17-2.115.56.168-.17.32-.36.455-.56a2.83 2.83 0 0 0 .43-1.282c.02-.47-.07-.92-.29-1.33.466.19.977.207 1.455.095.477-.114.87-.38 1.14-.703a1.982 1.982 0 0 0 .236-.376 3.456 3.456 0 0 0 .515-1.86c0-1.077-.493-2.052-1.284-2.7-.786-.644-1.86-1-3.028-1H32.4c.712 0 1.208.45 1.208 1s-.496 1-1.208 1H30.64c-.598 0-1.068.435-1.068.998 0 .562.47.998 1.07.998h1.408c.712 0 1.208.45 1.208 1s-.496 1-1.208 1H28.64c-.598 0-1.068.435-1.068.998 0 .562.47.998 1.07.998h1.408c.712 0 1.208.45 1.208 1s-.496 1-1.208 1H27.44c-.598 0-1.068.435-1.068.998 0 .562.47.998 1.07.998h1.208c.712 0 1.208.45 1.208 1s-.496 1-1.208 1H25.15c2.058 0 3.618 1.995 3.645 4.5.13.104.17.208.22.312 0-.038.01-.074.01-.11\" fill=\"%2373A6AD\" fill-opacity=\"0.1\" fill-rule=\"evenodd\"/%3E%3C/svg%3E')] opacity-20"></div>
       </div>
       
       <div className="container mx-auto px-4 relative z-10 w-[90%] sm:w-full">
@@ -47,7 +39,9 @@ const Hero = () => {
         </div>
       </div>
       
-      <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-background to-transparent"></div>
+      <div className="absolute bottom-0 left-0 right-0">
+        <div className="h-24 bg-gradient-to-t from-nileTeal/20 to-transparent"></div>
+      </div>
     </div>
   );
 };
