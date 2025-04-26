@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { Star } from 'lucide-react';
 import HeroButtons from './hero/HeroButtons';
@@ -15,15 +14,31 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-nileTeal/10 to-transparent animate-float"></div>
         <div className="absolute inset-0 bg-ancient-pattern opacity-20"></div>
         
-        {/* Cairo skyline overlay */}
+        {/* Cairo skyline overlay - Adjusted for better visibility */}
         <div 
-          className="absolute inset-0 cairo-skyline-pattern" 
+          className="absolute bottom-0 left-0 right-0 h-[40vh]" 
           style={{ 
-            backgroundImage: "url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1000 120%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M0,100 L50,70 L100,90 L150,50 L200,80 L250,30 L300,70 L350,20 L400,60 L450,40 L500,80 L550,30 L600,60 L650,50 L700,90 L750,40 L800,70 L850,20 L900,60 L950,30 L1000,50 L1000,120 L0,120 Z%22 fill=%22%23007791%22 opacity=%220.15%22/%3E%3C/svg%3E')",
+            backgroundImage: "url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1440 320%22%3E%3Cpath d=%22M0,256 L48,240 C96,224 192,192 288,192 C384,192 480,224 576,213.3 C672,203 768,149 864,128 C960,107 1056,117 1152,144 C1248,171 1344,213 1392,234.7 L1440,256 L1440,320 L1392,320 C1344,320 1248,320 1152,320 C1056,320 960,320 864,320 C768,320 672,320 576,320 C480,320 384,320 288,320 C192,320 96,320 48,320 L0,320 Z%22 fill=%22%23007791%22 fill-opacity=%220.25%22/%3E%3C/svg%3E')",
             backgroundSize: 'cover',
             backgroundPosition: 'bottom',
             backgroundRepeat: 'repeat-x',
-            opacity: 0.3  // Increased opacity
+            mixBlendMode: 'soft-light',
+            transform: 'scale(1.1)',
+            filter: 'contrast(1.2)'
+          }}
+        />
+        
+        {/* Additional skyline layer for depth */}
+        <div 
+          className="absolute bottom-0 left-0 right-0 h-[35vh]" 
+          style={{ 
+            backgroundImage: "url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1440 320%22%3E%3Cpath d=%22M0,224 L48,213.3 C96,203 192,181 288,181.3 C384,181 480,203 576,192 C672,181 768,139 864,128 C960,117 1056,139 1152,160 C1248,181 1344,203 1392,213.3 L1440,224 L1440,320 L1392,320 C1344,320 1248,320 1152,320 C1056,320 960,320 864,320 C768,320 672,320 576,320 C480,320 384,320 288,320 C192,320 96,320 48,320 L0,320 Z%22 fill=%22%23005571%22 fill-opacity=%220.2%22/%3E%3C/svg%3E')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'bottom',
+            backgroundRepeat: 'repeat-x',
+            mixBlendMode: 'soft-light',
+            transform: 'scale(1.05)',
+            filter: 'contrast(1.1)'
           }}
         />
         
