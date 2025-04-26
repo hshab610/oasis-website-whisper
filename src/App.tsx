@@ -37,64 +37,48 @@ const App = () => {
     document.body.classList.add("nile-theme");
     localStorage.setItem("nile-theme-enabled", "true");
     
-    // Diagnostic border for testing (will be visible in dev mode only)
-    if (process.env.NODE_ENV === 'development') {
-      const styleElement = document.createElement('style');
-      styleElement.innerHTML = `
-        /* Force Nile theme visibility */
-        header { border-bottom: 3px solid #007791 !important; }
-        .cta-button { border-color: #d4a937 !important; }
+    // Ensure background image is properly loaded
+    const ensureBackgroundVisibility = () => {
+      console.log('Checking background visibility...');
+      
+      // Apply a direct style to force the background image if needed
+      const style = document.createElement('style');
+      style.textContent = `
+        body::before {
+          content: "" !important;
+          background-image: url('/lovable-uploads/4873c787-00fa-4ef2-9caa-bc4e840b243e.png') !important;
+          position: fixed !important;
+          top: 0 !important;
+          left: 0 !important;
+          width: 100vw !important;
+          height: 100vh !important;
+          background-size: cover !important;
+          background-position: center !important;
+          background-repeat: no-repeat !important;
+          background-attachment: fixed !important;
+          opacity: 0.45 !important;
+          z-index: -1 !important;
+          pointer-events: none !important;
+          filter: contrast(1.1) brightness(1.05) !important;
+        }
         
-        /* Add visible indicators */
-        :root {
-          --nile-deep: #007791;
-          --desert-gold: #d4a937;
-          --papyrus: #f0e6d2;
+        html, body, #root {
+          background: transparent !important;
         }
       `;
-      document.head.appendChild(styleElement);
-    }
-    
-    // Failsafe for background visibility
-    const ensureBackgroundVisibility = () => {
-      // Check if background is visible
-      const computedStyle = window.getComputedStyle(document.body, '::after');
-      const isBackgroundVisible = computedStyle.opacity !== '0' && 
-                                  computedStyle.display !== 'none' && 
-                                  computedStyle.visibility !== 'hidden';
+      document.head.appendChild(style);
       
-      // If background isn't visible, apply nuclear option
-      if (!isBackgroundVisible) {
-        console.log('Background not visible, applying failsafe...');
-        document.head.insertAdjacentHTML('beforeend', `
-          <style id="forced-bg">
-            body::after {
-              content: "" !important;
-              background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath d='M0,256 L48,240 C96,224 192,192 288,192 C384,192 480,224 576,213.3 C672,203 768,149 864,128 C960,107 1056,117 1152,144 C1248,171 1344,213 1392,234.7 L1440,256 L1440,320 L1392,320 C1344,320 1248,320 1152,320 C1056,320 960,320 864,320 C768,320 672,320 576,320 C480,320 384,320 288,320 C192,320 96,320 48,320 L0,320 Z' fill='%23007791' fill-opacity='0.7'/%3E%3C/svg%3E") !important;
-              display: block !important;
-              position: fixed !important;
-              width: 100vw !important;
-              height: 100vh !important;
-              top: 0 !important;
-              left: 0 !important;
-              z-index: -9999 !important;
-              opacity: 0.25 !important;
-              background-size: 100% auto !important;
-              background-position: center bottom !important;
-              background-repeat: no-repeat !important;
-              pointer-events: none !important;
-              filter: contrast(1.2) grayscale(30%) sepia(15%) !important;
-            }
-            
-            #root, body, html {
-              background: transparent !important;
-            }
-          </style>
-        `);
-      }
+      // Remove any potential background color blockers
+      document.querySelectorAll('main, div').forEach(el => {
+        if (window.getComputedStyle(el).backgroundColor !== 'transparent' &&
+            window.getComputedStyle(el).backgroundColor !== 'rgba(0, 0, 0, 0)') {
+          el.style.backgroundColor = 'transparent';
+        }
+      });
     };
     
-    // Run failsafe after a short delay to ensure DOM is loaded
+    // Run immediately and after a short delay
+    ensureBackgroundVisibility();
     setTimeout(ensureBackgroundVisibility, 1000);
     
   }, []);
