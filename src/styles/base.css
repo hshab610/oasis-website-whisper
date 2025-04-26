@@ -7,66 +7,54 @@
 
 @layer base {
   :root {
-    /* Original theme colors */
-    --background: 42 38% 95%;
-    --foreground: 35 25% 20%;
-    --card: 38 30% 97%;
-    --card-foreground: 35 25% 20%;
-    --popover: 38 30% 97%;
-    --popover-foreground: 35 25% 20%;
-    --primary: 30 65% 56%;
-    --primary-foreground: 38 30% 97%;
-    --secondary: 185 18% 56%;
-    --secondary-foreground: 38 30% 97%;
-    --muted: 35 20% 90%;
-    --muted-foreground: 35 15% 40%;
-    --accent: 35 35% 85%;
-    --accent-foreground: 35 25% 20%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 38 30% 97%;
-    --border: 35 20% 80%;
-    --input: 35 20% 80%;
-    --ring: 30 65% 56%;
-    --radius: 0.5rem;
-  }
+    /* ... keep existing code (original theme colors definitions) */
 
-  /* Nile theme values */
-  :root {
+    /* Enhanced Nile theme values */
     --primary: 190 100% 28%; /* Nile Deep */
     --secondary: 43 61% 53%; /* Desert Gold */
     --background: 39 56% 88%; /* Papyrus Light */
     --card: 39 30% 95%;
     --accent: 39 35% 85%;
+    --border: 43 40% 80%;
+    --ring: 43 40% 70%;
   }
 
-  /* Original theme overrides can be enabled by removing the .nile-theme class */
-  body:not(.nile-theme) {
-    --primary: 30 65% 56%;
-    --secondary: 185 18% 56%;
-    --background: 42 38% 95%;
-    --card: 38 30% 97%;
-    --accent: 35 35% 85%;
-  }
-
-  * {
-    @apply border-border;
-  }
+  /* ... keep existing code (theme overrides section) */
 
   body {
     @apply bg-background text-foreground;
     font-family: 'Open Sans', sans-serif;
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23E8945C' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background: linear-gradient(to bottom, #f5e8c9 0%, #e4d5a8 100%);
+    position: relative;
+  }
+
+  /* Add subtle Cairo skyline pattern */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 200' preserveAspectRatio='none'%3E%3Cpath d='M0,100 L50,90 L100,110 L150,85 L200,115 L250,95 L300,120 L350,80 L400,100 L450,70 L500,90 L550,60 L600,80 L650,50 L700,70 L750,40 L800,60 L850,30 L900,50 L950,20 L1000,40' fill='none' stroke='%23D4A937' stroke-width='1' opacity='0.1'/%3E%3C/svg%3E");
+    background-position: center bottom;
+    background-repeat: repeat-x;
+    background-size: 100% auto;
+    opacity: 0.08;
+    pointer-events: none;
+    z-index: 0;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Playfair Display', serif;
   }
   
-  /* Nile theme divider */
+  /* Enhanced Nile divider */
   .divider-nile {
     position: relative;
     height: 20px;
     overflow: hidden;
+    background: linear-gradient(90deg, transparent, rgba(212, 169, 55, 0.1), transparent);
   }
 
   .divider-nile::before {
@@ -85,35 +73,37 @@
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
   }
-  
-  /* Nile theme enhanced elements */
+
+  /* Enhanced Nile theme elements */
   .nile-border {
     border: 2px solid #D4A937;
-    box-shadow: 0 0 15px rgba(212, 169, 55, 0.3);
+    box-shadow: 0 0 15px rgba(212, 169, 55, 0.15);
   }
   
   .nile-glow {
-    filter: drop-shadow(0 0 8px rgba(0, 119, 145, 0.4));
+    filter: drop-shadow(0 0 8px rgba(0, 119, 145, 0.3));
   }
 }
 
 @layer components {
-  /* Nile theme components - always active now */
+  /* Enhanced Nile components */
   .btn-nile {
-    @apply bg-nileDeep text-white hover:bg-nileDeep/90 transition-colors;
+    @apply bg-nileDeep text-white hover:bg-nileDeep/90 transition-colors border-b-2 border-nileDeep/70;
   }
   
   .card-papyrus {
-    @apply bg-papyrusLight/80 backdrop-blur-sm border border-desertGold/20;
+    @apply bg-gradient-to-b from-[#f5e8c9] to-[#e4d5a8] backdrop-blur-sm 
+           border border-desertGold/20 shadow-sm hover:shadow-md 
+           transition-all duration-300;
   }
   
   .text-nile-gradient {
     @apply bg-gradient-to-r from-nileDeep to-nileTeal bg-clip-text text-transparent;
   }
   
-  /* Enhanced Nile components */
+  /* Refined Nile components */
   .nile-card {
-    @apply bg-gradient-to-b from-white/80 to-papyrusLight/90 backdrop-blur-sm 
+    @apply bg-gradient-to-b from-[#f5e8c9]/90 to-[#e4d5a8]/80 backdrop-blur-sm 
            border border-desertGold/30 shadow-lg rounded-lg
            hover:border-desertGold/50 transition-all duration-300;
   }
@@ -125,7 +115,28 @@
   }
   
   .nile-input {
-    @apply bg-papyrusLight/50 border-nileTeal/30 focus:border-desertGold
+    @apply bg-[#f5e8c9]/50 border-nileTeal/30 focus:border-desertGold
            focus:ring-desertGold/30 rounded-md transition-all duration-200;
+  }
+
+  /* Pyramid divider */
+  .pyramid-divider {
+    position: relative;
+    height: 40px;
+    margin: 2rem 0;
+    overflow: hidden;
+  }
+
+  .pyramid-divider::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    width: 60px;
+    height: 40px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 40'%3E%3Cpath d='M30 0L60 40H0L30 0z' fill='%23D4A937' fill-opacity='0.2'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
   }
 }

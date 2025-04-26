@@ -72,11 +72,13 @@ const Services = () => {
   ];
 
   return (
-    <section className="py-16 md:py-24 bg-background">
-      <div className="container mx-auto px-4">
+    <section className="py-16 md:py-24 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-[#f5e8c9] to-[#e4d5a8] opacity-50" />
+      
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Services</h2>
-          <div className="w-24 h-1 bg-primary mx-auto mb-6"></div>
+          <PyramidDivider variant="bold" className="mb-6" />
           <p className="text-lg text-muted-foreground">
             We offer a wide range of moving and storage services to meet all your needs.
             From local moves to long-distance relocations, we've got you covered.
@@ -131,8 +133,9 @@ const Services = () => {
         </div>
 
         <div className="mt-16 text-center">
+          <PyramidDivider variant="gradient" className="mb-8" />
           <Link to="/services">
-            <Button className="cta-button">
+            <Button className="nile-button">
               View All Services & Pricing
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
