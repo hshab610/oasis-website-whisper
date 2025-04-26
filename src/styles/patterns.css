@@ -16,3 +16,30 @@
   background-blend-mode: overlay;
   background-opacity: 0.05;
 }
+
+/* Cairo skyline pattern */
+.cairo-skyline-pattern {
+  position: relative;
+}
+
+.cairo-skyline-pattern::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 120' preserveAspectRatio='none'%3E%3Cpath d='M0,120 L0,80 L40,70 L60,90 L80,65 L100,85 L120,60 L140,70 L160,55 L180,75 L200,50 L220,65 L240,40 L260,60 L280,45 L300,70 L320,55 L340,75 L360,45 L380,65 L400,40 L420,60 L440,50 L460,70 L480,45 L500,65 L520,50 L540,75 L560,60 L580,70 L600,45 L620,65 L640,50 L660,75 L680,55 L700,70 L720,45 L740,65 L760,80 L780,60 L800,70 L820,45 L840,65 L860,55 L880,75 L900,50 L920,65 L940,45 L960,60 L980,70 L1000,55 L1000,120 Z' fill='%23007791' opacity='0.15'/%3E%3C/svg%3E");
+  background-size: cover;
+  background-position: bottom;
+  background-repeat: no-repeat;
+  opacity: 0.2;
+  z-index: 1;
+}
+
+/* Egyptian-style service card */
+.service-card {
+  @apply bg-gradient-to-b from-[#f5e8c9]/80 to-[#e4d5a8]/60 p-6 rounded-lg border border-desertGold/20
+         hover:border-desertGold/40 hover:shadow-md transition-all duration-300
+         hover:from-[#f5e8c9]/90 hover:to-[#e4d5a8]/70 animate-fadeIn;
+}
