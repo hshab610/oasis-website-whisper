@@ -1,6 +1,6 @@
 
 import { LucideIcon } from 'lucide-react';
-import { CheckCircle, DollarSign, Info, Star, Shield } from 'lucide-react';
+import { CheckCircle, DollarSign, Info, Star, Shield, Clock } from 'lucide-react';
 
 interface ServiceCardProps {
   icon: LucideIcon;
@@ -12,7 +12,7 @@ interface ServiceCardProps {
 
 const ServiceCard = ({ icon: Icon, title, description, price, details }: ServiceCardProps) => {
   return (
-    <div className="card-papyrus rounded-lg shadow-sm overflow-hidden border-desertGold/20 hover:border-desertGold/40 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+    <div className="card-papyrus rounded-lg shadow-sm hover:shadow-md overflow-hidden border border-desertGold/20 hover:border-desertGold/40 transition-all duration-300 transform hover:-translate-y-1">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-0">
         <div className="p-4 sm:p-5 lg:p-6 lg:border-r border-desertGold/20 flex flex-col relative overflow-hidden">
           <div className="flex justify-between items-center mb-3">
@@ -33,6 +33,10 @@ const ServiceCard = ({ icon: Icon, title, description, price, details }: Service
               <span className="font-medium">Pricing:</span>
             </div>
             <p className="font-semibold text-sm">{price}</p>
+            <div className="flex items-center text-xs text-muted-foreground mt-2">
+              <Clock className="h-3 w-3 mr-1 text-primary/80" />
+              <span>Same-day quotes available</span>
+            </div>
           </div>
         </div>
         
@@ -51,10 +55,15 @@ const ServiceCard = ({ icon: Icon, title, description, price, details }: Service
             ))}
           </div>
           
-          <div className="mt-4 pt-3 border-t border-desertGold/10 flex items-center justify-end">
+          <div className="mt-4 pt-3 border-t border-desertGold/10 flex items-center justify-between">
             <div className="flex items-center text-xs text-muted-foreground">
               <Shield className="h-3 w-3 mr-1" />
               <span>Licensed & Insured</span>
+            </div>
+            <div className="text-xs font-medium text-primary">
+              <a href="/contact" className="flex items-center hover:underline">
+                Book Now <ArrowRight className="h-3 w-3 ml-1" />
+              </a>
             </div>
           </div>
         </div>

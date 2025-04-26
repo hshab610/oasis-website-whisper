@@ -1,3 +1,4 @@
+
 import { Helmet } from 'react-helmet';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -11,6 +12,7 @@ import MovingProcess from '@/components/home/MovingProcess';
 import PromoBanner from '@/components/promotion/PromoBanner';
 import PromoPopup from '@/components/promotion/PromoPopup';
 import ChatWidget from '@/components/chat/ChatWidget';
+import { TrustBadge } from '@/components/ui/trust-badge'; 
 
 const Index = () => {
   return (
@@ -33,6 +35,15 @@ const Index = () => {
           <section className="contain-content">
             <Hero />
           </section>
+          
+          <div className="bg-white/80 py-3 shadow-sm border-y border-nileTeal/10">
+            <div className="container mx-auto flex flex-wrap justify-center gap-3">
+              <TrustBadge type="rating" value="4.8★ Westerville" />
+              <TrustBadge type="insured" />
+              <TrustBadge type="ontime" />
+              <TrustBadge type="dot" />
+            </div>
+          </div>
           
           <MovingProcess />
           

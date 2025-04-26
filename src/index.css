@@ -1,7 +1,7 @@
 
 @import './styles/base.css';
 
-/* Force immediate application of background image */
+/* Cairo skyline background with optimized visibility */
 body::before {
   content: "";
   background-image: url('/lovable-uploads/d9454fb5-aa86-4aeb-88fe-1f48b1375dcc.png') !important;
@@ -14,7 +14,7 @@ body::before {
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  opacity: 0.65;  /* Increased opacity for better visibility */
+  opacity: 0.7;  /* Enhanced opacity for better visibility */
   z-index: -1;
   pointer-events: none;
   filter: contrast(1.1) brightness(1.05);
@@ -23,4 +23,21 @@ body::before {
 /* Ensure all wrapper elements allow background to show through */
 html, body, #root, main, .content-visibility-auto {
   background: transparent !important;
+}
+
+/* Add additional nile wave animation at the bottom */
+.nile-wave {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 15vh;
+  background: linear-gradient(to top, rgba(0, 119, 145, 0.15), transparent);
+  z-index: -1;
+  animation: nileWave 15s infinite ease-in-out;
+}
+
+@keyframes nileWave {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.25; }
 }

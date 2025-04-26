@@ -1,7 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Calculator, Clock, Shield, Star } from 'lucide-react';
+import { ArrowRight, Calculator, Clock, Shield, Star, Calendar, Phone } from 'lucide-react';
 import QuoteButton from '../contact/QuoteButton';
 
 const CTA = () => {
@@ -15,6 +15,11 @@ const CTA = () => {
                 <Star key={i} className={`${i === 4 ? 'text-yellow-400' : 'text-yellow-500'} h-4 w-4 ${i < 4 ? 'fill-yellow-500' : 'fill-yellow-400/50'}`} />
               ))}
               <span className="font-medium ml-1 text-sm">4.8★ Rated Service</span>
+              <span className="mx-2 text-gray-300">|</span>
+              <div className="flex items-center">
+                <Phone className="h-3 w-3 mr-1 text-primary" />
+                <a href="tel:6147400275" className="text-sm hover:text-primary">(614) 740-0275</a>
+              </div>
             </div>
 
             <h2 className="text-2xl md:text-3xl font-bold mb-4">Ready to Move? It Takes 2 Minutes</h2>
@@ -45,9 +50,17 @@ const CTA = () => {
               </a>
             </div>
             
-            <div className="mt-6 flex items-center justify-center gap-2 text-xs text-muted-foreground">
-              <Shield className="h-3 w-3" />
-              <span>Licensed & Insured • DOT #123456789</span>
+            {/* Enhanced trust elements */}
+            <div className="mt-6 flex flex-col items-center gap-2">
+              <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
+                <Shield className="h-3 w-3" />
+                <span>Licensed & Insured • DOT #123456789</span>
+              </div>
+              
+              <div className="flex items-center justify-center mt-2 text-xs px-3 py-1.5 bg-yellow-50 rounded-full border border-desertGold/20">
+                <Calendar className="h-3 w-3 text-desertGold mr-1.5" />
+                <span className="font-medium text-desertGold">Westerville Slots Available: Book Now!</span>
+              </div>
             </div>
           </div>
         </div>

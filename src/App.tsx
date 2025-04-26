@@ -31,7 +31,7 @@ const queryClient = new QueryClient({
 });
 
 const App = () => {
-  // Force background image application on load
+  // Enhanced background image application on load
   useEffect(() => {
     // Apply Nile theme by default
     document.body.classList.add("nile-theme");
@@ -56,7 +56,7 @@ const App = () => {
           background-position: center !important;
           background-repeat: no-repeat !important;
           background-attachment: fixed !important;
-          opacity: 0.55 !important;
+          opacity: 0.7 !important;  /* Enhanced opacity for visibility */
           z-index: -1 !important;
           pointer-events: none !important;
           filter: contrast(1.1) brightness(1.05) !important;
@@ -69,8 +69,32 @@ const App = () => {
         main, .content-visibility-auto {
           background: transparent !important;
         }
+        
+        /* Add Nile wave animation */
+        .nile-wave {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 15vh;
+          background: linear-gradient(to top, rgba(0, 119, 145, 0.15), transparent);
+          z-index: -1;
+          animation: nileWave 15s infinite ease-in-out;
+        }
+        
+        @keyframes nileWave {
+          0%, 100% { opacity: 0.15; }
+          50% { opacity: 0.25; }
+        }
       `;
       document.head.appendChild(style);
+      
+      // Add the wave element to the DOM
+      if (!document.querySelector('.nile-wave')) {
+        const waveElement = document.createElement('div');
+        waveElement.className = 'nile-wave';
+        document.body.appendChild(waveElement);
+      }
       
       // Remove any potential background color blockers
       document.querySelectorAll('main, div, section').forEach(el => {
@@ -97,6 +121,10 @@ const App = () => {
     setTimeout(ensureBackgroundVisibility, 500);
     setTimeout(ensureBackgroundVisibility, 1500);
     
+    // Add interval to ensure background stays visible even after dynamic content loads
+    const interval = setInterval(ensureBackgroundVisibility, 5000);
+    return () => clearInterval(interval);
+    
   }, []);
 
   return (
@@ -105,8 +133,8 @@ const App = () => {
         <TooltipProvider>
           <PromotionProvider>
             <Helmet>
-              <title>Oasis Moving & Storage | Professional Moving Services</title>
-              <meta name="description" content="Professional moving and storage services in Westerville, Ohio. Local and long-distance moving, furniture assembly, and more." />
+              <title>Oasis Moving & Storage | Professional Moving Services in Westerville, Ohio</title>
+              <meta name="description" content="Owner-supervised professional moving and storage services in Westerville, Ohio. Local and long-distance moving, furniture assembly, and more." />
               <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0" />
               <meta name="theme-color" content="#007791" />
             </Helmet>

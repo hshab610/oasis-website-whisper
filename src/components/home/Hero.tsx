@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { Star, CheckCircle, Shield, Clock } from 'lucide-react';
+import { Star, CheckCircle, Shield, Clock, Phone } from 'lucide-react';
 import HeroButtons from './hero/HeroButtons';
 import HeroFeatures from './hero/HeroFeatures';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -35,13 +35,16 @@ const Hero = () => {
       
       <div className="container mx-auto px-4 relative z-10 w-[90%] sm:w-full">
         <div className="max-w-4xl mx-auto text-center">
-          {/* Industry standard: Trust badges near top */}
+          {/* Enhanced trust badges */}
           <div className="mb-6 flex flex-col items-center">
-            <div className="bg-white/95 backdrop-blur-sm px-4 py-1 rounded-full mb-3 shadow-sm inline-flex items-center">
+            <div className="bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full mb-3 shadow-sm inline-flex items-center">
               <Shield className="text-primary h-4 w-4 mr-1.5" />
-              <span className="text-xs font-medium">Licensed & Insured LLC</span>
+              <span className="text-xs font-medium">Oasis Moving LLC</span>
               <span className="mx-2 text-gray-300">|</span>
-              <span className="font-medium text-xs">Call: (614) 740-0275</span>
+              <div className="flex items-center">
+                <Phone className="h-3 w-3 mr-1 text-primary" />
+                <a href="tel:6147400275" className="font-semibold text-xs hover:text-primary">(614) 740-0275</a>
+              </div>
             </div>
           </div>
           
@@ -50,7 +53,7 @@ const Hero = () => {
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className={`${i === 4 ? 'text-yellow-400' : 'text-yellow-500'} h-4 w-4 ${i < 4 ? 'fill-yellow-500' : 'fill-yellow-400/50'}`} />
               ))}
-              <span className="font-medium ml-1 text-sm md:text-base">4.8★ Rated in Ohio</span>
+              <span className="font-medium ml-1 text-sm md:text-base">4.8★ Rated in Westerville</span>
             </div>
             
             <h1 className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-5xl lg:text-6xl'} font-bold leading-tight text-pharaohBlue font-playfair mb-4 tracking-tight`}>
@@ -71,12 +74,22 @@ const Hero = () => {
                 <span>Fully Insured</span>
               </div>
               <div className="flex items-center text-sm text-muted-foreground">
+                <CheckCircle className="h-4 w-4 text-primary mr-1.5" />
+                <span>Same-Day Quotes</span>
+              </div>
+              <div className="flex items-center text-sm text-muted-foreground">
                 <Clock className="h-4 w-4 text-primary mr-1.5" />
                 <span>On-Time Service</span>
               </div>
             </div>
             
             <HeroButtons />
+
+            {/* Add urgency trigger */}
+            <div className="mt-4 text-xs text-pharaohBlue/70 font-medium bg-nileTeal/5 py-1.5 px-3 rounded-full inline-block">
+              <span className="animate-pulse inline-block mr-1.5">●</span>
+              Only 2 trucks available for Westerville next week
+            </div>
           </div>
           
           <HeroFeatures />

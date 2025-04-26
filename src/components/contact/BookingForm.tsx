@@ -11,8 +11,7 @@ import SuccessMessage from './booking/SuccessMessage';
 import FormHeader from './booking/FormHeader';
 import PromoApplied from './booking/PromoApplied';
 import { useBookingForm } from '@/hooks/use-booking-form';
-import { Loader, BadgePercent } from 'lucide-react';
-// Updated import path for DepositButton
+import { Loader, BadgePercent, Shield, Clock } from 'lucide-react';
 import DepositButton from '@/components/payment/deposit/DepositButton';
 import DepositStatus from '@/components/payment/DepositStatus';
 
@@ -24,7 +23,7 @@ const BookingForm = () => {
     errors,
     isSubmitting,
     formSubmitted,
-    bookingId, // Now we're exposing bookingId from the hook
+    bookingId,
     handleChange,
     handleSelectChange,
     handleDateChange,
@@ -48,7 +47,7 @@ const BookingForm = () => {
       <div className="bg-white p-6 md:p-8 rounded-lg shadow-md border border-border space-y-6">
         <SuccessMessage onRequestAnother={resetForm} />
         
-        {/* Deposit Payment Section */}
+        {/* Enhanced Deposit Payment Section */}
         {showDepositPayment && bookingId && (
           <div className="mt-8 border-t pt-8">
             <div className="text-center mb-6">
@@ -56,6 +55,18 @@ const BookingForm = () => {
               <p className="text-muted-foreground mt-1">
                 Pay a $100 fully-refundable deposit to lock in your moving date and crew
               </p>
+              
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-4 mb-6 text-xs text-muted-foreground">
+                <div className="flex items-center">
+                  <Shield className="h-3 w-3 mr-1 text-primary" />
+                  <span>48hr Deposit Protection</span>
+                </div>
+                <div className="hidden sm:block">•</div>
+                <div className="flex items-center">
+                  <Clock className="h-3 w-3 mr-1 text-primary" />
+                  <span>Westerville Slots Filling Fast</span>
+                </div>
+              </div>
             </div>
             
             <DepositButton
@@ -142,6 +153,11 @@ const BookingForm = () => {
         
         <div className="pt-2">
           <SubmitButton isSubmitting={isSubmitting} />
+          
+          <div className="mt-4 flex items-center justify-center gap-2 text-xs text-muted-foreground">
+            <Shield className="h-3 w-3" />
+            <span>Licensed & Insured • Same-Day Response</span>
+          </div>
         </div>
       </form>
     </div>
