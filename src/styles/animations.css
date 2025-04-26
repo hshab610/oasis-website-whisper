@@ -57,6 +57,24 @@
   }
 }
 
+/* Nile Flow Animation */
+@keyframes nileFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-nileFlow {
+  background: linear-gradient(90deg, 
+    rgba(115, 166, 173, 0.1), 
+    rgba(115, 166, 173, 0.2), 
+    rgba(115, 166, 173, 0.3),
+    rgba(115, 166, 173, 0.2), 
+    rgba(115, 166, 173, 0.1));
+  background-size: 200% 100%;
+  animation: nileFlow 15s infinite ease-in-out;
+}
+
 .animate-fadeIn {
   animation: fadeIn 0.5s ease-out forwards;
 }

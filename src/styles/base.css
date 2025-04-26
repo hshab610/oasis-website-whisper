@@ -7,6 +7,7 @@
 
 @layer base {
   :root {
+    /* Original theme colors */
     --background: 42 38% 95%;
     --foreground: 35 25% 20%;
     --card: 38 30% 97%;
@@ -27,6 +28,15 @@
     --input: 35 20% 80%;
     --ring: 30 65% 56%;
     --radius: 0.5rem;
+
+    /* Nile theme overrides can be enabled by adding a .nile-theme class to the body */
+    .nile-theme {
+      --primary: 190 100% 28%; /* Nile Deep */
+      --secondary: 43 61% 53%; /* Desert Gold */
+      --background: 39 56% 88%; /* Papyrus Light */
+      --card: 39 30% 95%;
+      --accent: 39 35% 85%;
+    }
   }
 
   * {
@@ -42,4 +52,38 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Playfair Display', serif;
   }
+  
+  /* Nile theme divider */
+  .divider-nile {
+    position: relative;
+    height: 20px;
+    overflow: hidden;
+  }
+
+  .divider-nile::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 12px;
+    background: linear-gradient(90deg, transparent, rgba(115, 166, 173, 0.3), transparent);
+    animation: nileFlow 15s infinite ease-in-out;
+    background-size: 200% 100%;
+  }
 }
+
+@layer components {
+  /* Nile theme components */
+  .btn-nile {
+    @apply bg-nileDeep text-white hover:bg-nileDeep/90 transition-colors;
+  }
+  
+  .card-papyrus {
+    @apply bg-papyrusLight/80 backdrop-blur-sm border border-desertGold/20;
+  }
+  
+  .text-nile-gradient {
+    @apply bg-gradient-to-r from-nileDeep to-nileTeal bg-clip-text text-transparent;
+  }
+}
+
