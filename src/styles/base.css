@@ -47,11 +47,11 @@
   body {
     @apply bg-background text-foreground;
     font-family: 'Open Sans', sans-serif;
-    background: linear-gradient(to bottom, #f5e8c9 0%, #e4d5a8 100%);
     position: relative;
+    background: linear-gradient(to bottom, rgba(245, 232, 201, 0.9), rgba(228, 213, 168, 0.9));
   }
 
-  /* Simplified background placeholder until photo is uploaded */
+  /* High-quality pyramids background */
   body::after {
     content: "";
     position: fixed;
@@ -59,12 +59,17 @@
     right: 0;
     bottom: 0;
     left: 0;
+    background-image: url('/lovable-uploads/79b26d22-a9cd-4b08-ba49-f1af01c34d3a.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     opacity: 0.15;
     width: 100vw;
     height: 100vh;
     z-index: -9999;
     pointer-events: none;
-    filter: contrast(1.2) grayscale(30%) sepia(15%);
+    filter: contrast(1.1) grayscale(20%) sepia(10%);
   }
 
   #root {
