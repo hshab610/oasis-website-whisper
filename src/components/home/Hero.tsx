@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import { Star } from 'lucide-react';
 import HeroButtons from './hero/HeroButtons';
@@ -8,13 +9,13 @@ const Hero = () => {
   const isMobile = useIsMobile();
   
   return (
-    <div className="relative overflow-hidden bg-desert-sunset min-h-[90vh] flex items-center">
+    <div className="relative overflow-hidden min-h-[90vh] flex items-center" style={{ background: 'transparent' }}>
       <div className="absolute inset-0 z-0">
-        {/* Background elements */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-nileTeal/10 to-transparent animate-float"></div>
-        <div className="absolute inset-0 bg-ancient-pattern opacity-20"></div>
+        {/* Background elements - use lower opacity to let the main background show through */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-nileTeal/5 to-transparent"></div>
+        <div className="absolute inset-0 bg-ancient-pattern opacity-10"></div>
         
-        {/* Cairo skyline overlay */}
+        {/* Cairo skyline overlay with reduced opacity */}
         <div 
           className="absolute bottom-0 left-0 right-0 h-[30vh]" 
           style={{ 
@@ -22,14 +23,14 @@ const Hero = () => {
             backgroundPosition: "bottom center",
             backgroundRepeat: "repeat-x",
             backgroundSize: "100% 100%",
-            opacity: 0.4,
+            opacity: 0.2, // Reduced opacity
           }}
         />
         
-        {/* Nile flowing animation */}
-        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-r from-nileTeal/20 via-nileTeal/40 to-nileTeal/20 animate-wave opacity-30"></div>
-        <div className="absolute bottom-16 left-0 right-0 h-8 bg-gradient-to-r from-nileTeal/10 via-nileTeal/30 to-nileTeal/10 animate-wave opacity-20" style={{ animationDelay: '0.5s', animationDuration: '20s' }}></div>
-        <div className="absolute bottom-24 left-0 right-0 h-4 bg-gradient-to-r from-nileTeal/5 via-nileTeal/20 to-nileTeal/5 animate-wave opacity-15" style={{ animationDelay: '1s', animationDuration: '25s' }}></div>
+        {/* Nile flowing animation with reduced opacity */}
+        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-r from-nileTeal/15 via-nileTeal/25 to-nileTeal/15 animate-wave opacity-20"></div>
+        <div className="absolute bottom-16 left-0 right-0 h-8 bg-gradient-to-r from-nileTeal/5 via-nileTeal/15 to-nileTeal/5 animate-wave opacity-15" style={{ animationDelay: '0.5s', animationDuration: '20s' }}></div>
+        <div className="absolute bottom-24 left-0 right-0 h-4 bg-gradient-to-r from-nileTeal/3 via-nileTeal/10 to-nileTeal/3 animate-wave opacity-10" style={{ animationDelay: '1s', animationDuration: '25s' }}></div>
       </div>
       
       <div className="container mx-auto px-4 relative z-10 w-[90%] sm:w-full">
@@ -58,7 +59,7 @@ const Hero = () => {
       </div>
       
       <div className="absolute bottom-0 left-0 right-0">
-        <div className="h-24 bg-gradient-to-t from-nileTeal/20 to-transparent"></div>
+        <div className="h-24 bg-gradient-to-t from-nileTeal/10 to-transparent"></div>
       </div>
     </div>
   );

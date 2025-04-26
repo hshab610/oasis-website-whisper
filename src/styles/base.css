@@ -19,7 +19,7 @@
   /* Theme overrides */
   .bg-background {
     --tw-bg-opacity: 1;
-    background-color: rgb(var(--background) / var(--tw-bg-opacity));
+    background-color: transparent !important;
   }
 
   .bg-card {
@@ -44,6 +44,19 @@
     --tw-ring-color: rgb(var(--ring) / <alpha-value>);
   }
 
+  body {
+    @apply text-foreground;
+    font-family: 'Open Sans', sans-serif;
+    position: relative;
+    background: transparent !important;
+  }
+
+  /* Keep the background transparent to allow the body::before to be visible */
+  html, body, #root {
+    background: transparent !important;
+  }
+
+  /* Rest of the styles */
   body {
     @apply bg-background text-foreground;
     font-family: 'Open Sans', sans-serif;
@@ -135,7 +148,7 @@
   }
   
   .card-papyrus {
-    @apply bg-gradient-to-b from-[#f5e8c9] to-[#e4d5a8] backdrop-blur-sm 
+    @apply bg-gradient-to-b from-[#f5e8c9]/90 to-[#e4d5a8]/80 backdrop-blur-sm 
            border border-desertGold/20 shadow-sm hover:shadow-md 
            transition-all duration-300;
   }

@@ -4,7 +4,7 @@
 /* Force immediate application of background image */
 body::before {
   content: "";
-  background-image: url('/lovable-uploads/4873c787-00fa-4ef2-9caa-bc4e840b243e.png');
+  background-image: url('/lovable-uploads/d9454fb5-aa86-4aeb-88fe-1f48b1375dcc.png') !important;
   position: fixed;
   top: 0;
   left: 0;
@@ -14,7 +14,7 @@ body::before {
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  opacity: 0.45;
+  opacity: 0.55;  /* Increased opacity for better visibility */
   z-index: -1;
   pointer-events: none;
   filter: contrast(1.1) brightness(1.05);
