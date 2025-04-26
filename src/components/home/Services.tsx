@@ -5,6 +5,7 @@ import {
   Truck, ArrowRight, Home, MapPin, Package, 
   SlidersHorizontal, Tv, Trash2, Heart, PackageOpen, Badge, Sparkles
 } from 'lucide-react';
+import { PyramidDivider } from '@/components/ui/pyramid-divider';
 
 const Services = () => {
   const services = [
