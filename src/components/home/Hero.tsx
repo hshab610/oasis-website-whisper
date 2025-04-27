@@ -1,8 +1,9 @@
 
 import { Link } from 'react-router-dom';
-import { Star, CheckCircle, Shield, Clock, Phone } from 'lucide-react';
+import { Clock } from 'lucide-react';
 import HeroButtons from './hero/HeroButtons';
 import HeroFeatures from './hero/HeroFeatures';
+import HeroTrustBadges from './hero/HeroTrustBadges';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const Hero = () => {
@@ -35,25 +36,10 @@ const Hero = () => {
       <div className="container mx-auto px-4 relative z-10 w-[90%] sm:w-full">
         <div className="max-w-4xl mx-auto text-center">
           {/* Enhanced trust badges */}
-          <div className="mb-6 flex flex-col items-center">
-            <div className="bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full mb-3 shadow-sm inline-flex items-center border border-desertGold/10">
-              <Shield className="text-primary h-4 w-4 mr-1.5" />
-              <span className="text-xs font-medium">Oasis Moving LLC</span>
-              <span className="mx-2 text-gray-300">|</span>
-              <div className="flex items-center">
-                <Phone className="h-3 w-3 mr-1 text-primary" />
-                <a href="tel:6147400275" className="font-semibold text-xs hover:text-primary transition-colors">(614) 740-0275</a>
-              </div>
-            </div>
-          </div>
+          <HeroTrustBadges />
           
           <div className="content-card p-6 md:p-8 mb-6 inline-block w-full shadow-xl hover:shadow-2xl transition-all duration-500 animate-fadeIn">
-            <div className="flex items-center justify-center gap-1 mb-4">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className={`${i === 4 ? 'text-yellow-400' : 'text-yellow-500'} h-5 w-5 ${i < 4 ? 'fill-yellow-500' : 'fill-yellow-400/50'}`} />
-              ))}
-              <span className="font-medium ml-1.5 text-base md:text-lg">4.8★ Rated in Westerville</span>
-            </div>
+            <HeroTrustBadges showRating={true} />
             
             <h1 className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-5xl lg:text-6xl'} font-bold leading-tight text-pharaohBlue font-playfair mb-5 tracking-tight`}>
               Professional <span className="text-primary">Moving</span> Made Simple
@@ -62,25 +48,6 @@ const Hero = () => {
             <p className="text-base md:text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto mb-6 leading-relaxed">
               Get an instant quote or book your move in minutes
             </p>
-            
-            <div className="flex flex-wrap items-center justify-center gap-4 mb-5">
-              <div className="flex items-center text-sm text-muted-foreground bg-primary/5 px-3 py-1.5 rounded-full">
-                <CheckCircle className="h-4 w-4 text-primary mr-2" />
-                <span>Owner-Supervised</span>
-              </div>
-              <div className="flex items-center text-sm text-muted-foreground bg-primary/5 px-3 py-1.5 rounded-full">
-                <CheckCircle className="h-4 w-4 text-primary mr-2" />
-                <span>Fully Insured</span>
-              </div>
-              <div className="flex items-center text-sm text-muted-foreground bg-primary/5 px-3 py-1.5 rounded-full">
-                <CheckCircle className="h-4 w-4 text-primary mr-2" />
-                <span>Same-Day Quotes</span>
-              </div>
-              <div className="flex items-center text-sm text-muted-foreground bg-primary/5 px-3 py-1.5 rounded-full">
-                <Clock className="h-4 w-4 text-primary mr-2" />
-                <span>On-Time Service</span>
-              </div>
-            </div>
             
             <HeroButtons />
 

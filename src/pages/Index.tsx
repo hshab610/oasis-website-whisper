@@ -12,7 +12,7 @@ import MovingProcess from '@/components/home/MovingProcess';
 import PromoBanner from '@/components/promotion/PromoBanner';
 import PromoPopup from '@/components/promotion/PromoPopup';
 import ChatWidget from '@/components/chat/ChatWidget';
-import { TrustBadge } from '@/components/ui/trust-badge'; 
+import TrustBadgeGroup from '@/components/ui/trust-elements/TrustBadgeGroup';
 
 const Index = () => {
   return (
@@ -48,11 +48,8 @@ const Index = () => {
           </section>
           
           <div className="bg-white/90 py-3 shadow-sm border-y border-nileTeal/10">
-            <div className="container mx-auto flex flex-wrap justify-center gap-3">
-              <TrustBadge type="rating" value="4.8★ Westerville" variant="highlight" />
-              <TrustBadge type="insured" />
-              <TrustBadge type="ontime" />
-              <TrustBadge type="dot" value="OH123456" />
+            <div className="container mx-auto">
+              <TrustBadgeGroup variant="highlight" />
             </div>
           </div>
           

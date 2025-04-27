@@ -1,8 +1,9 @@
 
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Calculator, Clock, Shield, Star, Calendar, Phone } from 'lucide-react';
+import { ArrowRight, Calculator, Clock, Phone, Star } from 'lucide-react';
 import QuoteButton from '../contact/QuoteButton';
+import CTATrustElements from '../ui/trust-elements/CTATrustElements';
 
 const CTA = () => {
   return (
@@ -55,17 +56,7 @@ const CTA = () => {
             </div>
             
             {/* Enhanced trust elements */}
-            <div className="mt-6 flex flex-col items-center gap-3">
-              <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
-                <Shield className="h-3 w-3" />
-                <span>Licensed & Insured • DOT #123456789</span>
-              </div>
-              
-              <div className="flex items-center justify-center mt-2 text-sm px-4 py-2 bg-yellow-50 rounded-full border border-desertGold/20">
-                <Calendar className="h-4 w-4 text-desertGold mr-2" />
-                <span className="font-medium text-desertGold">Westerville Slots Available: Book Now!</span>
-              </div>
-            </div>
+            <CTATrustElements className="mt-6" />
           </div>
         </div>
       </div>

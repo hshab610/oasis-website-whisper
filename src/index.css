@@ -1,49 +1,8 @@
 
-
 @import './styles/base.css';
+@import './styles/egyptian-theme.css';
 
-/* Cairo skyline background with optimized visibility */
-body::before {
-  content: "";
-  background-image: url('/lovable-uploads/d9454fb5-aa86-4aeb-88fe-1f48b1375dcc.png') !important;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  opacity: 0.15;  /* Reduced opacity for better content visibility */
-  z-index: -1;
-  pointer-events: none;
-  filter: contrast(1.1) brightness(1.05);
-}
-
-/* Ensure all wrapper elements allow background to show through */
-html, body, #root, main, .content-visibility-auto {
-  background: transparent !important;
-}
-
-/* Add additional nile wave animation at the bottom */
-.nile-wave {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 15vh;
-  background: linear-gradient(to top, rgba(0, 119, 145, 0.15), transparent);
-  z-index: -1;
-  animation: nileWave 15s infinite ease-in-out;
-}
-
-@keyframes nileWave {
-  0%, 100% { opacity: 0.15; }
-  50% { opacity: 0.25; }
-}
-
-/* Add professional page transitions */
+/* Professional page transitions */
 .page-transition-enter {
   opacity: 0;
   transform: translateY(5px);
@@ -82,4 +41,3 @@ html, body, #root, main, .content-visibility-auto {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   border: 1px solid rgba(212, 169, 55, 0.2);
 }
-
