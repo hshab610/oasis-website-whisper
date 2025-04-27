@@ -12,12 +12,24 @@ import {
 } from 'lucide-react';
 
 const Services = () => {
-  // Map the service data to the format expected by ServiceCard component
   const mappedServices = [
+    {
+      icon: <Truck size={24} />,
+      title: 'Local Moving',
+      description: 'Professional moving services in Westerville and surrounding areas.',
+      price: '$120 per hour',
+      details: [
+        '2-hour minimum',
+        'Fully equipped moving truck',
+        'Professional movers',
+        'Basic furniture protection',
+        'Free disassembly/reassembly of standard furniture'
+      ]
+    },
     {
       icon: <PackageOpen size={24} />,
       title: 'All-in-One Moving Package',
-      description: 'Best value! Complete moving solution with optional add-ons',
+      description: 'Our most popular package with complete moving services.',
       price: '$249 + $100 per hour',
       details: [
         'Professional local moving service',
@@ -30,21 +42,9 @@ const Services = () => {
       ]
     },
     {
-      icon: <Truck size={24} />,
-      title: 'Local Moving',
-      description: 'Includes mileage and travel time within Ohio',
-      price: '$120 per hour',
-      details: [
-        '2-hour minimum',
-        'Fully equipped moving truck',
-        'Professional movers',
-        'Basic furniture protection'
-      ]
-    },
-    {
       icon: <SlidersHorizontal size={24} />,
       title: 'Furniture Assembly',
-      description: 'Assembly or disassembly services',
+      description: 'Expert assembly and disassembly services for all types of furniture.',
       price: '$90 / $120 flat rate',
       details: [
         '$90 for up to 5 items',
@@ -56,7 +56,7 @@ const Services = () => {
     {
       icon: <Tv size={24} />,
       title: 'TV Mounting',
-      description: 'Professional TV installation',
+      description: 'Professional TV installation and mounting services.',
       price: '$60 flat rate',
       details: [
         'Customer provides wall mount',
@@ -68,7 +68,7 @@ const Services = () => {
     {
       icon: <Trash2 size={24} />,
       title: 'Junk Removal',
-      description: 'Hauling services for unwanted items',
+      description: 'Efficient removal and disposal of unwanted items.',
       price: '$150 flat rate',
       details: [
         'Potential dumping fees may apply',
@@ -83,7 +83,7 @@ const Services = () => {
     <>
       <Helmet>
         <title>Services & Pricing | Oasis Moving & Storage</title>
-        <meta name="description" content="Explore our comprehensive moving services including local and long-distance moving, furniture assembly, TV mounting, and storage solutions." />
+        <meta name="description" content="Explore our professional moving services in Westerville, Ohio including local moving, furniture assembly, TV mounting, and junk removal." />
       </Helmet>
       
       <div className="flex flex-col min-h-screen">
@@ -95,10 +95,10 @@ const Services = () => {
           <section className="py-16 bg-transparent">
             <div className="container mx-auto px-4">
               <div className="max-w-3xl mx-auto text-center mb-16">
-                <h2 className="text-3xl font-bold mb-4">Comprehensive Moving Solutions</h2>
+                <h2 className="text-3xl font-bold mb-4">Our Professional Services</h2>
                 <div className="w-24 h-1 bg-primary mx-auto mb-6"></div>
                 <p className="text-muted-foreground">
-                  From local moves to specialized services, we offer everything you need for a successful relocation.
+                  Oasis Moving & Storage offers comprehensive moving solutions in Westerville and surrounding areas.
                 </p>
               </div>
               
@@ -110,8 +110,8 @@ const Services = () => {
                     description={service.description}
                     icon={service.icon}
                     features={service.details}
-                    actionText="Learn More"
-                    actionUrl="#"
+                    actionText="Get Quote"
+                    actionUrl="/contact"
                     className={index === 0 ? "border-2 border-primary/20 bg-primary/5" : ""}
                   />
                 ))}
@@ -119,9 +119,10 @@ const Services = () => {
             </div>
           </section>
           
-          <section className="py-16 bg-accent/50 backdrop-blur-sm">
+          <section className="py-16 bg-white/80 backdrop-blur-sm border-y border-nileTeal/10">
             <div className="container mx-auto px-4">
               <div className="max-w-3xl mx-auto">
+                <h2 className="text-2xl font-bold mb-6 text-center">Additional Information</h2>
                 <AdditionalFees />
               </div>
             </div>

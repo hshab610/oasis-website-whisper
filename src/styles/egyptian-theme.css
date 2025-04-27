@@ -12,7 +12,7 @@ body::before {
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  opacity: 0.15;  /* Reduced opacity for better content visibility */
+  opacity: 0.1;  /* Reduced opacity for better content visibility */
   z-index: -1;
   pointer-events: none;
   filter: contrast(1.1) brightness(1.05);
@@ -30,14 +30,14 @@ html, body, #root, main, .content-visibility-auto {
   left: 0;
   width: 100%;
   height: 15vh;
-  background: linear-gradient(to top, rgba(0, 119, 145, 0.15), transparent);
+  background: linear-gradient(to top, rgba(0, 119, 145, 0.1), transparent);
   z-index: -1;
   animation: nileWave 15s infinite ease-in-out;
 }
 
 @keyframes nileWave {
-  0%, 100% { opacity: 0.15; }
-  50% { opacity: 0.25; }
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.15; }
 }
 
 /* Cairo skyline overlay */
@@ -46,7 +46,7 @@ html, body, #root, main, .content-visibility-auto {
   background-position: bottom center;
   background-repeat: repeat-x;
   background-size: 100% auto;
-  opacity: 0.15;
+  opacity: 0.1;
 }
 
 /* Pyramid divider */
@@ -72,19 +72,43 @@ html, body, #root, main, .content-visibility-auto {
 
 /* Enhanced Egyptian theme components */
 .egyptcard {
-  @apply bg-gradient-to-b from-[#f5e8c9]/90 to-[#e4d5a8]/80 backdrop-blur-sm 
-         border border-desertGold/20 shadow-md hover:shadow-lg 
-         transition-all duration-300 rounded-md;
+  @apply bg-gradient-to-b from-[#f5e8c9]/95 to-[#e4d5a8]/95 backdrop-blur-sm 
+         border border-desertGold/10 shadow-md hover:shadow-lg 
+         transition-all duration-300 rounded-lg;
 }
 
 /* Hieroglyphics pattern background for specific sections */
 .hieroglyphic-pattern {
-  background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23007791' fill-opacity='0.05'%3E%3Cpath d='M0,0 L20,0 L20,20 L0,20 L0,0 Z M10,8 C10,10 10,12 10,12 C10,12 10,10 10,8 C10,6 10,4 10,4 C10,4 10,6 10,8 Z'/%3E%3Cpath d='M40,0 L60,0 L60,20 L40,20 L40,0 Z M50,4 C50,4 50,6 50,8 C50,10 50,12 50,12 C50,12 50,10 50,8 C50,6 50,4 50,4 Z M48,8 L52,8 L52,12 L48,12 L48,8 Z'/%3E%3Cpath d='M80,0 L100,0 L100,20 L80,20 L80,0 Z M90,10 L94,10 L94,12 L90,12 L90,10 Z M86,10 L88,10 L88,12 L86,12 L86,10 Z M86,4 L88,4 L88,8 L86,8 L86,4 Z M92,4 L94,4 L94,8 L92,8 L92,4 Z'/%3E%3Cpath d='M0,40 L20,40 L20,60 L0,60 L0,40 Z M10,46 L14,46 L14,48 L10,48 L10,46 Z M6,46 L8,46 L8,48 L6,48 L6,46 Z M6,52 L8,52 L8,54 L6,54 L6,52 Z M12,52 L14,52 L14,54 L12,54 L12,52 Z M8,50 L12,50 L12,52 L8,52 L8,50 Z'/%3E%3Cpath d='M40,40 L60,40 L60,60 L40,60 L40,40 Z M50,48 C50,48 50,52 46,52 C42,52 42,48 42,48 C42,44 46,44 46,44 C48,44 50,48 50,48 Z'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23007791' fill-opacity='0.03'%3E%3Cpath d='M0,0 L20,0 L20,20 L0,20 L0,0 Z M10,8 C10,10 10,12 10,12 C10,12 10,10 10,8 C10,6 10,4 10,4 C10,4 10,6 10,8 Z'/%3E%3Cpath d='M40,0 L60,0 L60,20 L40,20 L40,0 Z M50,4 C50,4 50,6 50,8 C50,10 50,12 50,12 C50,12 50,10 50,8 C50,6 50,4 50,4 Z M48,8 L52,8 L52,12 L48,12 L48,8 Z'/%3E%3Cpath d='M80,0 L100,0 L100,20 L80,20 L80,0 Z M90,10 L94,10 L94,12 L90,12 L90,10 Z M86,10 L88,10 L88,12 L86,12 L86,10 Z M86,4 L88,4 L88,8 L86,8 L86,4 Z M92,4 L94,4 L94,8 L92,8 L92,4 Z'/%3E%3Cpath d='M0,40 L20,40 L20,60 L0,60 L0,40 Z M10,46 L14,46 L14,48 L10,48 L10,46 Z M6,46 L8,46 L8,48 L6,48 L6,46 Z M6,52 L8,52 L8,54 L6,54 L6,52 Z M12,52 L14,52 L14,54 L12,54 L12,52 Z M8,50 L12,50 L12,52 L8,52 L8,50 Z'/%3E%3Cpath d='M40,40 L60,40 L60,60 L40,60 L40,40 Z M50,48 C50,48 50,52 46,52 C42,52 42,48 42,48 C42,44 46,44 46,44 C48,44 50,48 50,48 Z'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 /* Nile border */
 .nile-border {
-  border: 2px solid rgba(0, 119, 145, 0.3);
-  box-shadow: 0 0 15px rgba(0, 119, 145, 0.15);
+  border: 1px solid rgba(0, 119, 145, 0.2);
+  box-shadow: 0 0 15px rgba(0, 119, 145, 0.1);
   border-radius: 0.5rem;
+}
+
+/* Professional Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes wave {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.animate-wave {
+  animation: wave 15s infinite ease-in-out;
+}
+
+/* Improved Background Pattern */
+.bg-ancient-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23007791' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
 }

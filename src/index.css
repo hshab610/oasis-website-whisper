@@ -35,20 +35,20 @@
 
 /* Enhance readability */
 .content-card {
-  background-color: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(8px);
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
   border-radius: 0.5rem;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  border: 1px solid rgba(212, 169, 55, 0.2);
+  border: 1px solid rgba(0, 119, 145, 0.1);
 }
 
 /* Egyptian-themed content cards */
 .egyptian-card {
-  background-color: rgba(245, 232, 201, 0.85);
-  backdrop-filter: blur(8px);
-  border-radius: 0.5rem;
+  background-color: rgba(245, 232, 201, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 0.75rem;
   box-shadow: 0 4px 10px -2px rgba(0, 119, 145, 0.15);
-  border: 1px solid rgba(212, 169, 55, 0.25);
+  border: 1px solid rgba(212, 169, 55, 0.15);
 }
 
 /* Nile-themed buttons */
@@ -63,7 +63,7 @@
 
 /* Service card styling */
 .service-card {
-  @apply content-card p-6 rounded-md transition-all duration-300;
+  @apply content-card p-6 rounded-lg transition-all duration-300;
   border-left: 3px solid rgba(0, 119, 145, 0.3);
 }
 
@@ -75,5 +75,5 @@
 
 /* Ancient Egyptian symbols subtle background */
 .ancient-symbols {
-  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23D4A937' fill-opacity='0.05'%3E%3Cpath d='M0,0 L10,0 L10,10 L0,10 L0,0 Z M5,3 L5,7 L3,7 L3,3 L5,3 Z'/%3E%3Cpath d='M20,0 L30,0 L30,10 L20,10 L20,0 Z M25,3 C23,3 23,7 25,7 C27,7 27,3 25,3 Z'/%3E%3Cpath d='M40,0 L50,0 L50,10 L40,10 L40,0 Z M45,3 L45,7 L42,5 L45,3 Z'/%3E%3Cpath d='M0,20 L10,20 L10,30 L0,30 L0,20 Z M5,23 L3,25 L5,27 L7,25 L5,23 Z'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23D4A937' fill-opacity='0.03'%3E%3Cpath d='M0,0 L10,0 L10,10 L0,10 L0,0 Z M5,3 L5,7 L3,7 L3,3 L5,3 Z'/%3E%3Cpath d='M20,0 L30,0 L30,10 L20,10 L20,0 Z M25,3 C23,3 23,7 25,7 C27,7 27,3 25,3 Z'/%3E%3Cpath d='M40,0 L50,0 L50,10 L40,10 L40,0 Z M45,3 L45,7 L42,5 L45,3 Z'/%3E%3Cpath d='M0,20 L10,20 L10,30 L0,30 L0,20 Z M5,23 L3,25 L5,27 L7,25 L5,23 Z'/%3E%3C/g%3E%3C/svg%3E");
 }

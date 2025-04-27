@@ -13,13 +13,13 @@ const Footer = () => {
               Professional moving services you can trust. We make your relocation smooth and stress-free.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-foreground hover:text-primary transition-colors">
+              <a href="#" className="text-foreground hover:text-primary transition-colors" aria-label="Facebook">
                 <Facebook size={20} />
               </a>
-              <a href="#" className="text-foreground hover:text-primary transition-colors">
+              <a href="#" className="text-foreground hover:text-primary transition-colors" aria-label="Instagram">
                 <Instagram size={20} />
               </a>
-              <a href="#" className="text-foreground hover:text-primary transition-colors">
+              <a href="#" className="text-foreground hover:text-primary transition-colors" aria-label="Twitter">
                 <Twitter size={20} />
               </a>
             </div>
@@ -88,53 +88,63 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="text-xl font-semibold mb-4">Contact Info</h3>
-            <ul className="space-y-4">
+            <h3 className="text-xl font-semibold mb-4">Contact Information</h3>
+            <ul className="space-y-3">
               <li className="flex items-start space-x-3">
                 <MapPin size={20} className="text-primary mt-1 flex-shrink-0" />
-                <span className="text-muted-foreground">Westerville, Ohio</span>
+                <div>
+                  <strong className="block text-sm font-medium">Our Location</strong>
+                  <span className="text-muted-foreground">Westerville, Ohio</span>
+                </div>
               </li>
-              <li className="flex items-center space-x-3">
-                <Phone size={20} className="text-primary flex-shrink-0" />
-                <a href="tel:+16147400275" className="text-muted-foreground hover:text-primary transition-colors">
-                  614-740-0275
-                </a>
+              <li className="flex items-start space-x-3">
+                <Phone size={20} className="text-primary mt-1 flex-shrink-0" />
+                <div>
+                  <strong className="block text-sm font-medium">Phone</strong>
+                  <a href="tel:+16147400275" className="text-muted-foreground hover:text-primary transition-colors">
+                    (614) 740-0275
+                  </a>
+                </div>
               </li>
-              <li className="flex items-center space-x-3">
-                <Mail size={20} className="text-primary flex-shrink-0" />
-                <a href="mailto:zay@oasismovingandstorage.com" className="text-muted-foreground hover:text-primary transition-colors">
-                  zay@oasismovingandstorage.com
-                </a>
-              </li>
-              <li className="flex items-center space-x-3">
-                <MapPin size={20} className="text-primary flex-shrink-0" />
-                <a href="https://oasismovingandstorage.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
-                  oasismovingandstorage.com
-                </a>
+              <li className="flex items-start space-x-3">
+                <Mail size={20} className="text-primary mt-1 flex-shrink-0" />
+                <div>
+                  <strong className="block text-sm font-medium">Email</strong>
+                  <a href="mailto:zay@oasismovingandstorage.com" className="text-muted-foreground hover:text-primary transition-colors text-sm">
+                    zay@oasismovingandstorage.com
+                  </a>
+                </div>
               </li>
               <li className="flex items-start space-x-3">
                 <Clock size={20} className="text-primary mt-1 flex-shrink-0" />
-                <span className="text-muted-foreground">Mon - Sat: 8AM - 7PM<br />Sunday: 9AM - 5PM</span>
+                <div>
+                  <strong className="block text-sm font-medium">Hours</strong>
+                  <span className="text-muted-foreground text-sm">Mon - Sat: 8AM - 7PM<br />Sunday: 9AM - 5PM</span>
+                </div>
               </li>
             </ul>
           </div>
         </div>
 
         <div className="border-t border-border mt-8 pt-8 text-center text-muted-foreground">
-          <p className="mb-2">
-            © {new Date().getFullYear()} Oasis Moving & Storage LLC •{' '}
-            <a href="tel:6147400275" className="hover:text-primary transition-colors">
-              (614) 740-0275
-            </a> •{' '}
-            <a 
-              href="mailto:zay@oasismovingandstorage.com" 
-              className="hover:text-primary transition-colors"
-            >
-              Email Us
-            </a>
-          </p>
-          <p className="text-sm text-muted-foreground/80">
-            *Moving services provided by insured partners
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
+            <div className="flex items-center">
+              <Shield className="h-4 w-4 mr-2 text-primary" />
+              <span>Licensed & Insured</span>
+            </div>
+            <div className="flex items-center">
+              <Clock className="h-4 w-4 mr-2 text-primary" />
+              <span>On-Time Service</span>
+            </div>
+            <div className="flex items-center">
+              <Phone className="h-4 w-4 mr-2 text-primary" />
+              <a href="tel:6147400275" className="hover:text-primary transition-colors">
+                (614) 740-0275
+              </a>
+            </div>
+          </div>
+          <p>
+            © {new Date().getFullYear()} Oasis Moving & Storage LLC • All Rights Reserved
           </p>
         </div>
       </div>

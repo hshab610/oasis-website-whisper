@@ -18,22 +18,22 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>Oasis Moving & Storage | Owner-Supervised Moving Services in Westerville, Ohio</title>
+        <title>Oasis Moving & Storage | Professional Moving Services in Westerville, Ohio</title>
         <meta 
           name="description" 
-          content="Work directly with Zay, who personally oversees your move from start to finish. We combine hands-on management with certified hauling partners for a premium moving experience in Westerville, Ohio." 
+          content="Professional local moving services in Westerville, Ohio. Fully licensed and insured movers offering owner-supervised relocations, furniture assembly, and storage solutions." 
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
         <meta name="theme-color" content="#DFC9A5" />
         
         {/* Open Graph tags */}
-        <meta property="og:title" content="Oasis Moving & Storage | Premium Westerville Moving Services" />
-        <meta property="og:description" content="Get owner-supervised moving services with same-day quotes and fully insured professionals." />
+        <meta property="og:title" content="Oasis Moving & Storage | Professional Westerville Moving Services" />
+        <meta property="og:description" content="Fully licensed and insured moving services with same-day quotes and professional movers." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://oasismovingandstorage.com" />
         
         {/* Additional SEO tags */}
-        <meta name="keywords" content="moving services, Westerville moving, owner-supervised moving, local movers, storage solutions, Ohio movers" />
+        <meta name="keywords" content="moving services, Westerville moving, local movers, furniture assembly, storage solutions, Ohio movers" />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href="https://oasismovingandstorage.com" />
       </Helmet>
@@ -49,7 +49,7 @@ const Index = () => {
           
           <div className="bg-white/90 py-3 shadow-sm border-y border-nileTeal/10">
             <div className="container mx-auto">
-              <TrustBadgeGroup variant="highlight" />
+              <TrustBadgeGroup variant="highlight" showDot={true} showRating={true} showInsured={true} showOntime={true} />
             </div>
           </div>
           

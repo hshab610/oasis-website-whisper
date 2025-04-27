@@ -35,26 +35,23 @@ const Hero = () => {
       
       <div className="container mx-auto px-4 relative z-10 w-[90%] sm:w-full">
         <div className="max-w-4xl mx-auto text-center">
-          {/* Enhanced trust badges */}
-          <HeroTrustBadges />
-          
           <div className="egyptian-card p-6 md:p-8 mb-6 inline-block w-full shadow-xl hover:shadow-2xl transition-all duration-500 animate-fadeIn">
-            <HeroTrustBadges showRating={true} />
+            <HeroTrustBadges />
             
             <h1 className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-5xl lg:text-6xl'} font-bold leading-tight text-pharaohBlue font-playfair mb-5 tracking-tight`}>
-              Professional <span className="text-primary">Moving</span> Made Simple
+              Professional <span className="text-primary">Moving</span> in Westerville
             </h1>
             
             <p className="text-base md:text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto mb-6 leading-relaxed">
-              Get an instant quote or book your move in minutes
+              Reliable, owner-supervised moving services
             </p>
             
             <HeroButtons />
 
-            {/* Add urgency trigger */}
-            <div className="mt-4 text-sm text-white font-medium bg-pharaohBlue/90 py-2 px-4 rounded-full inline-block shadow-md">
-              <span className="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse mr-2"></span>
-              Only 2 trucks available for Westerville next week
+            {/* Add urgency trigger but make it more subtle and professional */}
+            <div className="mt-4 text-sm text-pharaohBlue font-medium bg-white/80 py-2 px-4 rounded-full inline-block shadow-sm border border-pharaohBlue/10">
+              <Clock className="inline-block h-3.5 w-3.5 text-primary mr-2" />
+              Limited slots available in Westerville next week
             </div>
           </div>
           

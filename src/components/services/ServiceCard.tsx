@@ -23,9 +23,9 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   className,
 }) => {
   return (
-    <div className={`content-card p-6 rounded-md shadow-md hover:shadow-lg transition-shadow duration-300 ${className}`}>
+    <div className={`content-card p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 ${className}`}>
       <div className="flex items-center mb-4">
-        <div className="mr-4 text-4xl text-primary">{icon}</div>
+        <div className="mr-4 text-3xl text-primary bg-primary/5 p-2 rounded-lg">{icon}</div>
         <h3 className="text-xl font-semibold text-pharaohBlue">{title}</h3>
       </div>
       <p className="text-muted-foreground mb-4">{description}</p>
@@ -37,7 +37,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
         </ul>
       )}
       <Button asChild className="mt-2 hover:translate-x-1 transition-transform">
-        <a href={actionUrl} className="inline-flex items-center gap-1.5 hover:underline">
+        <a href={actionUrl} className="inline-flex items-center gap-1.5">
           {actionText}
           <ArrowRight className="h-4 w-4" />
         </a>

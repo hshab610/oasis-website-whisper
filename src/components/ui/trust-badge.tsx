@@ -47,22 +47,22 @@ const TrustBadge = React.forwardRef<HTMLDivElement, TrustBadgeProps>(
     };
     
     const variantClassName = {
-      default: "bg-white/95 shadow-sm",
+      default: "bg-white/95 shadow-sm border border-gray-100",
       outline: "border border-primary/20 bg-transparent",
       muted: "bg-muted/20",
-      highlight: "bg-primary/10 border border-primary/20",
+      highlight: "bg-primary/5 border border-primary/10",
     };
     
     const iconClassName = {
-      sm: "h-3 w-3 mr-1.5", 
-      md: "h-4 w-4 mr-2", 
-      lg: "h-5 w-5 mr-2.5",
+      sm: "h-3 w-3 mr-1", 
+      md: "h-4 w-4 mr-1.5", 
+      lg: "h-5 w-5 mr-2",
     }[size];
     
     return (
       <div
         className={cn(
-          "flex items-center justify-center rounded-full",
+          "flex items-center justify-center rounded-md",
           sizeClassName[size],
           variantClassName[variant],
           className
