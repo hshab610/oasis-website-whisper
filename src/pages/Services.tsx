@@ -15,7 +15,7 @@ const Services = () => {
   // Map the service data to the format expected by ServiceCard component
   const mappedServices = [
     {
-      icon: PackageOpen,
+      icon: <PackageOpen size={24} />,
       title: 'All-in-One Moving Package',
       description: 'Best value! Complete moving solution with optional add-ons',
       price: '$249 + $100 per hour',
@@ -30,7 +30,7 @@ const Services = () => {
       ]
     },
     {
-      icon: Truck,
+      icon: <Truck size={24} />,
       title: 'Local Moving',
       description: 'Includes mileage and travel time within Ohio',
       price: '$120 per hour',
@@ -42,7 +42,7 @@ const Services = () => {
       ]
     },
     {
-      icon: SlidersHorizontal,
+      icon: <SlidersHorizontal size={24} />,
       title: 'Furniture Assembly',
       description: 'Assembly or disassembly services',
       price: '$90 / $120 flat rate',
@@ -54,7 +54,7 @@ const Services = () => {
       ]
     },
     {
-      icon: Tv,
+      icon: <Tv size={24} />,
       title: 'TV Mounting',
       description: 'Professional TV installation',
       price: '$60 flat rate',
@@ -66,7 +66,7 @@ const Services = () => {
       ]
     },
     {
-      icon: Trash2,
+      icon: <Trash2 size={24} />,
       title: 'Junk Removal',
       description: 'Hauling services for unwanted items',
       price: '$150 flat rate',
@@ -92,7 +92,7 @@ const Services = () => {
         <main className="flex-grow">
           <ServicesHero />
           
-          <section className="py-16 bg-background">
+          <section className="py-16 bg-transparent">
             <div className="container mx-auto px-4">
               <div className="max-w-3xl mx-auto text-center mb-16">
                 <h2 className="text-3xl font-bold mb-4">Comprehensive Moving Solutions</h2>
@@ -104,13 +104,22 @@ const Services = () => {
               
               <div className="space-y-12">
                 {mappedServices.map((service, index) => (
-                  <ServiceCard key={index} {...service} />
+                  <ServiceCard 
+                    key={index} 
+                    title={service.title}
+                    description={service.description}
+                    icon={service.icon}
+                    features={service.details}
+                    actionText="Learn More"
+                    actionUrl="#"
+                    className={index === 0 ? "border-2 border-primary/20 bg-primary/5" : ""}
+                  />
                 ))}
               </div>
             </div>
           </section>
           
-          <section className="py-16 bg-accent">
+          <section className="py-16 bg-accent/50 backdrop-blur-sm">
             <div className="container mx-auto px-4">
               <div className="max-w-3xl mx-auto">
                 <AdditionalFees />

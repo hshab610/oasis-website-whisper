@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
@@ -29,13 +30,13 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
       </div>
       <p className="text-muted-foreground mb-4">{description}</p>
       {features && features.length > 0 && (
-        <ul className="list-disc pl-5 mb-4">
+        <ul className="list-disc pl-5 mb-4 space-y-1.5">
           {features.map((feature, index) => (
             <li key={index} className="text-sm text-muted-foreground">{feature}</li>
           ))}
         </ul>
       )}
-      <Button asChild>
+      <Button asChild className="mt-2 hover:translate-x-1 transition-transform">
         <a href={actionUrl} className="inline-flex items-center gap-1.5 hover:underline">
           {actionText}
           <ArrowRight className="h-4 w-4" />

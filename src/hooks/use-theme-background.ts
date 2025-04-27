@@ -9,8 +9,6 @@ export const useThemeBackground = () => {
     
     // Ensure background image is properly loaded
     const ensureBackgroundVisibility = () => {
-      console.log('Ensuring background visibility...');
-      
       // Apply a direct style to force the background image if needed
       const style = document.createElement('style');
       style.textContent = `
@@ -26,7 +24,7 @@ export const useThemeBackground = () => {
           background-position: center !important;
           background-repeat: no-repeat !important;
           background-attachment: fixed !important;
-          opacity: 0.7 !important;  /* Enhanced opacity for visibility */
+          opacity: 0.15 !important;
           z-index: -1 !important;
           pointer-events: none !important;
           filter: contrast(1.1) brightness(1.05) !important;
@@ -56,6 +54,19 @@ export const useThemeBackground = () => {
           0%, 100% { opacity: 0.15; }
           50% { opacity: 0.25; }
         }
+        
+        /* Fix mobile layout issues */
+        @media (max-width: 640px) {
+          body {
+            overflow-x: hidden;
+          }
+          
+          .container {
+            width: 90% !important;
+            padding-left: 16px !important;
+            padding-right: 16px !important;
+          }
+        }
       `;
       document.head.appendChild(style);
       
@@ -68,13 +79,14 @@ export const useThemeBackground = () => {
       
       // Remove any potential background color blockers
       document.querySelectorAll('main, div, section').forEach(el => {
-        const element = el as HTMLElement; // Cast to HTMLElement which has style property
+        const element = el as HTMLElement;
         
         // Skip elements that need background (like cards, etc)
         if (element.classList.contains('card') || 
             element.classList.contains('nile-card') || 
             element.classList.contains('content-overlay') ||
-            element.classList.contains('bg-white')) {
+            element.classList.contains('bg-white') ||
+            element.classList.contains('content-card')) {
           return;
         }
         

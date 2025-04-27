@@ -14,7 +14,7 @@ const Hero = () => {
       <div className="absolute inset-0 z-0">
         {/* Background gradient overlay to improve image visibility */}
         <div className="absolute inset-0 bg-gradient-to-b from-pharaohBlue/10 via-transparent to-nileTeal/10"></div>
-        <div className="absolute inset-0 bg-ancient-pattern opacity-5"></div>
+        <div className="absolute inset-0 ancient-symbols opacity-5"></div>
         
         {/* Cairo skyline overlay with enhanced visibility */}
         <div 
@@ -38,7 +38,7 @@ const Hero = () => {
           {/* Enhanced trust badges */}
           <HeroTrustBadges />
           
-          <div className="content-card p-6 md:p-8 mb-6 inline-block w-full shadow-xl hover:shadow-2xl transition-all duration-500 animate-fadeIn">
+          <div className="egyptian-card p-6 md:p-8 mb-6 inline-block w-full shadow-xl hover:shadow-2xl transition-all duration-500 animate-fadeIn">
             <HeroTrustBadges showRating={true} />
             
             <h1 className={`${isMobile ? 'text-3xl' : 'text-4xl md:text-5xl lg:text-6xl'} font-bold leading-tight text-pharaohBlue font-playfair mb-5 tracking-tight`}>
