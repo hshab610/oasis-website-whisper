@@ -12,7 +12,7 @@ interface CTATrustElementsProps {
 const CTATrustElements: React.FC<CTATrustElementsProps> = ({
   showDot = true,
   showScheduling = true,
-  dotNumber = "123456789",
+  dotNumber = "3498216",
   className = "",
 }) => {
   return (

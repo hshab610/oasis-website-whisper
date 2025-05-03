@@ -13,13 +13,13 @@ const Footer = () => {
               Professional moving services you can trust. We make your relocation smooth and stress-free.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-foreground hover:text-primary transition-colors" aria-label="Facebook">
+              <a href="https://facebook.com" aria-label="Facebook" className="text-foreground hover:text-primary transition-colors" target="_blank" rel="noopener">
                 <Facebook size={20} />
               </a>
-              <a href="#" className="text-foreground hover:text-primary transition-colors" aria-label="Instagram">
+              <a href="https://instagram.com" aria-label="Instagram" className="text-foreground hover:text-primary transition-colors" target="_blank" rel="noopener">
                 <Instagram size={20} />
               </a>
-              <a href="#" className="text-foreground hover:text-primary transition-colors" aria-label="Twitter">
+              <a href="https://twitter.com" aria-label="Twitter" className="text-foreground hover:text-primary transition-colors" target="_blank" rel="noopener">
                 <Twitter size={20} />
               </a>
             </div>
@@ -84,6 +84,11 @@ const Footer = () => {
                   Contact Us
                 </Link>
               </li>
+              <li>
+                <Link to="#" className="text-muted-foreground hover:text-primary transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -94,7 +99,10 @@ const Footer = () => {
                 <MapPin size={20} className="text-primary mt-1 flex-shrink-0" />
                 <div>
                   <strong className="block text-sm font-medium">Our Location</strong>
-                  <span className="text-muted-foreground">Westerville, Ohio</span>
+                  <address className="text-muted-foreground not-italic">
+                    315 S State St<br />
+                    Westerville, OH 43081
+                  </address>
                 </div>
               </li>
               <li className="flex items-start space-x-3">
@@ -130,12 +138,14 @@ const Footer = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
             <div className="flex items-center">
               <Shield className="h-4 w-4 mr-2 text-primary" />
-              <span>Licensed & Insured</span>
+              <span>Licensed & Insured • DOT #3498216</span>
             </div>
+            <div className="hidden sm:block">•</div>
             <div className="flex items-center">
               <Clock className="h-4 w-4 mr-2 text-primary" />
               <span>On-Time Service</span>
             </div>
+            <div className="hidden sm:block">•</div>
             <div className="flex items-center">
               <Phone className="h-4 w-4 mr-2 text-primary" />
               <a href="tel:6147400275" className="hover:text-primary transition-colors">
