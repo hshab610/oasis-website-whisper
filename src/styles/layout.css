@@ -28,11 +28,11 @@
   }
   
   .mobile-nav {
-    padding: 0.5rem 0;
+    padding: 0.75rem 0;
   }
   
   .mobile-heading {
-    font-size: 2rem;
+    font-size: 1.75rem;
     line-height: 1.2;
   }
   
@@ -40,23 +40,62 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    gap: 0.5rem;
   }
   
-  .mobile-buttons .button {
+  .mobile-button {
     width: 100%;
-    margin-bottom: 0.5rem;
+    min-height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .content-card {
+    padding: 1rem !important;
+  }
+
+  .section-title {
+    font-size: 1.75rem !important;
   }
 }
 
 /* Landscape orientation for mobile devices */
 @media (orientation: landscape) and (max-height: 500px) {
   .landscape-adjust {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+    min-height: auto !important;
   }
   
   .landscape-nav {
     max-height: 60px;
+  }
+
+  .hero-section {
+    min-height: auto !important;
+    padding: 2rem 0 !important;
+  }
+
+  .mobile-menu {
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  .content-card {
+    padding: 1rem !important;
+  }
+
+  h1 {
+    font-size: 1.5rem !important;
+  }
+
+  .landscape-hide {
+    display: none !important;
   }
 }
 
@@ -77,5 +116,58 @@
 @media (max-width: 768px) {
   .form-container {
     padding: 1.5rem;
+  }
+
+  /* Improve touch targets in forms */
+  .form-field label {
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    font-size: 16px;
+    min-height: 48px;
+    width: 100%;
+  }
+
+  /* Improve spacing between form fields */
+  .form-group + .form-group {
+    margin-top: 1rem;
+  }
+}
+
+/* iOS-specific fixes */
+@supports (-webkit-touch-callout: none) {
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Fix iOS button vertical alignment */
+  button, .button {
+    padding-top: 0.125rem;
+  }
+
+  /* Prevent zoom on input focus */
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+
+  /* Fix iOS scroll bounce issues */
+  html {
+    position: fixed;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  body {
+    overflow: auto;
+    height: 100%;
+    -webkit-overflow-scrolling: touch;
   }
 }

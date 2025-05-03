@@ -13,12 +13,12 @@ export const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className="md:hidden mt-3 pb-3 animate-fadeIn w-[90%] mx-auto">
-      <div className="flex flex-col space-y-5">
+    <div className="md:hidden mt-3 pb-4 animate-fadeIn w-full bg-desertSand/95 backdrop-blur-sm shadow-lg border-b border-primary/10">
+      <div className="flex flex-col space-y-5 w-[90%] mx-auto py-2">
         <NavLinks mobile={true} closeMenu={onClose} />
-        <div className="space-y-3 pt-2">
+        <div className="space-y-3 pt-3 pb-1">
           <Link to="/contact" onClick={onClose} className="block w-full">
-            <Button className="cta-button w-full min-h-[48px] py-3 transform active:scale-[0.98] transition-transform">
+            <Button className="cta-button w-full min-h-[52px] py-3 transform active:scale-[0.98] transition-transform">
               Get a Quote
             </Button>
           </Link>
@@ -26,7 +26,7 @@ export const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
             <Button 
               variant="outline" 
               size="sm" 
-              className="flex items-center justify-center gap-2 w-full min-h-[48px] py-3 transform active:scale-[0.98] transition-transform"
+              className="flex items-center justify-center gap-2 w-full min-h-[52px] py-3 transform active:scale-[0.98] transition-transform"
             >
               <Phone size={16} />
               <span className="text-base">614-740-0275</span>

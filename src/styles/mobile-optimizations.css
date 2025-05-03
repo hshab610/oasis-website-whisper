@@ -16,8 +16,8 @@
   
   /* Vertical spacing for sections - 64px (8px × 8) */
   section {
-    padding-top: 64px;
-    padding-bottom: 64px;
+    padding-top: 48px;
+    padding-bottom: 48px;
   }
   
   /* Prevent margin collapse */
@@ -42,7 +42,15 @@
   select,
   label[for] {
     min-height: 48px;
-    min-width: 48px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Fix button alignment */
+  button > *, a > * {
+    pointer-events: none;
   }
   
   /* Proper input sizing on mobile */
@@ -62,6 +70,32 @@
   .tap-highlight {
     transform: scale(0.98);
   }
+
+  /* Fix nav items spacing */
+  .mobile-nav-item {
+    padding: 12px 0;
+  }
+
+  /* Improve mobile menu padding */
+  .mobile-menu {
+    padding: 8px 0;
+  }
+  
+  /* Reduce text sizes on mobile */
+  h1 {
+    font-size: 1.75rem !important;
+    line-height: 1.2 !important;
+  }
+  
+  h2 {
+    font-size: 1.5rem !important;
+    line-height: 1.3 !important;
+  }
+  
+  /* Fix form layouts for mobile */
+  .form-grid {
+    grid-template-columns: 1fr !important;
+  }
 }
 
 /* Better focus states for accessibility */
@@ -73,6 +107,7 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus, [tabindex]:foc
 /* Typography optimizations */
 body {
   line-height: 1.6;
+  font-size: 16px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -111,3 +146,30 @@ html, body {
 .z-modal { z-index: 8000; }
 .z-dropdown { z-index: 7000; }
 .z-nav { z-index: 6000; }
+
+/* Safari-specific fixes */
+@supports (-webkit-touch-callout: none) {
+  /* iOS-specific styles */
+  .ios-btn-fix {
+    padding-top: 0.25rem;
+  }
+}
+
+/* Fix viewports on mobile */
+@media (max-width: 768px) {
+  .hero-content {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  
+  /* Fix contact details */
+  .contact-details {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  /* Fix cards */
+  .service-card {
+    margin-bottom: 1rem;
+  }
+}

@@ -26,8 +26,7 @@ export const NavLinks = ({ mobile = false, closeMenu }: NavLinksProps) => {
       className={`
         ${mobile 
           ? 'flex flex-col space-y-0 w-full' 
-          : 'hidden md:flex md:space-x-5 lg:space-x-6'
-        }
+          : 'hidden md:flex md:space-x-5 lg:space-x-6'}
       `}
     >
       {links.map(link => (
@@ -37,9 +36,8 @@ export const NavLinks = ({ mobile = false, closeMenu }: NavLinksProps) => {
           className={`
             font-medium text-base text-foreground hover:text-sunsetOrange transition-colors duration-300 
             ${mobile 
-              ? 'py-3 border-b border-primary/10 min-h-[48px] flex items-center' 
-              : 'relative group py-2'
-            }
+              ? 'py-4 border-b border-primary/10 min-h-[52px] flex items-center justify-center' 
+              : 'relative group py-2'}
           `}
           onClick={handleClick}
         >

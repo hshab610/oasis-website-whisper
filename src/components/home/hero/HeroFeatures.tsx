@@ -6,11 +6,11 @@ const HeroFeatures = () => {
   const isMobile = useIsMobile();
   
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-6 max-w-3xl mx-auto w-[90%] sm:w-full">
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-3xl mx-auto w-[95%]">
       {features.map((feature, index) => (
         <div 
           key={index} 
-          className="flex flex-col items-center gap-2 bg-white/80 p-3 rounded-lg shadow-sm min-h-[48px] hover:shadow-md transition-shadow"
+          className="flex flex-col items-center gap-2 bg-white/80 p-3 rounded-lg shadow-sm min-h-[60px] hover:shadow-md transition-shadow flex-1"
         >
           <div className="bg-primary/10 p-2 rounded-full flex items-center justify-center">
             <feature.icon size={isMobile ? 16 : 20} className="text-primary" aria-hidden="true" />
