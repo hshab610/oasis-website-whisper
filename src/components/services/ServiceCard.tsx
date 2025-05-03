@@ -8,6 +8,7 @@ interface ServiceCardProps {
   description: string;
   icon: React.ReactNode;
   features?: string[];
+  footnote?: string;
   actionText?: string;
   actionUrl?: string;
   className?: string;
@@ -18,6 +19,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   description,
   icon,
   features,
+  footnote,
   actionText = "Learn More",
   actionUrl = "#",
   className,
@@ -35,6 +37,11 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
             <li key={index} className="text-xs sm:text-sm text-muted-foreground">{feature}</li>
           ))}
         </ul>
+      )}
+      {footnote && (
+        <div className="mb-4 mt-2 text-xs sm:text-sm text-muted-foreground bg-primary/5 p-3 rounded-md">
+          {footnote}
+        </div>
       )}
       <Button asChild className="mt-2 hover:translate-x-1 transition-transform min-h-[48px]">
         <a href={actionUrl} className="inline-flex items-center gap-1.5">

@@ -29,6 +29,13 @@ const Services = () => {
       link: '/services'
     },
     {
+      icon: <Home size={24} />,
+      title: 'Full-Service Moving',
+      description: 'Our premium full-service moves include start-to-finish handling: packing, loading, transportation, and unloading.',
+      link: '/services',
+      note: 'For clients who need trucking services, we utilize trusted local providers operating under their own authority to ensure your move is fully insured and compliant with Ohio regulations.'
+    },
+    {
       icon: <MapPin size={24} />,
       title: 'Long Distance Moving',
       description: 'Reliable moving services for longer distances with custom quotes tailored to your needs.',
@@ -64,12 +71,6 @@ const Services = () => {
       description: 'Secure storage options for your belongings. Contact us for pricing and availability.',
       link: '/services'
     },
-    {
-      icon: <Home size={24} />,
-      title: 'Full Service Solutions',
-      description: 'Comprehensive moving services tailored to your specific needs. Get in touch for a custom quote.',
-      link: '/services'
-    }
   ];
 
   return (
@@ -95,6 +96,9 @@ const Services = () => {
             We offer a wide range of moving and storage services to meet all your needs.
             From local moves to long-distance relocations, we've got you covered.
           </p>
+          <p className="text-sm text-muted-foreground mt-2">
+            Serving Central Ohio from our Westerville (43081) base
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -119,6 +123,11 @@ const Services = () => {
                 {service.title}
               </h3>
               <p className="text-muted-foreground mb-4">{service.description}</p>
+              {service.note && (
+                <div className="bg-primary/5 p-3 rounded-md mb-4">
+                  <p className="text-sm text-muted-foreground">{service.note}</p>
+                </div>
+              )}
               {service.featured && service.pricing && (
                 <div className="bg-primary/10 p-4 rounded-lg mb-4">
                   <h4 className="font-semibold mb-2">Package Options:</h4>

@@ -8,7 +8,7 @@ import ServiceCard from '@/components/services/ServiceCard';
 import { AdditionalFees } from '@/components/pricing/AdditionalFees';
 import { services } from '@/data/pricing';
 import { 
-  PackageOpen, Truck, SlidersHorizontal, Tv, Trash2
+  PackageOpen, Truck, SlidersHorizontal, Tv, Trash2, Home
 } from 'lucide-react';
 
 const Services = () => {
@@ -25,6 +25,21 @@ const Services = () => {
         'Basic furniture protection',
         'Free disassembly/reassembly of standard furniture'
       ]
+    },
+    {
+      icon: <Home size={24} />,
+      title: 'STRESS-FREE FULL SERVICE MOVES',
+      description: 'Our premium full-service moves include start-to-finish handling: packing, loading, transportation, and unloading.',
+      price: 'Custom Quote',
+      details: [
+        'Complete packing services',
+        'Loading and unloading',
+        'Transportation to destination',
+        'Basic unpacking at destination',
+        'One point of contact from start to finish',
+        'Serving Central Ohio from our Westerville (43081) base'
+      ],
+      footnote: 'For clients who need trucking services, we utilize trusted local providers operating under their own authority to ensure your move is fully insured and compliant with Ohio regulations.'
     },
     {
       icon: <PackageOpen size={24} />,
@@ -110,6 +125,7 @@ const Services = () => {
                     description={service.description}
                     icon={service.icon}
                     features={service.details}
+                    footnote={service.footnote}
                     actionText="Get Quote"
                     actionUrl="/contact"
                     className={index === 0 ? "border-2 border-primary/20 bg-primary/5" : ""}
@@ -124,6 +140,10 @@ const Services = () => {
               <div className="max-w-3xl mx-auto">
                 <h2 className="text-2xl font-bold mb-6 text-center">Additional Information</h2>
                 <AdditionalFees />
+                <div className="mt-8 text-sm text-muted-foreground text-center">
+                  <p>Full-service transportation provided through Oasis-approved local carriers.</p>
+                  <p className="mt-2">We vet all equipment providers to meet our standards.</p>
+                </div>
               </div>
             </div>
           </section>
