@@ -9,7 +9,6 @@ import ContactForm from '@/components/home/ContactForm';
 import Pricing from '@/components/home/Pricing';
 import Services from '@/components/home/Services';
 import MovingProcess from '@/components/home/MovingProcess';
-import PromoBanner from '@/components/promotion/PromoBanner';
 import PromoPopup from '@/components/promotion/PromoPopup';
 import ChatWidget from '@/components/chat/ChatWidget';
 import TrustBadgeGroup from '@/components/ui/trust-elements/TrustBadgeGroup';
@@ -38,7 +37,6 @@ const Index = () => {
         <link rel="canonical" href="https://oasismovingandstorage.com" />
       </Helmet>
       
-      <PromoBanner />
       <div className="flex flex-col min-h-screen w-full">
         <Navbar />
         

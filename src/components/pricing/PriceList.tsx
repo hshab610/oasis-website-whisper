@@ -13,6 +13,12 @@ export const PriceList = () => {
 
   return (
     <div className="bg-muted rounded-lg overflow-hidden max-w-4xl mx-auto shadow-sm">
+      <div className="py-3 px-4 bg-primary/10 border-b border-primary/20 text-center">
+        <p className="text-sm font-medium">
+          Westerville's Most Reliable Loading Crew - Since 2024 | Fair hourly pricing - no surprises: $120/hr (2-hr minimum)
+        </p>
+        <p className="text-xs text-muted-foreground mt-1">First-time customer? Mention this website for a courtesy discount.</p>
+      </div>
       <Collapsible
         open={isOpen}
         onOpenChange={setIsOpen}
