@@ -43,10 +43,10 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
           {footnote}
         </div>
       )}
-      <Button asChild className="mt-2 hover:translate-x-1 transition-transform min-h-[48px]">
-        <a href={actionUrl} className="inline-flex items-center gap-1.5">
+      <Button asChild className="mt-2 hover:translate-x-1 transition-transform min-h-[48px] w-full sm:w-auto px-5">
+        <a href={actionUrl} className="inline-flex items-center gap-1.5 justify-center">
           {actionText}
-          <ArrowRight className="h-4 w-4" />
+          <ArrowRight className="h-4 w-4 ml-1.5" />
         </a>
       </Button>
     </div>

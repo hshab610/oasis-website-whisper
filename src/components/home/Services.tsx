@@ -93,8 +93,8 @@ const Services = () => {
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Services</h2>
           <PyramidDivider variant="bold" className="mb-6" />
           <p className="text-lg text-muted-foreground">
-            We offer a wide range of moving and storage services to meet all your needs.
-            From local moves to long-distance relocations, we've got you covered.
+            We've handled every move type - from studio apartments to grand pianos.
+            With 15+ years combined moving experience, Zay & Jay deliver exceptional service.
           </p>
           <p className="text-sm text-muted-foreground mt-2">
             Serving Central Ohio from our Westerville (43081) base

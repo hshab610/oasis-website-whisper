@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Clock, Facebook, Instagram, Twitter, Shield } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -17,7 +16,7 @@ const Footer = () => {
             </p>
             <div className="flex space-x-4">
               <a 
-                href="https://facebook.com" 
+                href="https://facebook.com/oasismovingohio" 
                 aria-label="Facebook" 
                 className="text-foreground hover:text-primary transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center" 
                 target="_blank" 
@@ -26,7 +25,7 @@ const Footer = () => {
                 <Facebook size={20} />
               </a>
               <a 
-                href="https://instagram.com" 
+                href="https://instagram.com/oasismovingohio" 
                 aria-label="Instagram" 
                 className="text-foreground hover:text-primary transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center" 
                 target="_blank" 
@@ -35,7 +34,7 @@ const Footer = () => {
                 <Instagram size={20} />
               </a>
               <a 
-                href="https://twitter.com" 
+                href="https://twitter.com/oasismovingohio" 
                 aria-label="Twitter" 
                 className="text-foreground hover:text-primary transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center" 
                 target="_blank" 
@@ -128,10 +127,15 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-border mt-8 pt-8 text-center text-muted-foreground">
+          <div className="mb-4 bg-primary/5 py-3 px-4 rounded-md text-sm">
+            <strong>Labor-only specialists.</strong> Clients typically provide own truck through U-Haul/Penske. 
+            For full-service moves, we utilize trusted local providers operating under their own authority.
+          </div>
+          
           <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} items-center justify-center gap-4 mb-4`}>
             <div className="flex items-center">
               <Shield className="h-4 w-4 mr-2 text-primary flex-shrink-0" />
-              <span>Licensed & Insured • DOT #3498216</span>
+              <span>Fully Insured • Locally Owned</span>
             </div>
             {!isMobile && <div className="hidden sm:block">•</div>}
             <div className="flex items-center">
@@ -147,7 +151,7 @@ const Footer = () => {
             </div>
           </div>
           <p>
-            © {new Date().getFullYear()} Oasis Moving & Storage LLC • All Rights Reserved
+            © {new Date().getFullYear()} Oasis Moving & Storage LLC • All Rights Reserved • <Link to="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</Link>
           </p>
         </div>
       </div>
