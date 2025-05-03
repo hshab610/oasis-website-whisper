@@ -9,7 +9,6 @@ import ContactForm from '@/components/home/ContactForm';
 import Pricing from '@/components/home/Pricing';
 import Services from '@/components/home/Services';
 import MovingProcess from '@/components/home/MovingProcess';
-import PromoPopup from '@/components/promotion/PromoPopup';
 import ChatWidget from '@/components/chat/ChatWidget';
 import TrustBadgeGroup from '@/components/ui/trust-elements/TrustBadgeGroup';
 
@@ -78,8 +77,6 @@ const Index = () => {
       </div>
       
       <ChatWidget />
-      
-      <PromoPopup trigger="exit" />
     </>
   );
 };

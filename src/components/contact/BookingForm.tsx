@@ -1,6 +1,5 @@
 
 import React, { useEffect, useState } from 'react';
-import { usePromotion } from '@/contexts/PromotionContext';
 import PersonalInfoFields from './booking/PersonalInfoFields';
 import MoveDetailsFields from './booking/MoveDetailsFields';
 import ServiceDetailsFields from './booking/ServiceDetailsFields';
@@ -9,13 +8,11 @@ import DatePickerField from './DatePickerField';
 import TimeSelect from './TimeSelect';
 import SuccessMessage from './booking/SuccessMessage';
 import FormHeader from './booking/FormHeader';
-import PromoApplied from './booking/PromoApplied';
 import { useBookingForm } from '@/hooks/use-booking-form';
-import { Loader, BadgePercent, Shield, Clock } from 'lucide-react';
+import { Loader, Shield, Clock } from 'lucide-react';
 import DepositButton from '@/components/payment/deposit/DepositButton';
 
 const BookingForm = () => {
-  const { isPromotionActive, discountPercentage } = usePromotion();
   const {
     formData,
     selectedDate,
@@ -85,16 +82,12 @@ const BookingForm = () => {
 
   return (
     <div className="content-card p-6 md:p-8 rounded-lg">
-      {isPromotionActive && (
-        <div className="mb-6 -mt-2 bg-sunsetOrange/10 py-2.5 px-4 rounded-md flex items-center justify-center text-sm font-medium text-primary border border-desertGold/20">
-          <BadgePercent className="h-5 w-5 mr-2 animate-pulse" />
-          New customer booking discount: <span className="font-bold ml-1.5">{discountPercentage}% OFF</span>
-        </div>
-      )}
+      <div className="mb-6 -mt-2 bg-primary/10 py-2.5 px-4 rounded-md flex items-center justify-center text-sm font-medium text-primary border border-desertGold/20">
+        <Shield className="h-5 w-5 mr-2" />
+        Fair hourly pricing - no surprises: $120/hr (2-hr minimum)
+      </div>
       
       <FormHeader />
-      
-      {isPromotionActive && <PromoApplied />}
       
       {isSubmitting && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">

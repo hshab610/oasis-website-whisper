@@ -16,11 +16,4 @@
   flex-direction: column;
 }
 
-/* Remove any promo banner remnants */
-.rm-sticky-promo {
-  display: none !important;
-}
-
-.promotional-content {
-  display: none !important;
-}
+/* No promo banner styles needed anymore */

@@ -3,8 +3,6 @@ import { Helmet } from 'react-helmet';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import ContactSection from '@/components/contact/ContactSection';
-import PromoBanner from '@/components/promotion/PromoBanner';
-import PromoPopup from '@/components/promotion/PromoPopup';
 import ChatWidget from '@/components/chat/ChatWidget';
 import { BadgePercent } from 'lucide-react';
 
@@ -13,13 +11,11 @@ const Contact = () => {
     <>
       <Helmet>
         <title>Contact Us | Oasis Moving & Storage</title>
-        <meta name="description" content="Contact Oasis Moving & Storage for professional moving services. Get a free quote and book your move today with 10% off for new customers!" />
+        <meta name="description" content="Contact Oasis Moving & Storage for professional moving services. Get a free quote and book your move today!" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
         <meta name="theme-color" content="#DFC9A5" />
       </Helmet>
       
-      <PromoBanner />
-      <PromoPopup trigger="timer" />
       <ChatWidget />
       
       <div className="flex flex-col min-h-screen">
@@ -32,10 +28,10 @@ const Contact = () => {
               <p className="text-lg text-muted-foreground">
                 We'd love to hear from you! Fill out the form below to book your move or ask any questions.
               </p>
-              <div className="mt-2 inline-block bg-sunsetOrange/10 py-1 px-3 rounded-full">
+              <div className="mt-2 inline-block bg-primary/10 py-1 px-3 rounded-full">
                 <p className="text-sm font-medium text-primary flex items-center">
-                  <BadgePercent className="h-4 w-4 mr-1.5 text-sunsetOrange" />
-                  New customers get 10% off their first booking!
+                  <BadgePercent className="h-4 w-4 mr-1.5 text-primary" />
+                  Westerville's Most Reliable Loading Crew - Since 2024
                 </p>
               </div>
             </div>

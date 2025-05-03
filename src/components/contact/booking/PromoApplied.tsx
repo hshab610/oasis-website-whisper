@@ -1,6 +1,7 @@
 
+// This component has been fully removed as part of promo banner removal
 const PromoApplied = () => {
-  // This component has been removed as part of promo banner removal
+  // Component is now a no-op placeholder
   return null;
 };
 

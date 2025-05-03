@@ -1,8 +1,6 @@
-
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useFormspree } from '@/hooks/use-formspree';
-import { usePromotion } from '@/contexts/PromotionContext';
 import { supabase } from '@/integrations/supabase/client';
 
 // Define the gtag property on the Window interface
@@ -47,7 +45,6 @@ export interface BookingFormErrors {
 
 export const useBookingForm = () => {
   const { toast } = useToast();
-  const { isPromotionActive, promoCode, discountPercentage } = usePromotion();
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [bookingId, setBookingId] = useState<string | null>(null);
@@ -62,8 +59,8 @@ export const useBookingForm = () => {
     package_type: '',
     additional_services: '',
     notes: '',
-    promo_code: isPromotionActive ? promoCode : '',
-    discount: isPromotionActive ? discountPercentage : 0
+    promo_code: '',
+    discount: 0
   });
   
   const [errors, setErrors] = useState<BookingFormErrors>({});
@@ -160,7 +157,7 @@ export const useBookingForm = () => {
       type: 'booking',
       submission_time: new Date().toISOString(),
       _cc: 'zay@oasismovingandstorage.com',
-      promo_applied: isPromotionActive ? `${discountPercentage}% First Hour Discount` : 'None'
+      promo_applied: 'None'
     };
     
     const success = await submitToFormspree(enhancedFormData);
@@ -259,8 +256,8 @@ export const useBookingForm = () => {
       package_type: '',
       additional_services: '',
       notes: '',
-      promo_code: isPromotionActive ? promoCode : '',
-      discount: isPromotionActive ? discountPercentage : 0
+      promo_code: '',
+      discount: 0
     });
     setSelectedDate(undefined);
     setErrors({});
