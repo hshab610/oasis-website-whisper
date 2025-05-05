@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Clock, Facebook, Instagram, Twitter, Shield } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -92,7 +93,6 @@ const Footer = () => {
                 <div>
                   <strong className="block text-sm font-medium">Our Location</strong>
                   <address className="text-muted-foreground not-italic">
-                    315 S State St<br />
                     Westerville, OH 43081
                   </address>
                 </div>

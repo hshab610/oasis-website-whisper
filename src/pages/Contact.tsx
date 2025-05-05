@@ -10,8 +10,8 @@ const Contact = () => {
   return (
     <>
       <Helmet>
-        <title>Contact Us | Oasis Moving & Storage</title>
-        <meta name="description" content="Contact Oasis Moving & Storage for professional moving services. Get a free quote and book your move today!" />
+        <title>Contact Us | Oasis Moving & Storage LLC</title>
+        <meta name="description" content="Contact Oasis Moving & Storage LLC for professional moving services. Get a free quote and book your move today!" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
         <meta name="theme-color" content="#DFC9A5" />
       </Helmet>

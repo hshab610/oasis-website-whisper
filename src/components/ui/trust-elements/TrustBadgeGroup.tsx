@@ -15,12 +15,12 @@ interface TrustBadgeGroupProps {
 
 export const TrustBadgeGroup: React.FC<TrustBadgeGroupProps> = ({
   variant = 'default',
-  showDot = true,
+  showDot = false,
   showRating = true,
   showInsured = true,
   showOntime = true,
   ratingValue = "4.8★ Westerville",
-  dotValue = "OH123456",
+  dotValue = "",
   className = "",
 }) => {
   const badgeVariant = variant === 'highlight' ? 'highlight' : 'default';
@@ -45,14 +45,6 @@ export const TrustBadgeGroup: React.FC<TrustBadgeGroupProps> = ({
       {showOntime && (
         <TrustBadge 
           type="ontime" 
-          variant={badgeVariant} 
-        />
-      )}
-      
-      {showDot && (
-        <TrustBadge 
-          type="dot" 
-          value={dotValue} 
           variant={badgeVariant} 
         />
       )}

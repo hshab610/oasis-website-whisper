@@ -12,7 +12,7 @@ interface CTATrustElementsProps {
 const CTATrustElements: React.FC<CTATrustElementsProps> = ({
   showDot = true,
   showScheduling = true,
-  dotNumber = "3498216",
+  dotNumber = "",
   className = "",
 }) => {
   return (
@@ -20,7 +20,7 @@ const CTATrustElements: React.FC<CTATrustElementsProps> = ({
       {showDot && (
         <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground bg-white/80 backdrop-blur-sm px-3 py-2 rounded-full shadow-sm border border-primary/10 min-h-[48px]">
           <Shield className="h-4 w-4 text-primary flex-shrink-0" />
-          <span>Licensed & Insured {dotNumber && `• DOT #${dotNumber}`}</span>
+          <span>Licensed & Insured</span>
         </div>
       )}
       

@@ -14,7 +14,7 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>Oasis Moving & Storage | Professional Moving Services in Westerville, Ohio</title>
+        <title>Oasis Moving & Storage LLC | Professional Moving Services in Westerville, Ohio</title>
         <meta 
           name="description" 
           content="Professional local moving services in Westerville, Ohio. Fully licensed and insured movers offering owner-supervised relocations, furniture assembly, and storage solutions." 
@@ -23,7 +23,7 @@ const Index = () => {
         <meta name="theme-color" content="#DFC9A5" />
         
         {/* Open Graph tags */}
-        <meta property="og:title" content="Oasis Moving & Storage | Professional Westerville Moving Services" />
+        <meta property="og:title" content="Oasis Moving & Storage LLC | Professional Westerville Moving Services" />
         <meta property="og:description" content="Fully licensed and insured moving services with same-day quotes and professional movers." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://oasismovingandstorage.com" />
@@ -44,7 +44,7 @@ const Index = () => {
           
           <div className="bg-white/90 py-3 shadow-sm border-y border-nileTeal/10">
             <div className="container mx-auto">
-              <TrustBadgeGroup variant="highlight" showDot={true} showRating={true} showInsured={true} showOntime={true} />
+              <TrustBadgeGroup variant="highlight" showDot={false} showRating={true} showInsured={true} showOntime={true} />
             </div>
           </div>
           
