@@ -11,74 +11,74 @@ const Testimonials = () => {
   const testimonials = [
     {
       id: 1,
-      name: 'Sarah Johnson',
+      name: 'Jennifer M.',
       location: 'Westerville, OH',
       service: 'Local Moving',
-      date: 'March 2023',
-      text: 'Oasis Moving made our local move so easy! The team was professional, efficient, and careful with all of our belongings. I was especially impressed with how they handled our antique furniture. The pricing was transparent with no surprises, and they finished right on schedule. I would definitely recommend their services to anyone moving in the area!',
+      date: 'March 15, 2023',
+      text: 'I cannot recommend Oasis Moving enough! They arrived exactly when they said they would and handled all our furniture with extreme care. The team was courteous, efficient, and went above and beyond to ensure nothing was damaged. Their pricing was transparent with no hidden fees. Our entire 3-bedroom house was moved in one day without any issues. Would definitely use them again!',
       rating: 5
     },
     {
       id: 2,
-      name: 'Michael Rodriguez',
+      name: 'Carlos R.',
       location: 'Columbus, OH',
       service: 'Long Distance Moving',
-      date: 'February 2023',
-      text: 'I was dreading my move across the state, but Oasis Moving turned it into a stress-free experience. Their pricing was straightforward, and the movers were friendly and hardworking. They took great care with all my belongings, especially my piano which was a concern for me. They even finished earlier than expected! Communication throughout the process was excellent.',
+      date: 'February 10, 2023',
+      text: 'Moving from Columbus to Cincinnati was stressful enough, but Oasis Moving made the process so much easier. The crew was professional and respectful of our belongings. They wrapped everything meticulously and nothing was damaged in transit. Communication was excellent throughout the entire process, and they kept to their estimated timeline. I would definitely use them again for any future moves.',
       rating: 5
     },
     {
       id: 3,
-      name: 'Emily Chen',
+      name: 'Sophia L.',
       location: 'Dublin, OH',
       service: 'Storage Solutions',
-      date: 'January 2023',
-      text: 'The storage solutions provided by Oasis Moving were perfect for my situation. I needed to store my belongings for three months between moves, and everything was kept in excellent condition. The facility was clean and secure, and the staff was helpful whenever I needed to access my items. The pickup and delivery were seamless, making the whole process convenient.',
+      date: 'January 22, 2023',
+      text: 'I needed temporary storage between apartment leases, and Oasis Moving provided the perfect solution. They carefully packed and stored all my items for three months. When it was time to move into my new place, everything was in the exact same condition as when it went in. Their facility was clean and secure, and their staff was helpful whenever I needed access to my items. Great experience overall!',
       rating: 5
     },
     {
       id: 4,
-      name: 'David Williams',
+      name: 'Marcus W.',
       location: 'Gahanna, OH',
       service: 'Furniture Assembly & TV Mounting',
-      date: 'April 2023',
-      text: 'I hired Oasis for furniture assembly and TV mounting services after moving into my new apartment. The team was punctual, professional, and did an excellent job with everything. They assembled all my furniture quickly and correctly, and my TV was mounted perfectly. They were careful not to damage my walls and cleaned up afterward. Great service!',
+      date: 'April 3, 2023',
+      text: 'After moving into my new home, I hired Oasis for furniture assembly and TV mounting. Their technician arrived on time and was incredibly efficient. He assembled my entertainment center, dining table, and mounted two TVs in under 4 hours! Everything was perfectly level and secure. He even cleaned up all the packaging and made sure I was completely satisfied before leaving. Excellent service at a fair price.',
       rating: 5
     },
     {
       id: 5,
-      name: 'Jessica Thompson',
+      name: 'Rebecca T.',
       location: 'Westerville, OH',
       service: 'Local Moving',
-      date: 'May 2023',
-      text: 'Our experience with Oasis Moving was outstanding from start to finish. The crew arrived on time and worked efficiently throughout the day. They were respectful of our home and belongings, using proper protection for furniture and doorways. The final cost matched the estimate we were given, which was refreshing. I would use their services again without hesitation.',
+      date: 'May 19, 2023',
+      text: 'Oasis Moving exceeded all expectations during our recent home move. From the initial quote to the final box placement, their service was impeccable. The movers treated our belongings as if they were their own, using proper padding and securing techniques for everything. They worked quickly without sacrificing quality, and the price matched the quote exactly. Would recommend them to anyone in the Westerville area!',
       rating: 5
     },
     {
       id: 6,
-      name: 'Robert Kim',
+      name: 'Daniel K.',
       location: 'Upper Arlington, OH',
       service: 'Junk Removal',
-      date: 'March 2023',
-      text: "I used Oasis Moving for junk removal after cleaning out my parents' home. They were prompt, courteous, and efficient. They removed everything I needed and even swept the area afterward. The price was fair for the amount of work involved, and they made sure to dispose of items responsibly when possible. Highly recommend their junk removal service.",
+      date: 'March 11, 2023',
+      text: "After clearing out my parents' basement, I needed help with junk removal. Oasis Moving was prompt, professional, and reasonably priced. The team was respectful and efficient, removing everything from old furniture to boxes of miscellaneous items. They even swept up afterward! I appreciated that they sorted items for donation when possible instead of taking everything to the landfill. Will definitely use them again for future cleanouts.",
       rating: 5
     },
     {
       id: 7,
-      name: 'Amanda Garcia',
+      name: 'Olivia G.',
       location: 'Reynoldsburg, OH',
       service: 'Furniture Assembly',
-      date: 'June 2023',
-      text: 'I had several pieces of furniture that needed assembly, and Oasis Moving did a fantastic job. The technician was knowledgeable and worked quickly but carefully. He even helped move the assembled pieces to their final locations. The flat rate pricing was reasonable and worth every penny for the time and frustration saved. Will definitely use again!',
+      date: 'June 7, 2023',
+      text: 'I ordered several pieces of furniture online and dreaded the assembly process. Oasis Moving saved the day! Their furniture assembly specialist arrived with all the necessary tools and had everything assembled in a fraction of the time it would have taken me. My sectional sofa, bed frame, and dining set were perfectly assembled with no scratches or issues. Worth every penny for the time and frustration saved!',
       rating: 5
     },
     {
       id: 8,
-      name: 'Thomas Bennett',
+      name: 'Jason B.',
       location: 'Worthington, OH',
       service: 'Local Moving & Storage',
-      date: 'February 2023',
-      text: 'We used Oasis for both moving and temporary storage during our home renovation. They were very accommodating with our changing timeline and made the process easy. Our items were well-protected in storage and returned in perfect condition. The moving crew was professional and efficient both during the move-out and move-in phases. Great experience overall.',
+      date: 'February 25, 2023',
+      text: 'We used Oasis for both moving and storage during our home renovation. They accommodated our changing schedule with no issues, which was a huge relief during an already stressful time. Our items were carefully packed and stored, then delivered back to us in perfect condition when our renovation was complete. The crew was friendly and professional both times. I would highly recommend their services to anyone needing reliable movers in the Columbus area.',
       rating: 5
     }
   ];

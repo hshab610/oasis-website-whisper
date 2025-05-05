@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 const testimonials = [
   {
     id: 1,
-    name: 'Sarah Johnson',
+    name: 'Jennifer M.',
     location: 'Westerville, OH',
     service: 'Local Moving',
     date: 'March 2023',
@@ -16,7 +16,7 @@ const testimonials = [
   },
   {
     id: 2,
-    name: 'Michael Rodriguez',
+    name: 'Carlos R.',
     location: 'Columbus, OH',
     service: 'Long Distance Moving',
     date: 'February 2023',
@@ -25,7 +25,7 @@ const testimonials = [
   },
   {
     id: 3,
-    name: 'Emily Chen',
+    name: 'Sophia L.',
     location: 'Dublin, OH',
     service: 'Storage Solutions',
     date: 'January 2023',

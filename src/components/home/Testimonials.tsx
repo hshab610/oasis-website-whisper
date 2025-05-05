@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Star, ArrowLeft, ArrowRight, Quote } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -6,28 +7,28 @@ import { Link } from 'react-router-dom';
 const testimonials = [
   {
     id: 1,
-    name: 'Sarah Johnson',
+    name: 'Jennifer M.',
     location: 'Westerville, OH',
     text: 'Oasis Moving made our local move so easy! The team was professional, efficient, and careful with all of our belongings. I was impressed with how they handled our antique furniture. Highly recommend their services!',
     rating: 5,
   },
   {
     id: 2,
-    name: 'Michael Rodriguez',
+    name: 'Carlos R.',
     location: 'Columbus, OH',
     text: 'I was dreading my move across the state, but Oasis Moving turned it into a stress-free experience. Their pricing was transparent, and the movers were friendly and hardworking. They even finished earlier than expected!',
     rating: 5,
   },
   {
     id: 3,
-    name: 'Emily Chen',
+    name: 'Sophia L.',
     location: 'Dublin, OH',
     text: 'The storage solutions provided by Oasis Moving were perfect for my situation. I needed to store my belongings for three months, and everything was kept in excellent condition. The pickup and delivery were seamless.',
     rating: 5,
   },
   {
     id: 4,
-    name: 'David Williams',
+    name: 'Marcus W.',
     location: 'Gahanna, OH',
     text: 'I hired Oasis for furniture assembly and TV mounting services. The team was punctual, professional, and did an excellent job. They were careful not to damage my walls and cleaned up afterward. Great service!',
     rating: 5,
