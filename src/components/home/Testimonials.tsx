@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Star, ArrowLeft, ArrowRight, Quote } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -31,7 +30,7 @@ const testimonials = [
     name: 'David Williams',
     location: 'Gahanna, OH',
     text: 'I hired Oasis for furniture assembly and TV mounting services. The team was punctual, professional, and did an excellent job. They were careful not to damage my walls and cleaned up afterward. Great service!',
-    rating: 4,
+    rating: 5,
   },
 ];
 
@@ -63,7 +62,7 @@ const Testimonials = () => {
           <h2 className="text-3xl md:text-4xl font-bold mb-4">What Our Clients Say</h2>
           <div className="w-24 h-1 bg-primary mx-auto mb-6"></div>
           <p className="text-lg text-muted-foreground">
-            Don't just take our word for it. Here's what our satisfied customers have to say about their experience with Oasis Moving & Storage.
+            Don't just take our word for it. Here's what our satisfied customers have to say about their experience with Oasis Moving & Storage LLC.
           </p>
         </div>
 
@@ -75,11 +74,8 @@ const Testimonials = () => {
             
             <div className="mb-6">
               <div className="flex">
-                {[...Array(activeTestimonial.rating)].map((_, i) => (
+                {[...Array(5)].map((_, i) => (
                   <Star key={i} className="text-yellow-500 h-5 w-5 fill-yellow-500" />
-                ))}
-                {[...Array(5 - activeTestimonial.rating)].map((_, i) => (
-                  <Star key={i + activeTestimonial.rating} className="text-gray-300 h-5 w-5" />
                 ))}
               </div>
             </div>

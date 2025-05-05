@@ -9,7 +9,7 @@ interface HeroTrustBadgesProps {
 
 const HeroTrustBadges: React.FC<HeroTrustBadgesProps> = ({
   showRating = true,
-  ratingValue = "4.8★ Westerville"
+  ratingValue = "5★ Westerville"
 }) => {
   return (
     <>
@@ -28,7 +28,7 @@ const HeroTrustBadges: React.FC<HeroTrustBadgesProps> = ({
       {showRating && (
         <div className="flex items-center justify-center gap-1 mb-4">
           {[...Array(5)].map((_, i) => (
-            <Star key={i} className={`h-4 w-4 ${i === 4 ? 'text-yellow-400/80' : 'text-yellow-500'} ${i < 4 ? 'fill-yellow-500' : 'fill-yellow-400/40'}`} />
+            <Star key={i} className="h-4 w-4 text-yellow-500 fill-yellow-500" />
           ))}
           <span className="font-medium ml-1.5 text-sm">{ratingValue}</span>
         </div>

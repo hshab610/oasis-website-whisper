@@ -10,7 +10,7 @@ const testimonials = [
     name: 'Sarah Johnson',
     location: 'Westerville, OH',
     service: 'Local Moving',
-    date: 'March 15, 2023',
+    date: 'March 2023',
     text: 'Oasis Moving made our local move so easy! The team was professional, efficient, and careful with all of our belongings. I was especially impressed with how they handled our antique furniture.',
     rating: 5
   },
@@ -19,7 +19,7 @@ const testimonials = [
     name: 'Michael Rodriguez',
     location: 'Columbus, OH',
     service: 'Long Distance Moving',
-    date: 'February 3, 2023',
+    date: 'February 2023',
     text: 'I was dreading my move across the state, but Oasis Moving turned it into a stress-free experience. Their pricing was transparent, and the movers were friendly and hardworking.',
     rating: 5
   },
@@ -28,7 +28,7 @@ const testimonials = [
     name: 'Emily Chen',
     location: 'Dublin, OH',
     service: 'Storage Solutions',
-    date: 'January 12, 2023',
+    date: 'January 2023',
     text: 'The storage solutions provided by Oasis Moving were perfect for my situation. I needed to store my belongings for three months between moves, and everything was kept in excellent condition.',
     rating: 5
   }
@@ -72,7 +72,7 @@ const TestimonialSlider = () => {
           {[...Array(5)].map((_, i) => (
             <Star 
               key={i} 
-              className={`h-4 w-4 ${i < currentTestimonial.rating ? "text-yellow-500 fill-yellow-500" : "text-gray-300"}`}
+              className="h-4 w-4 text-yellow-500 fill-yellow-500"
             />
           ))}
         </div>
