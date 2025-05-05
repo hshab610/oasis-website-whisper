@@ -5,12 +5,10 @@ import Footer from '@/components/layout/Footer';
 import Hero from '@/components/home/Hero';
 import QuickEstimate from '@/components/home/QuickEstimate';
 import CTA from '@/components/home/CTA';
-import ContactForm from '@/components/home/ContactForm';
-import Pricing from '@/components/home/Pricing';
-import Services from '@/components/home/Services';
-import MovingProcess from '@/components/home/MovingProcess';
+import ServicePreview from '@/components/home/ServicePreview'; 
 import ChatWidget from '@/components/chat/ChatWidget';
 import TrustBadgeGroup from '@/components/ui/trust-elements/TrustBadgeGroup';
+import MovingProcessPreview from '@/components/home/MovingProcessPreview';
 
 const Index = () => {
   return (
@@ -50,7 +48,7 @@ const Index = () => {
             </div>
           </div>
           
-          <MovingProcess />
+          <MovingProcessPreview />
           
           <section id="quick-estimate" className="contain-content scroll-mt-20">
             <QuickEstimate />
@@ -61,15 +59,7 @@ const Index = () => {
           </section>
           
           <section id="services" className="contain-content scroll-mt-20">
-            <Services />
-          </section>
-          
-          <section id="pricing" className="contain-content scroll-mt-20">
-            <Pricing />
-          </section>
-          
-          <section id="contact" className="contain-content scroll-mt-20">
-            <ContactForm />
+            <ServicePreview />
           </section>
         </main>
         

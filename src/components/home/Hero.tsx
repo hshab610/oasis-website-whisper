@@ -10,7 +10,7 @@ const Hero = () => {
   const isMobile = useIsMobile();
   
   return (
-    <div className="relative overflow-hidden min-h-[85vh] flex items-center">
+    <div className="relative overflow-hidden min-h-[80vh] flex items-center">
       <div className="absolute inset-0 z-0">
         {/* Background gradient overlay to improve image visibility */}
         <div className="absolute inset-0 bg-gradient-to-b from-pharaohBlue/10 via-transparent to-nileTeal/10"></div>
@@ -38,12 +38,12 @@ const Hero = () => {
           <div className="egyptian-card p-6 md:p-8 mb-6 inline-block w-full shadow-xl hover:shadow-2xl transition-all duration-500 animate-fadeIn">
             <HeroTrustBadges />
             
-            <h1 className={`${isMobile ? 'text-2xl sm:text-3xl' : 'text-4xl md:text-5xl lg:text-6xl'} font-bold leading-tight text-pharaohBlue font-playfair mb-5 tracking-tight`}>
+            <h1 className={`${isMobile ? 'text-2xl sm:text-3xl' : 'text-4xl md:text-5xl'} font-bold leading-tight text-pharaohBlue font-playfair mb-4 tracking-tight`}>
               Professional <span className="text-primary">Moving</span> in Westerville
             </h1>
             
-            <p className={`${isMobile ? 'text-base' : 'text-base md:text-xl lg:text-2xl'} text-muted-foreground max-w-2xl mx-auto mb-6 leading-relaxed`}>
-              Reliable, owner-supervised moving services
+            <p className={`${isMobile ? 'text-base' : 'text-lg md:text-xl'} text-muted-foreground max-w-2xl mx-auto mb-6 leading-relaxed`}>
+              Reliable, licensed & insured moving services
             </p>
             
             <HeroButtons />

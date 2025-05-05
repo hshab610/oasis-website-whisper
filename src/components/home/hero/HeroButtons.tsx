@@ -1,7 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Calculator, Truck } from 'lucide-react';
+import { ArrowRight, Calculator, Truck, Phone } from 'lucide-react';
 import QuoteButton from '@/components/contact/QuoteButton';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -24,16 +24,28 @@ const HeroButtons = () => {
           </span>
         </QuoteButton>
       </Link>
-      <a href="#quick-estimate" className="w-full">
-        <Button 
-          variant="outline" 
-          size="xl" 
-          className="w-full border-2 border-primary bg-white/80 text-primary hover:bg-primary/10 font-bold px-5 py-4 rounded-md shadow-lg hover:shadow-xl transition-all duration-300 text-base flex items-center justify-center h-auto min-h-[52px] hover-lift"
-        >
-          <Calculator className="mr-2 h-5 w-5 flex-shrink-0" />
-          Calculate Cost
-        </Button>
-      </a>
+      <div className="flex gap-2 w-full">
+        <a href="#quick-estimate" className="flex-1">
+          <Button 
+            variant="outline" 
+            size="xl" 
+            className="w-full border-2 border-primary bg-white/80 text-primary hover:bg-primary/10 font-bold px-4 py-4 rounded-md shadow-lg hover:shadow-xl transition-all duration-300 text-base flex items-center justify-center h-auto min-h-[52px] hover-lift"
+          >
+            <Calculator className="mr-2 h-5 w-5 flex-shrink-0" />
+            Calculate
+          </Button>
+        </a>
+        <a href="tel:6147400275" className="flex-1">
+          <Button 
+            variant="outline" 
+            size="xl" 
+            className="w-full border-2 border-primary bg-white/80 text-primary hover:bg-primary/10 font-bold px-4 py-4 rounded-md shadow-lg hover:shadow-xl transition-all duration-300 text-base flex items-center justify-center h-auto min-h-[52px] hover-lift"
+          >
+            <Phone className="mr-2 h-5 w-5 flex-shrink-0" />
+            Call Us
+          </Button>
+        </a>
+      </div>
     </div>
   );
 };

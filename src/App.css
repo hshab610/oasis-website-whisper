@@ -16,4 +16,14 @@
   flex-direction: column;
 }
 
-/* No promo banner styles needed anymore */
+/* Additional spacing utilities */
+.contain-content {
+  padding: 1rem 0;
+}
+
+/* Focus on mobile experience */
+@media (max-width: 640px) {
+  .contain-content {
+    padding: 0.5rem 0;
+  }
+}
