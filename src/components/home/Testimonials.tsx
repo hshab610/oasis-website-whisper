@@ -69,11 +69,11 @@ const Testimonials = () => {
 
         <div className="max-w-4xl mx-auto relative">
           <div className="bg-white p-8 md:p-12 rounded-lg shadow-md relative">
-            <div className="absolute -top-6 left-8 bg-primary text-white p-3 rounded-full">
+            <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-primary text-white p-3 rounded-full">
               <Quote size={24} />
             </div>
             
-            <div className="mb-6">
+            <div className="mb-6 flex justify-center">
               <div className="flex">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="text-yellow-500 h-5 w-5 fill-yellow-500" />
@@ -81,13 +81,11 @@ const Testimonials = () => {
               </div>
             </div>
             
-            <p className="text-lg mb-6 italic">{activeTestimonial.text}</p>
+            <p className="text-lg mb-6 italic text-center">{activeTestimonial.text}</p>
             
-            <div className="flex items-center">
-              <div>
-                <p className="font-semibold">{activeTestimonial.name}</p>
-                <p className="text-sm text-muted-foreground">{activeTestimonial.location}</p>
-              </div>
+            <div className="flex flex-col items-center">
+              <p className="font-semibold">{activeTestimonial.name}</p>
+              <p className="text-sm text-muted-foreground">{activeTestimonial.location}</p>
             </div>
           </div>
           
@@ -96,7 +94,7 @@ const Testimonials = () => {
               variant="outline"
               size="icon"
               onClick={handlePrev}
-              className="bg-white/80 hover:bg-white"
+              className="bg-white/80 hover:bg-white shadow-sm"
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
@@ -118,7 +116,7 @@ const Testimonials = () => {
               variant="outline"
               size="icon"
               onClick={handleNext}
-              className="bg-white/80 hover:bg-white"
+              className="bg-white/80 hover:bg-white shadow-sm"
             >
               <ArrowRight className="h-5 w-5" />
             </Button>
@@ -127,7 +125,7 @@ const Testimonials = () => {
         
         <div className="text-center mt-12">
           <Link to="/testimonials">
-            <Button variant="outline">
+            <Button variant="outline" className="shadow-sm hover:shadow-md transition-all">
               View All Reviews
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>

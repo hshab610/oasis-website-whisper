@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Star, ArrowLeft, ArrowRight, Quote } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-// More authentic testimonials with varied content
+// Authentic looking testimonials
 const testimonials = [
   {
     id: 1,
@@ -87,12 +87,12 @@ const TestimonialSlider = () => {
         </div>
       </div>
       
-      <div className="relative min-h-[200px] flex flex-col justify-between">
+      <div className="relative min-h-[220px] flex flex-col justify-between">
         <div className="absolute top-0 right-0 text-primary opacity-20">
           <Quote size={48} />
         </div>
         
-        <blockquote className="text-foreground italic z-10 mb-4">
+        <blockquote className="text-foreground italic z-10 mb-6">
           "{currentTestimonial.text}"
         </blockquote>
         

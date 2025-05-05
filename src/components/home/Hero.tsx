@@ -33,7 +33,7 @@ const Hero = () => {
         <div className="absolute bottom-16 left-0 right-0 h-8 bg-gradient-to-r from-nileTeal/5 via-nileTeal/15 to-nileTeal/5 animate-wave opacity-20" style={{ animationDelay: '0.5s', animationDuration: '20s' }}></div>
       </div>
       
-      <div className="container mx-auto px-4 relative z-10 w-[95%] sm:w-full">
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <div className="egyptian-card p-6 md:p-8 mb-6 inline-block w-full shadow-xl hover:shadow-2xl transition-all duration-500 animate-fadeIn">
             <HeroTrustBadges />

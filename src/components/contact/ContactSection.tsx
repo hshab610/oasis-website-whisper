@@ -14,9 +14,9 @@ const ContactSection = () => {
           <TestimonialSlider />
         </div>
         
-        <div className="mt-8 text-center">
+        <div className="mt-8 text-center bg-white/50 p-6 rounded-lg shadow-sm">
           <h3 className="text-xl font-semibold mb-4">Ready to Get Started?</h3>
-          <QuoteButton className="w-full sm:w-auto" />
+          <QuoteButton className="w-full sm:w-auto mx-auto" />
         </div>
       </div>
       <div className="order-1 lg:order-2">

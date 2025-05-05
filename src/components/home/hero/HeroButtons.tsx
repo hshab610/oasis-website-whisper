@@ -9,7 +9,7 @@ const HeroButtons = () => {
   const isMobile = useIsMobile();
   
   return (
-    <div className={`flex flex-col sm:flex-row gap-4 pt-4 mx-auto ${isMobile ? 'w-full' : 'max-w-lg'}`}>
+    <div className={`flex flex-col sm:flex-row gap-4 pt-4 mx-auto max-w-lg`}>
       <Link to="/contact" className="w-full">
         <QuoteButton 
           text="Book Your Move"
