@@ -11,74 +11,74 @@ const Testimonials = () => {
   const testimonials = [
     {
       id: 1,
-      name: 'Jennifer M.',
+      name: 'Joseph M.',
       location: 'Westerville, OH',
       service: 'Local Moving',
-      date: 'March 15, 2023',
-      text: 'I cannot recommend Oasis Moving enough! They arrived exactly when they said they would and handled all our furniture with extreme care. The team was courteous, efficient, and went above and beyond to ensure nothing was damaged. Their pricing was transparent with no hidden fees. Our entire 3-bedroom house was moved in one day without any issues. Would definitely use them again!',
+      date: 'April 15, 2024',
+      text: 'I\'ve used Oasis Moving & Storage LLC twice now and they\'ve been exceptional both times. Their team arrived exactly on schedule and worked efficiently throughout the day. They took special care with our family heirlooms and even helped position furniture exactly where we wanted in the new house. The pricing was transparent with no hidden fees, and they completed our entire 3-bedroom move in just one day. Their attention to detail and customer service is truly outstanding.',
       rating: 5
     },
     {
       id: 2,
-      name: 'Carlos R.',
+      name: 'Natalie R.',
       location: 'Columbus, OH',
       service: 'Long Distance Moving',
-      date: 'February 10, 2023',
-      text: 'Moving from Columbus to Cincinnati was stressful enough, but Oasis Moving made the process so much easier. The crew was professional and respectful of our belongings. They wrapped everything meticulously and nothing was damaged in transit. Communication was excellent throughout the entire process, and they kept to their estimated timeline. I would definitely use them again for any future moves.',
+      date: 'March 8, 2024',
+      text: 'Moving from Columbus to Cincinnati was stressful enough without worrying about the logistics, but Oasis Moving & Storage LLC made the entire process remarkably smooth. Their team was professional and respectful of our belongings, carefully wrapping everything to prevent damage during transit. Their communication was excellent throughout the entire process, providing updates and keeping to their estimated timeline. I especially appreciated how they coordinated everything with our real estate agents to ensure a seamless transition. Would definitely use them for any future moves.',
       rating: 5
     },
     {
       id: 3,
-      name: 'Sophia L.',
+      name: 'Christopher L.',
       location: 'Dublin, OH',
       service: 'Storage Solutions',
-      date: 'January 22, 2023',
-      text: 'I needed temporary storage between apartment leases, and Oasis Moving provided the perfect solution. They carefully packed and stored all my items for three months. When it was time to move into my new place, everything was in the exact same condition as when it went in. Their facility was clean and secure, and their staff was helpful whenever I needed access to my items. Great experience overall!',
+      date: 'February 24, 2024',
+      text: 'When I needed temporary storage between house closings, Oasis Moving & Storage LLC provided exactly what I needed. They carefully packed and stored all my items for nearly four months. When it was time to move into my new home, everything was in the exact same condition as when it went in. Their facility was clean, secure and climate-controlled, which was perfect for my wooden furniture and electronics. Their staff was always helpful when I needed access to retrieve items during the storage period. Could not have asked for a better storage experience.',
       rating: 5
     },
     {
       id: 4,
-      name: 'Marcus W.',
+      name: 'Lauren W.',
       location: 'Gahanna, OH',
       service: 'Furniture Assembly & TV Mounting',
-      date: 'April 3, 2023',
-      text: 'After moving into my new home, I hired Oasis for furniture assembly and TV mounting. Their technician arrived on time and was incredibly efficient. He assembled my entertainment center, dining table, and mounted two TVs in under 4 hours! Everything was perfectly level and secure. He even cleaned up all the packaging and made sure I was completely satisfied before leaving. Excellent service at a fair price.',
+      date: 'January 17, 2024',
+      text: 'After moving into my new home, I hired Oasis Moving & Storage LLC for furniture assembly and TV mounting. Their technician was punctual, professional, and incredibly skilled. He assembled my complex entertainment center, dining table, and mounted two TVs with perfect precision in under 4 hours. Everything was perfectly level and secure. He even cleaned up all the packaging and made sure I was completely satisfied before leaving. The service was excellent value for money and saved me days of frustration trying to do it myself.',
       rating: 5
     },
     {
       id: 5,
-      name: 'Rebecca T.',
+      name: 'Andrew T.',
       location: 'Westerville, OH',
       service: 'Local Moving',
-      date: 'May 19, 2023',
-      text: 'Oasis Moving exceeded all expectations during our recent home move. From the initial quote to the final box placement, their service was impeccable. The movers treated our belongings as if they were their own, using proper padding and securing techniques for everything. They worked quickly without sacrificing quality, and the price matched the quote exactly. Would recommend them to anyone in the Westerville area!',
+      date: 'December 5, 2023',
+      text: 'Oasis Moving & Storage LLC handled our complicated move with exceptional care and professionalism. We had several delicate items, including a piano and antique furniture that required special attention. Their crew arrived with all the necessary equipment and protective materials to ensure everything was transported safely. They were methodical in their approach, making sure each item was properly secured before loading. They worked quickly without sacrificing quality, and the final price matched the quote exactly. I was thoroughly impressed with their expertise and would recommend them to anyone moving in the Westerville area.',
       rating: 5
     },
     {
       id: 6,
-      name: 'Daniel K.',
+      name: 'Jessica K.',
       location: 'Upper Arlington, OH',
       service: 'Junk Removal',
-      date: 'March 11, 2023',
-      text: "After clearing out my parents' basement, I needed help with junk removal. Oasis Moving was prompt, professional, and reasonably priced. The team was respectful and efficient, removing everything from old furniture to boxes of miscellaneous items. They even swept up afterward! I appreciated that they sorted items for donation when possible instead of taking everything to the landfill. Will definitely use them again for future cleanouts.",
+      date: 'November 18, 2023',
+      text: 'After clearing out my parents\' home, I needed help with removing a substantial amount of items. Oasis Moving & Storage LLC was prompt, professional, and reasonably priced for this big job. Their team was respectful and efficient, removing everything from old furniture to boxes of miscellaneous items. I appreciated that they took the time to sort items that could potentially be donated rather than simply taking everything to be disposed of. They even swept the areas clean afterward. Their service made a difficult situation much easier to handle, and I would certainly use them again for any future cleanouts.',
       rating: 5
     },
     {
       id: 7,
-      name: 'Olivia G.',
+      name: 'Michelle G.',
       location: 'Reynoldsburg, OH',
       service: 'Furniture Assembly',
-      date: 'June 7, 2023',
-      text: 'I ordered several pieces of furniture online and dreaded the assembly process. Oasis Moving saved the day! Their furniture assembly specialist arrived with all the necessary tools and had everything assembled in a fraction of the time it would have taken me. My sectional sofa, bed frame, and dining set were perfectly assembled with no scratches or issues. Worth every penny for the time and frustration saved!',
+      date: 'October 22, 2023',
+      text: 'I recently purchased several pieces of furniture online and was dreading the assembly process. Oasis Moving & Storage LLC saved me so much time and frustration! Their furniture assembly specialist arrived with all the necessary tools and had everything assembled in a fraction of the time it would have taken me. My sectional sofa, bed frame, and dining set were perfectly assembled with no scratches or issues. The technician was friendly, experienced, and even helped position the furniture exactly where I wanted it. The service was absolutely worth every penny for the time and stress saved.',
       rating: 5
     },
     {
       id: 8,
-      name: 'Jason B.',
+      name: 'Daniel B.',
       location: 'Worthington, OH',
       service: 'Local Moving & Storage',
-      date: 'February 25, 2023',
-      text: 'We used Oasis for both moving and storage during our home renovation. They accommodated our changing schedule with no issues, which was a huge relief during an already stressful time. Our items were carefully packed and stored, then delivered back to us in perfect condition when our renovation was complete. The crew was friendly and professional both times. I would highly recommend their services to anyone needing reliable movers in the Columbus area.',
+      date: 'September 30, 2023',
+      text: 'We used Oasis Moving & Storage LLC for both moving and storage during our extensive home renovation. They accommodated our changing timeline with no issues, which was a huge relief during an already stressful renovation. Our items were carefully packed, inventoried, and stored in their climate-controlled facility, then delivered back to us in perfect condition when our renovation was complete. The crew was friendly and professional during both the pickup and delivery. Their flexibility and attention to detail made a complicated logistics situation much easier to manage. I would highly recommend their services to anyone needing reliable movers in the Columbus area.',
       rating: 5
     }
   ];

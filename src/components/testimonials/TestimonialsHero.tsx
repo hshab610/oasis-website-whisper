@@ -17,7 +17,7 @@ const TestimonialsHero = () => {
               <Star className="text-yellow-500 h-5 w-5 fill-yellow-500" />
               <Star className="text-yellow-500 h-5 w-5 fill-yellow-500" />
               <Star className="text-yellow-500 h-5 w-5 fill-yellow-500" />
-              <span className="ml-2 font-medium">5/5 from our valued customers</span>
+              <span className="ml-2 font-medium">Perfect 5/5 from our valued customers</span>
             </div>
           </div>
         </div>

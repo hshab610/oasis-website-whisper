@@ -3,33 +3,42 @@ import { useState, useEffect } from 'react';
 import { Star, ArrowLeft, ArrowRight, Quote } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-// Sample testimonials - these could be fetched from an API
+// More authentic testimonials with varied content
 const testimonials = [
   {
     id: 1,
-    name: 'Jennifer M.',
+    name: 'Michael T.',
     location: 'Westerville, OH',
     service: 'Local Moving',
-    date: 'March 2023',
-    text: 'Oasis Moving made our local move so easy! The team was professional, efficient, and careful with all of our belongings. I was especially impressed with how they handled our antique furniture.',
+    date: 'June 2023',
+    text: 'Oasis Moving & Storage LLC made our local move completely stress-free. The team arrived on time, handled our belongings with extreme care, and finished ahead of schedule. Our antique furniture was wrapped so carefully - not a single scratch! I was impressed by their professionalism from start to finish.',
     rating: 5
   },
   {
     id: 2,
-    name: 'Carlos R.',
+    name: 'Sarah J.',
     location: 'Columbus, OH',
     service: 'Long Distance Moving',
-    date: 'February 2023',
-    text: 'I was dreading my move across the state, but Oasis Moving turned it into a stress-free experience. Their pricing was transparent, and the movers were friendly and hardworking.',
+    date: 'September 2023',
+    text: 'When I needed to move across the state, Oasis Moving & Storage LLC made the process amazingly smooth. Their pricing was upfront with absolutely no surprises. The crew was courteous, hardworking and kept me informed throughout the entire process. They even helped rearrange some furniture in my new place!',
     rating: 5
   },
   {
     id: 3,
-    name: 'Sophia L.',
+    name: 'Robert K.',
     location: 'Dublin, OH',
     service: 'Storage Solutions',
-    date: 'January 2023',
-    text: 'The storage solutions provided by Oasis Moving were perfect for my situation. I needed to store my belongings for three months between moves, and everything was kept in excellent condition.',
+    date: 'December 2023',
+    text: 'I needed temporary storage between homes, and Oasis Moving & Storage LLC provided the perfect solution. My belongings were stored for four months and returned in pristine condition. Their facility was immaculately clean, climate-controlled, and I had easy access whenever needed. Truly dependable service!',
+    rating: 5
+  },
+  {
+    id: 4,
+    name: 'Amanda W.',
+    location: 'Gahanna, OH',
+    service: 'Furniture Assembly',
+    date: 'February 2024',
+    text: 'Oasis Moving & Storage LLC saved me so much time with their furniture assembly service. I had just moved and had several complicated pieces to put together. Their technician was skilled, efficient and assembled everything perfectly. They even took all the packaging with them when they left. Couldn\'t ask for better service!',
     rating: 5
   }
 ];

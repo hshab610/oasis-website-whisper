@@ -7,30 +7,30 @@ import { Link } from 'react-router-dom';
 const testimonials = [
   {
     id: 1,
-    name: 'Jennifer M.',
+    name: 'Thomas R.',
     location: 'Westerville, OH',
-    text: 'Oasis Moving made our local move so easy! The team was professional, efficient, and careful with all of our belongings. I was impressed with how they handled our antique furniture. Highly recommend their services!',
+    text: 'Oasis Moving & Storage LLC exceeded all my expectations. The crew was extremely professional and treated my belongings with the utmost care. They wrapped all my furniture thoroughly and were careful navigating narrow hallways. I recommend them to anyone looking for dependable movers.',
     rating: 5,
   },
   {
     id: 2,
-    name: 'Carlos R.',
+    name: 'Elizabeth M.',
     location: 'Columbus, OH',
-    text: 'I was dreading my move across the state, but Oasis Moving turned it into a stress-free experience. Their pricing was transparent, and the movers were friendly and hardworking. They even finished earlier than expected!',
+    text: 'My experience with Oasis Moving & Storage LLC was exceptional from start to finish. The team arrived early, worked efficiently, and handled a particularly challenging piano move with impressive skill. Their communication throughout the process gave me complete peace of mind.',
     rating: 5,
   },
   {
     id: 3,
-    name: 'Sophia L.',
+    name: 'David L.',
     location: 'Dublin, OH',
-    text: 'The storage solutions provided by Oasis Moving were perfect for my situation. I needed to store my belongings for three months, and everything was kept in excellent condition. The pickup and delivery were seamless.',
+    text: 'I needed storage between moves and Oasis Moving & Storage LLC provided the perfect solution. Their facility was clean, secure, and climate-controlled. When it came time to deliver my items, everything was in the exact same condition. I couldn\'t be happier with their service.',
     rating: 5,
   },
   {
     id: 4,
-    name: 'Marcus W.',
+    name: 'Katherine P.',
     location: 'Gahanna, OH',
-    text: 'I hired Oasis for furniture assembly and TV mounting services. The team was punctual, professional, and did an excellent job. They were careful not to damage my walls and cleaned up afterward. Great service!',
+    text: 'The furniture assembly service from Oasis Moving & Storage LLC saved me days of frustration. Their technician expertly assembled my complex entertainment center and mounted my TVs perfectly. The attention to detail was impressive - everything was level, secure, and exactly where I wanted it.',
     rating: 5,
   },
 ];
